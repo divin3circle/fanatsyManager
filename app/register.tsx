@@ -1,30 +1,27 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  ImageBackground,
-  useColorScheme,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Button, StatusBar } from "react-native";
 import React from "react";
 import Welcome from "../components/welcome_components/Welcome";
 import { Link } from "expo-router";
 import { COLORS } from "../utils/Colors";
+import useThemeStore from "../utils/store";
 
 const Register = () => {
+  const { theme, toggleTheme } = useThemeStore();
   const [isUser, setIsUser] = React.useState(false);
-  const colorScheme = useColorScheme();
-  const bgStyle =
-    colorScheme === "dark" ? styles.welcomeDark : styles.welcomeLight;
+
+  const bgStyle = theme === "dark" ? styles.welcomeDark : styles.welcomeLight;
+  const textColor = theme === "dark" ? styles.textDark : null;
   return (
     <View style={[styles.welcome, bgStyle]}>
+      <StatusBar
+        barStyle={theme === "dark" ? "light-content" : "dark-content"}
+      />
       <View>
         <Image
           source={
-            colorScheme !== "dark"
-              ? require("../assests/images/icons/prem.png")
-              : require("../assests/images/icons/prembg.png")
+            theme === "dark"
+              ? require("../assests/images/icons/prembg.png")
+              : require("../assests/images/icons/prem.png")
           }
           accessibilityLabel="prem-logo"
           style={{
@@ -38,13 +35,17 @@ const Register = () => {
         <View style={styles.textConainter}>
           {!isUser ? (
             <>
-              <Text style={styles.appText}>Welcome back</Text>
-              <Text style={styles.describeText}>Sign into your account</Text>
+              <Text style={[styles.appText, textColor]}>Welcome back</Text>
+              <Text style={[styles.describeText, textColor]}>
+                Sign into your account
+              </Text>
             </>
           ) : (
             <>
-              <Text style={styles.appText}>Sign Up</Text>
-              <Text style={styles.describeText}>Craete an account</Text>
+              <Text style={[styles.appText, textColor]}>Sign Up</Text>
+              <Text style={[styles.describeText, textColor]}>
+                Craete an account
+              </Text>
             </>
           )}
         </View>
@@ -54,6 +55,7 @@ const Register = () => {
             onPress={() => setIsUser(!isUser)}
           />
         </View>
+        <Button title="Toggle Theme" onPress={toggleTheme} />
       </View>
       <Link href={"/Home"} replace asChild>
         <Button title="Login" />
@@ -75,6 +77,9 @@ const styles = StyleSheet.create({
   },
   welcomeDark: {
     backgroundColor: COLORS["app-dark"],
+  },
+  textDark: {
+    color: COLORS["app-light"],
   },
   appText: {
     fontSize: 30,
