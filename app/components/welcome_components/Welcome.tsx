@@ -8,19 +8,19 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
-import { COLORS } from "../../utils/Colors";
+import { COLORS } from "../../../utils/Colors";
 import Caurosel from "./Carousel";
 import { router, useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 
-const premIcon = require("../../assests/images/icons/prem.png");
+const premIcon = require("../../../assests/images/icons/prem.png");
 
 const Welcome = () => {
   const router = useRouter();
   const [fontsLoaded, fontError] = useFonts({
-    InclusiveSans: require("../../assests/fonts/InclusiveSans-Regular.ttf"),
+    InclusiveSans: require("../../../assests/fonts/InclusiveSans-Regular.ttf"),
   });
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {

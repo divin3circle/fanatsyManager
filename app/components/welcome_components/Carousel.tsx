@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React from "react";
-import { teams } from "../../utils/Data";
-import { COLORS } from "../../utils/Colors";
+import { teams } from "../../../utils/Data";
+import { COLORS } from "../../../utils/Colors";
 
 type CauroselProps = {
   name: string;
