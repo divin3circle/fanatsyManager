@@ -4,7 +4,7 @@ import { FormInput } from "./userRegister";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 
 type LoginUserState = {
-  login: () => Promise<void>;
+  login: () => Promise<boolean>;
   userEmail: FormInput;
   userPassword: FormInput;
   setUserEmail: (email: FormInput) => void;
@@ -23,10 +23,13 @@ const useUserLoginStore = create<LoginUserState>((set, get) => ({
           userPassword
         );
         set({ userEmail: "", userPassword: "" });
+        return true;
       } catch (error) {
         console.log(error);
+        return false;
       }
     }
+    return false;
   },
   userEmail: "",
   userPassword: "",

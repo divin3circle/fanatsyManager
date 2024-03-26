@@ -6,7 +6,7 @@ import { UserCredential } from "firebase/auth";
 
 export type FormInput = string | null;
 type RegisterUserState = {
-  register: () => Promise<void>;
+  register: () => Promise<boolean>;
   email: FormInput;
   fplTeam: FormInput;
   eplTeam: FormInput;
@@ -37,10 +37,13 @@ const useUseRegisterStore = create<RegisterUserState>((set, get) => ({
           password,
         });
         set({ email: "", fplTeam: "", eplTeam: "", password: "" });
+        return true;
       } catch (error) {
         console.log(error);
+        return false;
       }
     }
+    return false;
   },
   email: "",
   fplTeam: "",

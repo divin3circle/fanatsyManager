@@ -8,4 +8,5 @@ export const COLORS = {
   "card-dark": "#1b1b1b",
   "card-dark2": "#424769",
   "text-dark": "#f0eeee",
+  "primary-Text": "#fff",
 };

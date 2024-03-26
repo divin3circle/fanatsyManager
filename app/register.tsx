@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from "react-native";
 import React from "react";
 import { useNavigation } from "expo-router";
@@ -17,13 +18,7 @@ import Welcome from "./components/welcome_components/Welcome";
 import { Link } from "expo-router";
 import { COLORS } from "../utils/Colors";
 import useThemeStore from "../utils/store";
-import Animated, {
-  FadeIn,
-  FadeOut,
-  FadeInUp,
-  FadeOutDown,
-  FadeInDown,
-} from "react-native-reanimated";
+import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
 import useUseRegisterStore from "../utils/userRegister";
 import useUserLoginStore from "../utils/userLogin";
 import Loading from "./components/loading/Loading";
@@ -52,14 +47,24 @@ const Register = () => {
   // console.log(email, fplTeam, eplTeam, password);
   const signIn = async () => {
     setLoading(true);
-    await login();
-    navigation.navigate("(tabs)");
+    const isLoggedIn = await login();
+    isLoggedIn
+      ? navigation.navigate("(tabs)")
+      : Alert.alert("Error", "Check sign up credentials and try again.", [
+          { text: "OK" },
+        ]);
     setLoading(false);
   };
   const signUp = async () => {
     setLoading(true);
-    await register();
-    navigation.navigate("(tabs)");
+    const isRegistred = await register();
+    if (isRegistred) {
+      navigation.navigate("(tabs)");
+    } else {
+      Alert.alert("Error", "Check sign up credentials and try again.", [
+        { text: "OK" },
+      ]);
+    }
     setLoading(false);
   };
   if (loading) {
