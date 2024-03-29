@@ -92,3 +92,90 @@ export const managerBanner = [
     bgColor: "#034694;",
   },
 ];
+
+export const news = [
+  {
+    id: 1,
+    name: "Arsenal",
+    title: "Arsenal to sign new striker",
+    logo: require("../assests/images/team-logos/ars.png"),
+    imgUrl:
+      "https://images.teamtalk.com/content/uploads/2023/07/08083856/Kylian-Mbappe-Arsenal-target.jpg",
+    description:
+      "Arsenal are set to sign a new striker in the January transfer window. The Gunners have been linked with a number of forwards in recent weeks,including PSG's start Forward Kylian Mbappe, and it is believed that they are close to completing a deal for a new striker.",
+    date: "12/09/2021",
+    time: "23:00",
+  },
+  {
+    id: 2,
+    name: "Chelsea",
+    title: "Chelsea expect Recce James to return soon",
+    logo: require("../assests/images/team-logos/che.png"),
+    imgUrl:
+      "https://cdn1.thechelseachronicle.com/uploads/17/2023/08/GettyImages-1619312313.jpg",
+    description:
+      "Chelsea are expecting Recce James to return to action soon after the right-back suffered an injury in the Blues' 1-0 win over Newcastle United.",
+    date: "12/09/2021",
+    time: "12:00",
+  },
+  {
+    id: 3,
+    name: "Liverpool",
+    title: "Klopps says Salah will be ready for Man United Clash",
+    logo: require("../assests/images/team-logos/liv.png"),
+    imgUrl:
+      "https://imgresizer.eurosport.com/unsafe/1200x0/filters:format(jpeg)/origin-imgresizer.eurosport.com/2021/10/24/3242638-66370028-2560-1440.jpg",
+    description:
+      " Liverpool manager Jurgen Klopp has confirmed that Mohamed Salah will be available for the Reds' clash with Manchester United on Sunday. After missing the 2-2 draw with Brighton, Salah has returned to training and is expected to be fit for the game at Old Trafford.",
+    date: "12/09/2021",
+    time: "17:00",
+  },
+  {
+    id: 4,
+    name: "Man City",
+    title: "Another injury blow for De Bruyne",
+    logo: require("../assests/images/team-logos/mci.png"),
+    imgUrl:
+      "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt761d635ce9fb2473/64d6902a9eab6d1b5a44bfad/GettyImages-1608161788.jpg",
+    description:
+      "Manchester City have been dealt another injury blow with Kevin De Bruyne set to miss the next few weeks with a muscle injury. The Belgian midfielder has been in fine form this season, but will now be sidelined for the next few weeks.",
+    date: "12/09/2021",
+    time: "14:00",
+  },
+  {
+    id: 5,
+    name: "Man United",
+    title: "Luke Shaw out for 6 weeks",
+    logo: require("../assests/images/team-logos/mun.png"),
+    imgUrl:
+      "https://assets.manutd.com/AssetPicker/images/0/0/13/244/914531/A94T2869_2020071393147234_202007130936051594673400856_large.jpg",
+    description:
+      "Manchester United have been dealt a major injury blow with Luke Shaw set to miss the next six weeks with a hamstring injury. The left-back has been in fine form this season, but will now be sidelined for the next six weeks.",
+    date: "12/09/2021",
+    time: "14:00",
+  },
+  {
+    id: 6,
+    name: "Tottenham",
+    title: "Spurs keen to keep Werner",
+    logo: require("../assests/images/team-logos/tot.png"),
+    imgUrl:
+      "https://www.telegraph.co.uk/content/dam/football/2024/01/09/TELEMMGLPICT000362097540_17048282798380_trans_NvBQzQNjv4BqwRnwQ0KgCqCTKamrqQKaYl5NUcTKNHKqy85KLqtvPLE.jpeg?imwidth=680",
+    description:
+      "Tottenham are keen to keep Timo Werner at the club despite interest from other clubs. The German striker has been linked with a move away from Spurs, but the club are keen to keep hold of him.",
+    date: "12/09/2021",
+    time: "20:00",
+  },
+  {
+    id: 7,
+    name: "Chelsea",
+    title: "Osimhen remains Chelsea's top target for the sumer",
+    logo: require("../assests/images/team-logos/che.png"),
+    imgUrl:
+      "https://images.ps-aws.com/c?url=https%3A%2F%2Fimages.teamtalk.com%2Fcontent%2Fuploads%2F2024%2F01%2F27121309%2Fnapoli-striker-victor-osimhen-chelsea-manager-mauricio-pochettino.jpg",
+    description:
+      "Chelsea are set to make a move for Victor Osimhen in the summer transfer window. The Blues have been tracking the Napoli striker for some time and are keen to bring him to Stamford Bridge.",
+    date: "12/09/2021",
+    time: "23:00",
+  },
+];
