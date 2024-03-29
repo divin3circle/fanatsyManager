@@ -1,25 +1,40 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { COLORS } from "../../../utils/Colors";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { managerBanner } from "../../../utils/Data";
 
+type ManagerBannerProps = {
+  id: number;
+  name: string;
+  team: string;
+  image: any;
+  quote: string;
+};
 const ManagerBanner = () => {
+  const [displayManager, setManagerBanner] =
+    useState<ManagerBannerProps | null>(null);
+  const [bgColor, setBgColor] = useState<string>("");
+  useEffect(() => {
+    const randIndex = Math.floor(Math.random() * managerBanner.length);
+    const manager = managerBanner[randIndex];
+    setManagerBanner(manager);
+    setBgColor(manager.bgColor);
+  }, []);
+
   return (
     <Animated.View
-      style={styles.managerBannerContainer}
+      style={[styles.managerBannerContainer, { backgroundColor: bgColor }]}
       entering={FadeInDown.delay(100).duration(1000)}
     >
       {/** manager image */}
       <View style={styles.imageContainer}>
-        <Image
-          source={require("../../../assests/images/managers/ars.png")}
-          style={styles.image}
-        />
+        <Image source={displayManager?.image} style={styles.image} />
       </View>
       {/** manager info */}
       <View style={styles.infoContainer}>
         <View style={styles.infoTextContainer}>
-          <Text style={styles.infoText}>Mikel Arteta</Text>
+          <Text style={styles.infoText}>{displayManager?.name}</Text>
         </View>
         <View style={styles.textContainer}>
           <Text
@@ -27,13 +42,11 @@ const ManagerBanner = () => {
             ellipsizeMode="tail"
             style={styles.managerText}
           >
-            We have to create a culture, a way of living, a way of being around
-            the club that is very much aligned with the values and the
-            traditions.
+            {displayManager?.quote}
           </Text>
         </View>
         <View style={styles.infoTextContainer}>
-          <Text style={styles.infoText}>Arsenal</Text>
+          <Text style={styles.infoText}>{displayManager?.team}</Text>
         </View>
       </View>
     </Animated.View>
@@ -92,3 +105,4 @@ const styles = StyleSheet.create({
     fontFamily: "InclusiveSans",
   },
 });
+//107 lines
