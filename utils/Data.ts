@@ -157,7 +157,7 @@ export const news = [
   {
     id: 6,
     name: "Tottenham",
-    title: "Spurs keen to keep Werner",
+    title: "Spurs keen to keep a special player",
     logo: require("../assests/images/team-logos/tot.png"),
     imgUrl:
       "https://www.telegraph.co.uk/content/dam/football/2024/01/09/TELEMMGLPICT000362097540_17048282798380_trans_NvBQzQNjv4BqwRnwQ0KgCqCTKamrqQKaYl5NUcTKNHKqy85KLqtvPLE.jpeg?imwidth=680",

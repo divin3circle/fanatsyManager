@@ -12,6 +12,7 @@ import { COLORS } from "../../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { GAMEWEEKS } from "../../../utils/Gameweeks";
 import { teams } from "../../../utils/Data";
+import { Skeleton } from "moti/skeleton";
 
 type GameweekProps = {
   id: number;
@@ -230,27 +231,25 @@ const Fixtures = () => {
         <View style={styles.divider}></View>
         <View style={styles.divider}></View>
         {/*   Fav content  */}
-        {loadingFixtures ? (
-          <View style={styles.favactivityIndicatorContainer}>
-            <ActivityIndicator size="large" color={COLORS.primary} />
-          </View>
-        ) : (
-          fixtures.slice(0, 2).map((fixture) => {
-            return (
-              <FixtureContainer
-                key={fixture.id}
-                homeTeamId={fixture.team_h}
-                homeScore={fixture.team_h_score}
-                awayTeamId={fixture.team_a}
-                awayScore={fixture.team_a_score}
-                kickOffTime={fixture.kickoff_time}
-                event={fixture.event}
-                finished={fixture.finished}
-                started={fixture.started}
-              />
-            );
-          })
-        )}
+        {fixtures.slice(0, 2).map((fixture) => {
+          return (
+            <View style={{ marginBottom: 2 }}>
+              <Skeleton show={loadingFixtures} colorMode="light">
+                <FixtureContainer
+                  key={fixture.id}
+                  homeTeamId={fixture.team_h}
+                  homeScore={fixture.team_h_score}
+                  awayTeamId={fixture.team_a}
+                  awayScore={fixture.team_a_score}
+                  kickOffTime={fixture.kickoff_time}
+                  event={fixture.event}
+                  finished={fixture.finished}
+                  started={fixture.started}
+                />
+              </Skeleton>
+            </View>
+          );
+        })}
       </View>
 
       {/*   Fixture List  */}
@@ -264,27 +263,25 @@ const Fixtures = () => {
         <View style={styles.divider}></View>
         <View style={styles.divider}></View>
         {/*   Fixture content  */}
-        {loadingFixtures ? (
-          <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator size="large" color={COLORS.primary} />
-          </View>
-        ) : (
-          fixtures.slice(2, 10).map((fixture) => {
-            return (
-              <FixtureContainer
-                key={fixture.id}
-                homeTeamId={fixture.team_h}
-                homeScore={fixture.team_h_score}
-                awayTeamId={fixture.team_a}
-                awayScore={fixture.team_a_score}
-                kickOffTime={fixture.kickoff_time}
-                event={fixture.event}
-                finished={fixture.finished}
-                started={fixture.started}
-              />
-            );
-          })
-        )}
+        {fixtures.slice(2, 10).map((fixture) => {
+          return (
+            <View style={{ marginBottom: 2 }}>
+              <Skeleton show={loadingFixtures} colorMode="light">
+                <FixtureContainer
+                  key={fixture.id}
+                  homeTeamId={fixture.team_h}
+                  homeScore={fixture.team_h_score}
+                  awayTeamId={fixture.team_a}
+                  awayScore={fixture.team_a_score}
+                  kickOffTime={fixture.kickoff_time}
+                  event={fixture.event}
+                  finished={fixture.finished}
+                  started={fixture.started}
+                />
+              </Skeleton>
+            </View>
+          );
+        })}
       </View>
     </View>
   );
