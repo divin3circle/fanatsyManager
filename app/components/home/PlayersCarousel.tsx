@@ -40,6 +40,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
   const [totalPoints, setTotalPoints] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
   const [own, setOwn] = React.useState<number>(0);
+  //TODO: Fix loading typo
   const [laodingPlayerData, setLoadingPlayerData] =
     React.useState<boolean>(true);
   const fetchTeam = async () => {

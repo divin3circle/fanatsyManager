@@ -220,7 +220,7 @@ const Fixtures = () => {
         showsHorizontalScrollIndicator={false}
       />
 
-      {/*   Favourite fixtures List  */}
+      {/*   Favorite fixtures List  */}
       <View style={styles.fixtureContainer}>
         {/*   Title */}
         <View style={styles.fixtureTitleContainer}>
@@ -320,6 +320,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     borderRadius: 10,
   },
+  // TODO: Fix this typo
   selctedGameweekContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
