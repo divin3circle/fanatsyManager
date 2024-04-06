@@ -11,9 +11,10 @@ import {
 import React from "react";
 import useThemeStore from "../../utils/store";
 import { COLORS } from "../../utils/Colors";
-import Caurosel from "../components/welcome_components/Carousel";
 import { news, teams } from "../../utils/Data";
 import { Ionicons } from "@expo/vector-icons";
+import { Skeleton } from "moti/skeleton";
+import "react-native-reanimated";
 
 type Team = {
   id: number;
@@ -50,6 +51,7 @@ const NewsItem = ({
   time,
 }: News) => {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const [showContent, setShowContent] = React.useState(false);
   const bookmarkNews = () => {
     setIsBookmarked(!isBookmarked);
     return alert(`News ${isBookmarked ? "Removed" : "Bookmarked"}`);
@@ -57,45 +59,59 @@ const NewsItem = ({
   return (
     <View style={styles.newsItemConatainer}>
       {/* Image */}
+
       <View style={styles.newsItemImageContainer}>
-        <Image
-          source={{ uri: imgUrl }}
-          style={{ width: "100%", height: "100%", borderRadius: 10 }}
-        />
+        <Skeleton show={showContent} colorMode="light" radius={0} height={150}>
+          <Image
+            source={{
+              uri: imgUrl,
+            }}
+            style={{ width: "100%", height: 150 }}
+          />
+        </Skeleton>
       </View>
+
       {/* Core */}
       <View style={styles.newsItemCoreConatainer}>
-        <Text style={styles.newsItemTitleText}>{title}</Text>
-        <Text style={styles.newsItemText}>
-          {description.substring(0, 100)}
-          <Text style={{ color: "blue", fontSize: 12 }}>...Read More</Text>
-        </Text>
+        <View style={{ marginBottom: 5 }}>
+          <Skeleton show={showContent} colorMode="light" radius={10}>
+            <Text style={styles.newsItemTitleText}>{title}</Text>
+          </Skeleton>
+        </View>
+        <Skeleton show={showContent} colorMode="light" radius={10}>
+          <Text style={styles.newsItemText}>
+            {description.substring(0, 100)}
+            <Text style={{ color: "blue", fontSize: 12 }}>...Read More</Text>
+          </Text>
+        </Skeleton>
       </View>
       {/* Info */}
-      <View style={styles.newsItemInfoContainer}>
-        {/* Logo */}
-        <View style={styles.newsItemInfoLogoConatiner}>
-          <Image
-            source={logo}
-            style={{ width: 30, height: 30, borderRadius: 10 }}
-          />
-          <Text style={styles.newsItemInfoText}>{name}</Text>
+      <Skeleton show={showContent} radius={10} colorMode="light">
+        <View style={styles.newsItemInfoContainer}>
+          {/* Logo */}
+          <View style={styles.newsItemInfoLogoConatiner}>
+            <Image
+              source={logo}
+              style={{ width: 30, height: 30, borderRadius: 10 }}
+            />
+            <Text style={styles.newsItemInfoText}>{name}</Text>
+          </View>
+          {/* Text */}
+          <View>
+            <Text style={styles.newsItemInfoText}>
+              {date} : {time}
+            </Text>
+          </View>
+          {/* Save */}
+          <TouchableOpacity onPress={bookmarkNews}>
+            <Ionicons
+              name={isBookmarked ? "bookmark" : "bookmark-outline"}
+              size={20}
+              color="black"
+            />
+          </TouchableOpacity>
         </View>
-        {/* Text */}
-        <View>
-          <Text style={styles.newsItemInfoText}>
-            {date} : {time}
-          </Text>
-        </View>
-        {/* Save */}
-        <TouchableOpacity onPress={bookmarkNews}>
-          <Ionicons
-            name={isBookmarked ? "bookmark" : "bookmark-outline"}
-            size={20}
-            color="black"
-          />
-        </TouchableOpacity>
-      </View>
+      </Skeleton>
     </View>
   );
 };
@@ -257,6 +273,7 @@ const styles = StyleSheet.create({
   },
   newsItemCoreConatainer: {
     marginVertical: 10,
+    padding: 10,
   },
   newsItemInfoContainer: {
     flexDirection: "row",

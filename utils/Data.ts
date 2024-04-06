@@ -157,7 +157,7 @@ export const news = [
   {
     id: 6,
     name: "Tottenham",
-    title: "Spurs keen to keep Werner",
+    title: "Spurs keen to keep a special player",
     logo: require("../assests/images/team-logos/tot.png"),
     imgUrl:
       "https://www.telegraph.co.uk/content/dam/football/2024/01/09/TELEMMGLPICT000362097540_17048282798380_trans_NvBQzQNjv4BqwRnwQ0KgCqCTKamrqQKaYl5NUcTKNHKqy85KLqtvPLE.jpeg?imwidth=680",
@@ -177,5 +177,113 @@ export const news = [
       "Chelsea are set to make a move for Victor Osimhen in the summer transfer window. The Blues have been tracking the Napoli striker for some time and are keen to bring him to Stamford Bridge.",
     date: "12/09/2021",
     time: "23:00",
+  },
+];
+
+export const jerseys = [
+  {
+    id: 0,
+    name: "Dummy Team",
+    jerseyImage: require("../assests/images/jerseys/ars.png"),
+  },
+  {
+    id: 1,
+    name: "Ars",
+    jerseyImage: require("../assests/images/jerseys/ars.png"),
+  },
+  {
+    id: 2,
+    name: "Avl",
+    jerseyImage: require("../assests/images/jerseys/asv.png"),
+  },
+  {
+    id: 3,
+    name: "Bha",
+    jerseyImage: require("../assests/images/jerseys/bri.png"),
+  },
+  {
+    id: 4,
+    name: "Bou",
+    jerseyImage: require("../assests/images/jerseys/bou.png"),
+  },
+  {
+    id: 5,
+    name: "Bre",
+    jerseyImage: require("../assests/images/jerseys/bre.png"),
+  },
+  {
+    id: 6,
+    name: "Bur",
+    jerseyImage: require("../assests/images/jerseys/bur.png"),
+  },
+  {
+    id: 7,
+    name: "Che",
+    jerseyImage: require("../assests/images/jerseys/che.png"),
+  },
+  {
+    id: 8,
+    name: "Cry",
+    jerseyImage: require("../assests/images/jerseys/cry.png"),
+  },
+  {
+    id: 9,
+    name: "Eve",
+    jerseyImage: require("../assests/images/jerseys/eve.png"),
+  },
+  {
+    id: 10,
+    name: "Ful",
+    jerseyImage: require("../assests/images/jerseys/ful.png"),
+  },
+  {
+    id: 11,
+    name: "Liv",
+    jerseyImage: require("../assests/images/jerseys/liv.png"),
+  },
+  {
+    id: 12,
+    name: "Lut",
+    jerseyImage: require("../assests/images/jerseys/lut.png"),
+  },
+  {
+    id: 13,
+    name: "Mci",
+    jerseyImage: require("../assests/images/jerseys/mci.png"),
+  },
+  {
+    id: 14,
+    name: "Mun",
+    jerseyImage: require("../assests/images/jerseys/mun.png"),
+  },
+  {
+    id: 15,
+    name: "New",
+    jerseyImage: require("../assests/images/jerseys/new.png"),
+  },
+  {
+    id: 16,
+    name: "Nfo",
+    jerseyImage: require("../assests/images/jerseys/not.png"),
+  },
+  {
+    id: 17,
+    name: "Shu",
+    jerseyImage: require("../assests/images/jerseys/shu.png"),
+  },
+  {
+    id: 18,
+    name: "Tot",
+    jerseyImage: require("../assests/images/jerseys/tot.png"),
+  },
+  {
+    id: 19,
+    name: "Whu",
+    jerseyImage: require("../assests/images/jerseys/whu.png"),
+  },
+  {
+    id: 20,
+    name: "Wol",
+    jerseyImage: require("../assests/images/jerseys/wol.png"),
   },
 ];
