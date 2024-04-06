@@ -66,7 +66,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
       const player = players.find((player) => player.id === element);
       setForm(player.form);
       setTotalPoints(player.total_points);
-      setPrice(player.ep_this);
+      setPrice(player.ict_index);
       setOwn(player.selected_by_percent);
       const playerName = player.first_name + " " + player.second_name;
       setPlayerName(playerName);
@@ -104,7 +104,8 @@ const Player = ({ element, points, position }: PlayerProps) => {
         </Skeleton>
         <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
           <Text style={styles.carouselTextPosition}>
-            {jerseys[playerTeamId].name.toLocaleUpperCase()}
+            {/* {jerseys[playerTeamId].name.toLocaleUpperCase()} */}
+            {points}
           </Text>
         </Skeleton>
       </View>
@@ -126,7 +127,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
         <View style={styles.carouselInfoContainer}>
           <View style={{ marginBottom: 2 }}>
             <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-              <Text style={styles.carouselTextStats}>Price: £{price}</Text>
+              <Text style={styles.carouselTextStats}>ICT: {price}</Text>
             </Skeleton>
           </View>
           <View>
