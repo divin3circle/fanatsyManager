@@ -90,7 +90,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
           <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
             <Image
               source={jerseys[playerTeamId].jerseyImage}
-              style={{ width: 200, height: 200 }}
+              style={{ width: 175, height: 175, marginTop: 4 }}
             />
           </Skeleton>
         </View>

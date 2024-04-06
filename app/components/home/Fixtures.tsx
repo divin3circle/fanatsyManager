@@ -233,7 +233,7 @@ const Fixtures = () => {
         {/*   Fav content  */}
         {fixtures.slice(0, 2).map((fixture) => {
           return (
-            <View style={{ marginBottom: 2 }}>
+            <View key={fixture.code} style={{ marginBottom: 2 }}>
               <Skeleton show={loadingFixtures} colorMode="light">
                 <FixtureContainer
                   key={fixture.id}
@@ -265,7 +265,7 @@ const Fixtures = () => {
         {/*   Fixture content  */}
         {fixtures.slice(2, 10).map((fixture) => {
           return (
-            <View style={{ marginBottom: 2 }}>
+            <View key={fixture.code} style={{ marginBottom: 2 }}>
               <Skeleton show={loadingFixtures} colorMode="light">
                 <FixtureContainer
                   key={fixture.id}
