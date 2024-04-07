@@ -203,13 +203,13 @@ export const jerseys = [
   },
   {
     id: 4,
-    name: "Bou",
-    jerseyImage: require("../assests/images/jerseys/bou.png"),
+    name: "Bre",
+    jerseyImage: require("../assests/images/jerseys/bre.png"),
   },
   {
     id: 5,
-    name: "Bre",
-    jerseyImage: require("../assests/images/jerseys/bre.png"),
+    name: "Bou",
+    jerseyImage: require("../assests/images/jerseys/bou.png"),
   },
   {
     id: 6,
@@ -285,5 +285,116 @@ export const jerseys = [
     id: 20,
     name: "Wol",
     jerseyImage: require("../assests/images/jerseys/wol.png"),
+  },
+];
+
+export const mid = [
+  {
+    id: 1,
+    team_id: 7,
+    name: "Palmer",
+    position: 3,
+    price: 6.9,
+    combined_index: 99,
+    ict_index: 600,
+  },
+  {
+    id: 2,
+    team_id: 14,
+    name: "Fernandes",
+    position: 3,
+    price: 8.4,
+    combined_index: 55,
+    ict_index: 150,
+  },
+  {
+    id: 3,
+    team_id: 14,
+    name: "Rashford",
+    position: 3,
+    price: 6.9,
+    combined_index: 70,
+    ict_index: 200,
+  },
+];
+
+export const def = [
+  {
+    id: 1,
+    team_id: 1,
+    name: "Saliba",
+    position: 2,
+    price: 5.4,
+    combined_index: 50,
+    ict_index: 100,
+  },
+  {
+    id: 2,
+    team_id: 15,
+    name: "Tripier",
+    position: 2,
+    price: 6.4,
+    combined_index: 60,
+    ict_index: 150,
+  },
+  {
+    id: 3,
+    team_id: 13,
+    name: "Dias",
+    position: 2,
+    price: 5.6,
+    combined_index: 70,
+    ict_index: 290,
+  },
+];
+
+export const strikers = [
+  {
+    id: 1,
+    team_id: 11,
+    name: "Nunez",
+    position: 4,
+    price: 7.3,
+    combined_index: 78,
+    ict_index: 400,
+  },
+  {
+    id: 2,
+    team_id: 2,
+    name: "Watkins",
+    position: 4,
+    price: 8.8,
+    combined_index: 87,
+    ict_index: 500,
+  },
+  {
+    id: 3,
+    team_id: 20,
+    name: "Sarabia",
+    position: 4,
+    price: 7.2,
+    combined_index: 90,
+    ict_index: 600,
+  },
+];
+
+export const gks = [
+  {
+    id: 1,
+    team_id: 1,
+    name: "Raya",
+    position: 1,
+    price: 5.5,
+    combined_index: 70,
+    ict_index: 200,
+  },
+  {
+    id: 2,
+    team_id: 11,
+    name: "Alisson",
+    position: 1,
+    price: 6.0,
+    combined_index: 80,
+    ict_index: 300,
   },
 ];

@@ -24,7 +24,7 @@ const ManagerBanner = () => {
 
   return (
     <Animated.View
-      style={[styles.managerBannerContainer, { backgroundColor: bgColor }]}
+      style={[styles.managerBannerContainer]}
       entering={FadeInDown.delay(100).duration(1000)}
     >
       {/** manager image */}

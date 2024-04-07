@@ -40,36 +40,80 @@ const Player = ({ element, points, position }: PlayerProps) => {
   const [totalPoints, setTotalPoints] = React.useState<number>(0);
   const [price, setPrice] = React.useState<number>(0);
   const [own, setOwn] = React.useState<number>(0);
+  const [jersey, setJersey] = React.useState<number>(0);
   //TODO: Fix loading typo
   const [laodingPlayerData, setLoadingPlayerData] =
     React.useState<boolean>(true);
-  const fetchTeam = async () => {
+  // const fetchTeam = async () => {
+  //   try {
+  //     setLoadingPlayerData(true);
+  //     const response = await fetch(
+  //       `https://fantasy.premierleague.com/api/element-summary/${element}/`
+  //     );
+  //     // console.log("=>", element, points, position);
+  //     const data = await response.json();
+  //     const firstFixture = data.fixtures[0];
+  //     const teamId = firstFixture.is_home
+  //       ? firstFixture.team_h
+  //       : firstFixture.team_a;
+  //     setJersey(teamId);
+  //     // console.log(element, teamId, "=>", points, position);
+  //     setPlayerTeamId(teamId);
+  //     setPlayerData(firstFixture);
+  //     const bootstrap = await fetch(
+  //       "https://fantasy.premierleague.com/api/bootstrap-static/"
+  //     );
+  //     const bootstrapData = await bootstrap.json();
+  //     const players = bootstrapData.elements as any[];
+  //     const player = players.find((player) => player.id === element);
+  //     setForm(player.form);
+  //     setTotalPoints(player.total_points);
+  //     setPrice(player.ict_index);
+  //     setOwn(player.selected_by_percent);
+  //     const playerName = player.first_name + " " + player.second_name;
+  //     setPlayerName(playerName);
+  //     setLoadingPlayerData(false);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  const fetchData = async (url: string) => {
+    const response = await fetch(url);
+    return await response.json();
+  };
+
+  const handleElementSummaryResponse = (data: any, element: number) => {
+    const firstFixture = data.fixtures[0];
+    const teamId = firstFixture.is_home
+      ? firstFixture.team_h
+      : firstFixture.team_a;
+    setJersey(teamId);
+    setPlayerTeamId(teamId);
+    setPlayerData(firstFixture);
+  };
+
+  const handleBootstrapResponse = (data: any, element: number) => {
+    const players = data.elements as any[];
+    const player = players.find((player) => player.id === element);
+    setForm(player.form);
+    setTotalPoints(player.total_points);
+    setPrice(player.ict_index);
+    setOwn(player.selected_by_percent);
+    const playerName = player.first_name + " " + player.second_name;
+    setPlayerName(playerName);
+  };
+
+  const fetchTeam = async (element: number) => {
     try {
       setLoadingPlayerData(true);
-      const response = await fetch(
+      const elementSummaryData = await fetchData(
         `https://fantasy.premierleague.com/api/element-summary/${element}/`
       );
-      // console.log("=>", element, points, position);
-      const data = await response.json();
-      const firstFixture = data.fixtures[0];
-      const teamId = firstFixture.is_home
-        ? firstFixture.team_h
-        : firstFixture.team_a;
-      // console.log(element, teamId, "=>", points, position);
-      setPlayerTeamId(teamId);
-      setPlayerData(firstFixture);
-      const bootstrap = await fetch(
+      handleElementSummaryResponse(elementSummaryData, element);
+      const bootstrapData = await fetchData(
         "https://fantasy.premierleague.com/api/bootstrap-static/"
       );
-      const bootstrapData = await bootstrap.json();
-      const players = bootstrapData.elements as any[];
-      const player = players.find((player) => player.id === element);
-      setForm(player.form);
-      setTotalPoints(player.total_points);
-      setPrice(player.ict_index);
-      setOwn(player.selected_by_percent);
-      const playerName = player.first_name + " " + player.second_name;
-      setPlayerName(playerName);
+      handleBootstrapResponse(bootstrapData, element);
       setLoadingPlayerData(false);
     } catch (error) {
       console.error(error);
@@ -77,7 +121,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
   };
 
   useEffect(() => {
-    fetchTeam();
+    fetchTeam(element);
   }, [element]);
   return (
     <View style={styles.carouselItem}>
@@ -90,7 +134,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
         >
           <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
             <Image
-              source={jerseys[playerTeamId].jerseyImage}
+              source={jerseys[jersey].jerseyImage}
               style={{ width: 175, height: 175, marginTop: 4 }}
             />
           </Skeleton>
