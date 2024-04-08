@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import useThemeStore from "../../utils/store";
 import Team, { NoTeam } from "../components/fantasy/Team";
 import Suggestions from "../components/fantasy/Suggestions";
-import { fetchData } from "../../utils/Suggested";
 
 export type PlayerInformation = {
   id: number;
