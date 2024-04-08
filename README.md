@@ -1,8 +1,8 @@
-# Fanasy Assistant
+# Fantasy Assistant
 
 ## Description
 
-Fantasy Assistant is an application that consumes the FPL API, to help FPL managers easily manage their fantasy teams ans analyse EPL's fantasy landscape.
+Fantasy Assistant is an application that consumes the FPL API, to help FPL managers easily manage their fantasy teams ans analyze EPL's fantasy landscape.
 
 ## Table of Contents
 
