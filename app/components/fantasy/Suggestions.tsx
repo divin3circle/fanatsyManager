@@ -11,6 +11,7 @@ import {
   sortPlayers,
 } from "../../../utils/Suggested";
 import { Skeleton } from "moti/skeleton";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 type PositionProps = {
   position: number;
@@ -98,7 +99,10 @@ const Position = ({
       ? "Midfielders"
       : "Forwards";
   return (
-    <View style={styles.positionContainer}>
+    <Animated.View
+      entering={FadeInDown.delay(100).duration(1000)}
+      style={styles.positionContainer}
+    >
       <View
         style={{
           width: "100%",
@@ -162,7 +166,7 @@ const Position = ({
           );
         })}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
