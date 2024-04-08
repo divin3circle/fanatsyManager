@@ -103,69 +103,73 @@ const Position = ({
       entering={FadeInDown.delay(100).duration(1000)}
       style={styles.positionContainer}
     >
-      <View
-        style={{
-          width: "100%",
-          borderTopColor: "gray",
-          borderTopWidth: 1,
-          alignItems: "center",
-          marginTop: 10,
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: "#38003c",
-            width: "50%",
-            borderBottomRightRadius: 15,
-            borderBottomLeftRadius: 15,
-            paddingVertical: 5,
-            marginBottom: 5,
-          }}
-        >
-          <Text style={styles.positionText}>{playerPosition}</Text>
-        </View>
-        <View style={styles.playerContainer}>
-          <Text>Info</Text>
-          <Text
+      <Skeleton show={loading} colorMode="light">
+        <View>
+          <View
             style={{
-              width: "30%",
-              textAlign: "center",
-              fontFamily: "InclusiveSans",
+              width: "100%",
+              borderTopColor: "gray",
+              borderTopWidth: 1,
+              alignItems: "center",
+              marginTop: 10,
             }}
           >
-            Name
-          </Text>
-          <Text
-            style={{
-              width: "10%",
-              textAlign: "center",
-              fontFamily: "InclusiveSans",
-            }}
-          >
-            Own
-          </Text>
-          <Text
-            style={{
-              width: "10%",
-              textAlign: "center",
-              fontFamily: "InclusiveSans",
-            }}
-          >
-            Index
-          </Text>
-        </View>
-      </View>
-      <View>
-        {players?.map((player) => {
-          return (
-            <View key={player.code}>
-              <Skeleton show={loading} height={100} colorMode="light">
-                <Player {...player} />
-              </Skeleton>
+            <View
+              style={{
+                backgroundColor: "#38003c",
+                width: "50%",
+                borderBottomRightRadius: 15,
+                borderBottomLeftRadius: 15,
+                paddingVertical: 5,
+                marginBottom: 5,
+              }}
+            >
+              <Text style={styles.positionText}>{playerPosition}</Text>
             </View>
-          );
-        })}
-      </View>
+            <View style={styles.playerContainer}>
+              <Text>Info</Text>
+              <Text
+                style={{
+                  width: "30%",
+                  textAlign: "center",
+                  fontFamily: "InclusiveSans",
+                }}
+              >
+                Name
+              </Text>
+              <Text
+                style={{
+                  width: "10%",
+                  textAlign: "center",
+                  fontFamily: "InclusiveSans",
+                }}
+              >
+                Own
+              </Text>
+              <Text
+                style={{
+                  width: "10%",
+                  textAlign: "center",
+                  fontFamily: "InclusiveSans",
+                }}
+              >
+                Index
+              </Text>
+            </View>
+          </View>
+          <View>
+            {players?.map((player) => {
+              return (
+                <View key={player.code}>
+                  <Skeleton show={loading} height={100} colorMode="light">
+                    <Player {...player} />
+                  </Skeleton>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      </Skeleton>
     </Animated.View>
   );
 };
