@@ -1,14 +1,35 @@
 import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { COLORS } from "../../../utils/Colors";
 import { def, gks, jerseys, mid, strikers } from "../../../utils/Data";
 import { Ionicons } from "@expo/vector-icons";
+import {
+  combinedIndexCalculator,
+  fetchData,
+  PlayerData,
+  sortByIndex,
+  sortPlayers,
+} from "../../../utils/Suggested";
+import { Skeleton } from "moti/skeleton";
 
 type PositionProps = {
   position: number;
-  players: any[];
+  players: PlayerData[];
 };
-const Player = ({ player }: any) => {
+type Bootstrap = {
+  events: any[];
+  game_settings: any;
+  phases: any[];
+  teams: any[];
+  total_players: number;
+  elements: PlayerData[];
+  element_stats: any[];
+  element_types: any[];
+};
+type PlayerStats = {
+  player: PlayerData;
+};
+const Player = (player: PlayerData) => {
   return (
     <View style={styles.playerContainer}>
       <View style={styles.iconContainer}>
@@ -33,13 +54,13 @@ const Player = ({ player }: any) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            source={jerseys[player.team_id].jerseyImage}
+            source={jerseys[player.team].jerseyImage}
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.textName}>{player.name}</Text>
+          <Text style={styles.textName}>{player.web_name}</Text>
           <Text style={styles.textTeam}>
-            {jerseys[player.team_id].name.toLocaleUpperCase()}
+            {jerseys[player.team].name.toLocaleUpperCase()}
           </Text>
         </View>
       </View>
@@ -47,19 +68,27 @@ const Player = ({ player }: any) => {
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
       <View style={{ width: "8%" }}>
-        <Text>€{player.price}</Text>
+        <Text>{Number(player.selected_by_percent).toFixed(0)}%</Text>
       </View>
       <View
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
       <View style={{ width: "8%" }}>
-        <Text>{player.combined_index}</Text>
+        <Text>{player.combined_index?.toFixed(1)}</Text>
       </View>
     </View>
   );
 };
 
-const Position = ({ position, players }: PositionProps) => {
+const Position = ({
+  position,
+  players,
+  loading,
+}: {
+  position: number;
+  players: PlayerData[] | null;
+  loading: boolean;
+}) => {
   const playerPosition =
     position == 1
       ? "Goalkeepers"
@@ -109,7 +138,7 @@ const Position = ({ position, players }: PositionProps) => {
               fontFamily: "InclusiveSans",
             }}
           >
-            Price
+            Own
           </Text>
           <Text
             style={{
@@ -123,10 +152,12 @@ const Position = ({ position, players }: PositionProps) => {
         </View>
       </View>
       <View>
-        {players.map((player) => {
+        {players?.map((player) => {
           return (
-            <View key={player.id}>
-              <Player player={player} />
+            <View key={player.code}>
+              <Skeleton show={loading} height={100} colorMode="light">
+                <Player {...player} />
+              </Skeleton>
             </View>
           );
         })}
@@ -136,6 +167,51 @@ const Position = ({ position, players }: PositionProps) => {
 };
 
 const Suggestions = () => {
+  const [gk, setGk] = useState<PlayerData[] | null>(null);
+  const [defs, setDef] = useState<PlayerData[] | null>(null);
+  const [mids, setMid] = useState<PlayerData[] | null>(null);
+  const [sts, setSts] = useState<PlayerData[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const getSuggestedPlayers = async (url: string) => {
+    try {
+      setLoading(true);
+      //fetch bootstrap data
+      const players: Bootstrap = await fetchData(url);
+      //sort players into positions
+      const { gks, def, mid, st } = sortPlayers(players.elements);
+      //sort players by index(ict)
+      const sortedGks = sortByIndex(gks);
+      const sortedDefs = sortByIndex(def);
+      const sortedMids = sortByIndex(mid);
+      const sortedSts = sortByIndex(st);
+      //calculate CI for top 3 players
+      const suggestedGks = combinedIndexCalculator(sortedGks);
+      const suggestedDefs = combinedIndexCalculator(sortedDefs);
+      const suggestedMids = combinedIndexCalculator(sortedMids);
+      const suggestedSts = combinedIndexCalculator(sortedSts);
+      //set state
+      setGk(suggestedGks);
+      setDef(suggestedDefs);
+      setMid(suggestedMids);
+      setSts(suggestedSts);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getSuggestedPlayers(
+      "https://fantasy.premierleague.com/api/bootstrap-static/"
+    );
+    // console.log(
+    //   gk && gk[0]?.first_name,
+    //   defs && defs[0]?.first_name,
+    //   mids && mids[0]?.first_name,
+    //   sts && sts[0]?.first_name
+    // );
+  }, []);
+
   return (
     <ScrollView>
       <View style={styles.titleContainer}>
@@ -149,16 +225,16 @@ const Suggestions = () => {
         </Text>
       </View>
       <View>
-        <Position position={1} players={gks} />
+        <Position position={1} players={gk} loading={loading} />
       </View>
       <View>
-        <Position position={2} players={def} />
+        <Position position={2} players={defs} loading={loading} />
       </View>
       <View>
-        <Position position={3} players={mid} />
+        <Position position={3} players={mids} loading={loading} />
       </View>
       <View>
-        <Position position={4} players={strikers} />
+        <Position position={4} players={sts} loading={loading} />
       </View>
     </ScrollView>
   );
