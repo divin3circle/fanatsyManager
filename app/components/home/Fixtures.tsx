@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
     // margin: 10,
     backgroundColor: COLORS["card-light2"],
     marginBottom: 15,
+    minHeight: 150,
   },
   divider: {
     height: 0.2,

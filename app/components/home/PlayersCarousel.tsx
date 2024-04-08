@@ -28,9 +28,6 @@ type PlayerDataProps = {
   difficulty: number;
 };
 const Player = ({ element, points, position }: PlayerProps) => {
-  // console.log(element, "element");
-  // console.log(points, "points");
-  // console.log(position, "position");
   const [playerData, setPlayerData] = React.useState<PlayerDataProps[] | null>(
     null
   );
@@ -44,39 +41,6 @@ const Player = ({ element, points, position }: PlayerProps) => {
   //TODO: Fix loading typo
   const [laodingPlayerData, setLoadingPlayerData] =
     React.useState<boolean>(true);
-  // const fetchTeam = async () => {
-  //   try {
-  //     setLoadingPlayerData(true);
-  //     const response = await fetch(
-  //       `https://fantasy.premierleague.com/api/element-summary/${element}/`
-  //     );
-  //     // console.log("=>", element, points, position);
-  //     const data = await response.json();
-  //     const firstFixture = data.fixtures[0];
-  //     const teamId = firstFixture.is_home
-  //       ? firstFixture.team_h
-  //       : firstFixture.team_a;
-  //     setJersey(teamId);
-  //     // console.log(element, teamId, "=>", points, position);
-  //     setPlayerTeamId(teamId);
-  //     setPlayerData(firstFixture);
-  //     const bootstrap = await fetch(
-  //       "https://fantasy.premierleague.com/api/bootstrap-static/"
-  //     );
-  //     const bootstrapData = await bootstrap.json();
-  //     const players = bootstrapData.elements as any[];
-  //     const player = players.find((player) => player.id === element);
-  //     setForm(player.form);
-  //     setTotalPoints(player.total_points);
-  //     setPrice(player.ict_index);
-  //     setOwn(player.selected_by_percent);
-  //     const playerName = player.first_name + " " + player.second_name;
-  //     setPlayerName(playerName);
-  //     setLoadingPlayerData(false);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   const fetchData = async (url: string) => {
     const response = await fetch(url);
     return await response.json();
@@ -231,26 +195,28 @@ const PlayersCarousel = () => {
   }, [eventId]);
 
   return (
-    <View>
-      <View style={styles.headingTextContainer}>
-        <Text style={styles.headingText}>Players of Week</Text>
-        <Text style={styles.altHeadingText}>Gameweek {eventId}</Text>
+    <Skeleton show={loadingDreamTeam} colorMode="light">
+      <View style={{ minHeight: 150 }}>
+        <View style={styles.headingTextContainer}>
+          <Text style={styles.headingText}>Players of Week</Text>
+          <Text style={styles.altHeadingText}>Gameweek {eventId}</Text>
+        </View>
+        {/* Caurosel - Dream Team  */}
+        <FlatList
+          data={dreamTeam}
+          renderItem={({ item }) => (
+            <Player
+              element={item.element}
+              points={item.points}
+              position={item.position}
+            />
+          )}
+          keyExtractor={(item) => item.element.toString()}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
       </View>
-      {/* Caurosel  */}
-      <FlatList
-        data={dreamTeam}
-        renderItem={({ item }) => (
-          <Player
-            element={item.element}
-            points={item.points}
-            position={item.position}
-          />
-        )}
-        keyExtractor={(item) => item.element.toString()}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+    </Skeleton>
   );
 };
 
