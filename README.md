@@ -6,12 +6,12 @@ Fantasy Assistant is an application that consumes the FPL API, to help FPL manag
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Installation and Setup](#installation-and-setup)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Installation & Set up
+## Installation & Setup
 
 In progress
 
