@@ -57,10 +57,11 @@ const Fantasy = () => {
       setPlayerInformation(data);
     } catch (error) {
       setFplteamId(null);
-      console.error(error);
+      // console.error(error);
       setError("Error fetching data");
     }
   };
+  // !!!!DON'T DELETE THIS CODE!!!!
   // useEffect(() => {
   //   const getFplteamId = async () => {
   //     const storedFplteamId = await AsyncStorage.getItem("fplteamId");

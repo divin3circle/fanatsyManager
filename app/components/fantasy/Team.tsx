@@ -60,7 +60,6 @@ type NoTeamProps = {
 
 export const NoTeam = ({ fplteamId, setFplteamId }: NoTeamProps) => {
   const [teamId, setTeamId] = useState<number | null>(null);
-  const [eventInfo, setEventInfo] = useState<any>(null);
 
   return (
     <View style={styles.container}>

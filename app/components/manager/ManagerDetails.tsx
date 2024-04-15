@@ -12,6 +12,7 @@ import { COLORS } from "../../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Classic, PlayerData } from "../../types/Manager";
 import { fetchData } from "../../../utils/Suggested";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function ManagerHeader({ manager }: { manager: PlayerData | null }) {
   return (
@@ -236,7 +237,7 @@ function Standings({ league }: { league: Classic }) {
   );
 }
 
-function AppCustoms() {
+export function AppCustoms() {
   return (
     <View>
       {/* settings */}
@@ -303,23 +304,40 @@ function AppCustoms() {
   );
 }
 
-const ManagerDetails = () => {
-  const [managerDetails, setManagerDetails] = React.useState<PlayerData | null>(
-    null
-  );
+const ManagerDetails = ({
+  managerDetails,
+  loading,
+}: {
+  managerDetails: PlayerData | null;
+  loading: boolean;
+}) => {
+  // const [managerDetails, setManagerDetails] = React.useState<PlayerData | null>(
+  //   null
+  // );
   // https://fantasy.premierleague.com/api/entry/565066/
 
-  useEffect(() => {
-    const getManager = async () => {
-      const res = await fetch(
-        "https://fantasy.premierleague.com/api/entry/1985425/"
-      );
-      const data = await res.json();
-      setManagerDetails(data);
-    };
-    getManager();
-  }, []);
+  // useEffect(() => {
+  //   const getManager = async () => {
+  //     const res = await fetch(
+  //       "https://fantasy.premierleague.com/api/entry/1985425/"
+  //     );
+  //     const data = await res.json();
+  //     setManagerDetails(data);
+  //   };
+  //   getManager();
+  // }, []);
 
+  if (loading) {
+    return (
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <Text style={{ fontFamily: "InclusiveSans", fontSize: 16 }}>
+          Just a moment...
+        </Text>
+      </SafeAreaView>
+    );
+  }
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* navigation */}
@@ -344,9 +362,6 @@ const ManagerDetails = () => {
       </View>
       <ManagerLeagues manger={managerDetails} />
       {/* <View style={styles.divider}></View> */}
-      <View style={{ marginHorizontal: 15 }}>
-        <AppCustoms />
-      </View>
     </ScrollView>
   );
 };
