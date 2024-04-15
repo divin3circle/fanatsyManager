@@ -1,6 +1,7 @@
 import {
   Button,
   StyleSheet,
+  SafeAreaView,
   Text,
   ScrollView,
   View,
@@ -16,18 +17,25 @@ import Fixtures from "../components/home/Fixtures";
 const Home = () => {
   const { theme, toggleTheme } = useThemeStore();
   return (
-    <ScrollView>
-      <StatusBar barStyle="light-content" />
-      <View style={styles.componentContainer}>
-        <ManagerBanner />
-      </View>
-      <View style={styles.componentContainer}>
-        <PlayersCarousel />
-      </View>
-      <View style={styles.componentContainer}>
-        <Fixtures />
-      </View>
-    </ScrollView>
+    <SafeAreaView
+      style={{
+        backgroundColor: theme === "dark" ? "black" : "white",
+        flex: 1,
+      }}
+    >
+      <ScrollView>
+        <StatusBar barStyle="light-content" />
+        <View style={styles.componentContainer}>
+          <ManagerBanner />
+        </View>
+        <View style={styles.componentContainer}>
+          <PlayersCarousel />
+        </View>
+        <View style={styles.componentContainer}>
+          <Fixtures />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

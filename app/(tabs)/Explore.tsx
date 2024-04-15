@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import React from "react";
 import useThemeStore from "../../utils/store";
@@ -52,67 +53,80 @@ const NewsItem = ({
 }: News) => {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [showContent, setShowContent] = React.useState(false);
+  const { theme, toggleTheme } = useThemeStore();
   const bookmarkNews = () => {
     setIsBookmarked(!isBookmarked);
     return alert(`News ${isBookmarked ? "Removed" : "Bookmarked"}`);
   };
   return (
-    <View style={styles.newsItemConatainer}>
-      {/* Image */}
+    <SafeAreaView
+      style={{
+        backgroundColor: theme === "dark" ? "black" : "white",
+        flex: 1,
+      }}
+    >
+      <View style={styles.newsItemConatainer}>
+        {/* Image */}
 
-      <View style={styles.newsItemImageContainer}>
-        <Skeleton show={showContent} colorMode="light" radius={0} height={150}>
-          <Image
-            source={{
-              uri: imgUrl,
-            }}
-            style={{ width: "100%", height: 150 }}
-          />
-        </Skeleton>
-      </View>
-
-      {/* Core */}
-      <View style={styles.newsItemCoreConatainer}>
-        <View style={{ marginBottom: 5 }}>
-          <Skeleton show={showContent} colorMode="light" radius={10}>
-            <Text style={styles.newsItemTitleText}>{title}</Text>
+        <View style={styles.newsItemImageContainer}>
+          <Skeleton
+            show={showContent}
+            colorMode="light"
+            radius={0}
+            height={150}
+          >
+            <Image
+              source={{
+                uri: imgUrl,
+              }}
+              style={{ width: "100%", height: 150 }}
+            />
           </Skeleton>
         </View>
-        <Skeleton show={showContent} colorMode="light" radius={10}>
-          <Text style={styles.newsItemText}>
-            {description.substring(0, 100)}
-            <Text style={{ color: "blue", fontSize: 12 }}>...Read More</Text>
-          </Text>
+
+        {/* Core */}
+        <View style={styles.newsItemCoreConatainer}>
+          <View style={{ marginBottom: 5 }}>
+            <Skeleton show={showContent} colorMode="light" radius={10}>
+              <Text style={styles.newsItemTitleText}>{title}</Text>
+            </Skeleton>
+          </View>
+          <Skeleton show={showContent} colorMode="light" radius={10}>
+            <Text style={styles.newsItemText}>
+              {description.substring(0, 100)}
+              <Text style={{ color: "blue", fontSize: 12 }}>...Read More</Text>
+            </Text>
+          </Skeleton>
+        </View>
+        {/* Info */}
+        <Skeleton show={showContent} radius={10} colorMode="light">
+          <View style={styles.newsItemInfoContainer}>
+            {/* Logo */}
+            <View style={styles.newsItemInfoLogoConatiner}>
+              <Image
+                source={logo}
+                style={{ width: 30, height: 30, borderRadius: 10 }}
+              />
+              <Text style={styles.newsItemInfoText}>{name}</Text>
+            </View>
+            {/* Text */}
+            <View>
+              <Text style={styles.newsItemInfoText}>
+                {date} : {time}
+              </Text>
+            </View>
+            {/* Save */}
+            <TouchableOpacity onPress={bookmarkNews}>
+              <Ionicons
+                name={isBookmarked ? "bookmark" : "bookmark-outline"}
+                size={20}
+                color="black"
+              />
+            </TouchableOpacity>
+          </View>
         </Skeleton>
       </View>
-      {/* Info */}
-      <Skeleton show={showContent} radius={10} colorMode="light">
-        <View style={styles.newsItemInfoContainer}>
-          {/* Logo */}
-          <View style={styles.newsItemInfoLogoConatiner}>
-            <Image
-              source={logo}
-              style={{ width: 30, height: 30, borderRadius: 10 }}
-            />
-            <Text style={styles.newsItemInfoText}>{name}</Text>
-          </View>
-          {/* Text */}
-          <View>
-            <Text style={styles.newsItemInfoText}>
-              {date} : {time}
-            </Text>
-          </View>
-          {/* Save */}
-          <TouchableOpacity onPress={bookmarkNews}>
-            <Ionicons
-              name={isBookmarked ? "bookmark" : "bookmark-outline"}
-              size={20}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
-      </Skeleton>
-    </View>
+    </SafeAreaView>
   );
 };
 

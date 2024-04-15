@@ -12,8 +12,9 @@ const Layout = () => {
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary,
         tabBarStyle: {
-          marginHorizontal: 12,
-          borderRadius: 20,
+          marginHorizontal: 5,
+          borderTopEndRadius: 10,
+          borderTopStartRadius: 10,
           backgroundColor: COLORS["card-light"],
           shadowColor: "black",
           shadowOffset: {
@@ -46,6 +47,7 @@ const Layout = () => {
             backgroundColor: theme === "dark" ? COLORS["app-dark"] : "white",
           },
           headerTintColor: theme === "dark" ? "white" : "black",
+          headerShown: false,
         }}
       />
       <Tabs.Screen
@@ -58,6 +60,7 @@ const Layout = () => {
             backgroundColor: theme === "dark" ? COLORS["app-dark"] : "white",
           },
           headerTintColor: theme === "dark" ? "white" : "black",
+          headerShown: true,
         }}
       />
       <Tabs.Screen
@@ -70,6 +73,7 @@ const Layout = () => {
             backgroundColor: theme === "dark" ? COLORS["app-dark"] : "white",
           },
           headerTintColor: theme === "dark" ? "white" : "black",
+          headerShown: false,
         }}
       />
       <Tabs.Screen
@@ -82,6 +86,7 @@ const Layout = () => {
             backgroundColor: theme === "dark" ? COLORS["app-dark"] : "white",
           },
           headerTintColor: theme === "dark" ? "white" : "black",
+          headerShown: false,
         }}
       />
     </Tabs>

@@ -9,4 +9,5 @@ export const COLORS = {
   "card-dark2": "#424769",
   "text-dark": "#f0eeee",
   "primary-Text": "#fff",
+  "drop-rank": "red",
 };

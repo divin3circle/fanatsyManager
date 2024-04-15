@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, StatusBar, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import useThemeStore from "../../utils/store";
 import Team, { NoTeam } from "../components/fantasy/Team";
@@ -70,7 +77,12 @@ const Fantasy = () => {
   }, [fplteamId]);
   return (
     <ScrollView>
-      <View>
+      <SafeAreaView
+        style={{
+          backgroundColor: theme === "dark" ? "black" : "white",
+          flex: 1,
+        }}
+      >
         <StatusBar
           barStyle={theme === "dark" ? "light-content" : "dark-content"}
         />
@@ -91,7 +103,7 @@ const Fantasy = () => {
         <View style={styles.componentContainer}>
           <Suggestions gameWeek={playerInformation?.current_event} />
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };
