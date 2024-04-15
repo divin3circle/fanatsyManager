@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import useThemeStore from "../../utils/store";
 import Team, { NoTeam } from "../components/fantasy/Team";
 import Suggestions from "../components/fantasy/Suggestions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type PlayerInformation = {
   id: number;
@@ -32,7 +33,10 @@ export type PlayerInformation = {
 };
 const Fantasy = () => {
   const { theme, toggleTheme } = useThemeStore();
-  const [fplteamId, setFplteamId] = useState<number | null>(1985425);
+  const [fplteamId, setFplteamId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // 1985425 ==> fpl id
   const [playerInformation, setPlayerInformation] =
     useState<PlayerInformation | null>(null);
   const fetchPlayerInformation = async (id: number | null) => {
@@ -41,15 +45,29 @@ const Fantasy = () => {
       const res = await fetch(
         `https://fantasy.premierleague.com/api/entry/${id}/`
       );
+      if (!res.ok) throw new Error("Error fetching data");
       const data = await res.json();
       setPlayerInformation(data);
     } catch (error) {
+      setFplteamId(null);
       console.error(error);
+      setError("Error fetching data");
     }
   };
+  // useEffect(() => {
+  //   const getFplteamId = async () => {
+  //     const storedFplteamId = await AsyncStorage.getItem("fplteamId");
+  //     setFplteamId(storedFplteamId ? parseInt(storedFplteamId) : null);
+  //   };
+
+  //   getFplteamId();
+  // }, []);
+
   useEffect(() => {
+    if (fplteamId === null) return;
     fetchPlayerInformation(fplteamId);
-  }, []);
+    AsyncStorage.setItem("fplteamId", fplteamId!.toString());
+  }, [fplteamId]);
   return (
     <ScrollView>
       <View>
@@ -57,14 +75,21 @@ const Fantasy = () => {
           barStyle={theme === "dark" ? "light-content" : "dark-content"}
         />
         <View style={styles.componentContainer}>
-          {fplteamId === null ? (
-            <NoTeam />
+          {error ? (
+            <>
+              <Text>{error}</Text>
+              <NoTeam setFplteamId={setFplteamId} fplteamId={fplteamId} />
+            </>
+          ) : fplteamId === null ? (
+            <>
+              <NoTeam setFplteamId={setFplteamId} fplteamId={fplteamId} />
+            </>
           ) : (
             <Team playerInformation={playerInformation} />
           )}
         </View>
         <View style={styles.componentContainer}>
-          <Suggestions />
+          <Suggestions gameWeek={playerInformation?.current_event} />
         </View>
       </View>
     </ScrollView>

@@ -4,6 +4,8 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  Touchable,
+  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -51,7 +53,12 @@ type GameWeek = {
   most_vice_captained: number;
 };
 
-export const NoTeam = () => {
+type NoTeamProps = {
+  fplteamId: number | null;
+  setFplteamId: React.Dispatch<React.SetStateAction<number | null>>;
+};
+
+export const NoTeam = ({ fplteamId, setFplteamId }: NoTeamProps) => {
   const [teamId, setTeamId] = useState<number | null>(null);
   const [eventInfo, setEventInfo] = useState<any>(null);
 
@@ -91,7 +98,23 @@ export const NoTeam = () => {
           }}
           placeholder="Enter team ID"
           keyboardType="numeric"
+          value={teamId ? teamId.toString() : ""}
+          onChangeText={(text) => setTeamId(parseInt(text))}
         />
+        <TouchableOpacity
+          style={{
+            backgroundColor: COLORS.primary,
+            padding: 10,
+            borderRadius: 10,
+            marginTop: 10,
+          }}
+          onPress={() => setFplteamId(teamId)}
+          disabled={teamId === null ? true : teamId!.toString().length < 7}
+        >
+          <Text style={{ color: "white", fontFamily: "InclusiveSans" }}>
+            Submit
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -137,7 +160,6 @@ const Team = ({
   useEffect(() => {
     if (currentEvent) {
       fetchEventInfo(currentEvent);
-      console.log(eventInfo?.average_entry_score, eventInfo?.highest_score);
     }
   }, [currentEvent]);
 

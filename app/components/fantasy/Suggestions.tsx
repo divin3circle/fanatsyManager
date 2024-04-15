@@ -5,6 +5,7 @@ import { def, gks, jerseys, mid, strikers } from "../../../utils/Data";
 import { Ionicons } from "@expo/vector-icons";
 import {
   combinedIndexCalculator,
+  combinedIndexCalculatorGks,
   fetchData,
   PlayerData,
   sortByIndex,
@@ -174,7 +175,7 @@ const Position = ({
   );
 };
 
-const Suggestions = () => {
+const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
   const [gk, setGk] = useState<PlayerData[] | null>(null);
   const [defs, setDef] = useState<PlayerData[] | null>(null);
   const [mids, setMid] = useState<PlayerData[] | null>(null);
@@ -194,8 +195,8 @@ const Suggestions = () => {
       const sortedMids = sortByIndex(mid);
       const sortedSts = sortByIndex(st);
       //calculate CI for top 3 players
-      const suggestedGks = combinedIndexCalculator(sortedGks);
-      const suggestedDefs = combinedIndexCalculator(sortedDefs);
+      const suggestedGks = combinedIndexCalculatorGks(sortedGks);
+      const suggestedDefs = combinedIndexCalculatorGks(sortedDefs);
       const suggestedMids = combinedIndexCalculator(sortedMids);
       const suggestedSts = combinedIndexCalculator(sortedSts);
       //set state
@@ -212,11 +213,6 @@ const Suggestions = () => {
     getSuggestedPlayers(
       "https://fantasy.premierleague.com/api/bootstrap-static/"
     );
-    // console.log(
-    //   gk && gk[0]?.first_name,
-    //   defs && defs[0]?.first_name,
-    //   mids && mids[0]?.first_name,
-    //   sts && sts[0]?.first_name
     // );
   }, []);
 
@@ -229,7 +225,7 @@ const Suggestions = () => {
         <Text
           style={{ fontFamily: "InclusiveSans", fontSize: 17, color: "gray" }}
         >
-          Gameweek 34
+          Gameweek {++gameWeek!}
         </Text>
       </View>
       <View>

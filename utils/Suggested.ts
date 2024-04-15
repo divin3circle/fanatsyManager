@@ -156,14 +156,86 @@ const combinedIndexCalculator = (players: PlayerData[]) => {
   //sort by combined index
   return suggestedPlayers.sort((a, b) => b.combined_index! - a.combined_index!);
 };
+const combinedIndexCalculatorGks = (players: PlayerData[]) => {
+  //pick top 3 players
+  const suggestedPlayers = players.slice(0, 3);
+  //calculate combined index
+  suggestedPlayers.forEach((player) => {
+    const normalizedICT = normalizeField(300, parseFloat(player.ict_index));
+    const normalizedForm = normalizeField(15, parseFloat(player.form));
+    const normalizedOwnership = normalizeField(
+      100,
+      parseFloat(player.selected_by_percent)
+    );
+    const normalizedValue = normalizeField(2, parseFloat(player.value_season));
+    const normalizedXGC = normalizeField(
+      3,
+      parseFloat(player.expected_goals_conceded_per_90.toString())
+    );
+    const normalizedXCS = normalizeField(
+      1,
+      parseFloat(player.clean_sheets_per_90.toString())
+    );
+    const combinedIndex =
+      normalizedICT +
+      normalizedForm +
+      normalizedOwnership +
+      normalizedValue -
+      normalizedXGC -
+      normalizedXCS;
+    player["combined_index"] = combinedIndex;
+  });
+  //sort by combined index
+  return suggestedPlayers.sort((a, b) => b.combined_index! - a.combined_index!);
+};
 
 //rank by combined index
 // const rankByIndex = (players: PlayerData[]) => {};
+
+const combinedIndexCalculatorForCaptainPicks = (players: PlayerData[]) => {
+  //pick top 3 contenders
+  const suggestedPlayers = players.slice(0, 3);
+  //calculate combined index for captain picks
+  suggestedPlayers.forEach((player) => {
+    const normalizedICT = normalizeField(300, parseFloat(player.ict_index));
+    const normalizedForm = normalizeField(15, parseFloat(player.form));
+    const normalizedOwnership = normalizeField(
+      100,
+      parseFloat(player.selected_by_percent)
+    );
+    const normalizedValue = normalizeField(2, parseFloat(player.value_season));
+    const normalizedXGI = normalizeField(
+      10,
+      parseFloat(player.expected_goal_involvements)
+    );
+    const normalizedXG90 = normalizeField(2, player.expected_goals_per_90);
+    const normalizedXA90 = normalizeField(2, player.expected_assists_per_90);
+    const normalizedAvailability = normalizeField(
+      100,
+      player.chance_of_playing_this_round ?? 0
+    );
+    const normalizedBPS = normalizeField(30, player.bonus);
+    const combinedIndex =
+      normalizedICT +
+      normalizedForm +
+      normalizedOwnership +
+      normalizedValue +
+      normalizedXGI +
+      normalizedXG90 +
+      normalizedXA90 +
+      normalizedAvailability +
+      normalizedBPS;
+
+    player["combined_index"] = combinedIndex;
+  });
+};
 
 export {
   fetchData,
   sortPlayers,
   sortByIndex,
   combinedIndexCalculator,
+  combinedIndexCalculatorForCaptainPicks,
+  combinedIndexCalculatorGks,
   PlayerData,
 };
