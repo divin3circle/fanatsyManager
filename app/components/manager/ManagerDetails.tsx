@@ -111,7 +111,7 @@ function ManagerLeagues() {
 
 function Standings() {
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row", marginVertical: 5 }}>
       <View
         style={{
           width: "30%",
@@ -138,9 +138,76 @@ function Standings() {
   );
 }
 
+function AppCustoms() {
+  return (
+    <View>
+      {/* settings */}
+      <Pressable style={styles.appItem}>
+        <Ionicons
+          name="settings-outline"
+          size={30}
+          color="black"
+          style={{ width: "10%" }}
+        />
+        <Text
+          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+        >
+          Settings
+        </Text>
+        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+      </Pressable>
+      {/* refer */}
+      <Pressable style={styles.appItem}>
+        <Ionicons
+          name="share-social-outline"
+          size={30}
+          color="black"
+          style={{ width: "10%" }}
+        />
+        <Text
+          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+        >
+          Share App
+        </Text>
+        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+      </Pressable>
+      {/* about */}
+      <Pressable style={styles.appItem}>
+        <Ionicons
+          name="information-circle-outline"
+          size={30}
+          color="black"
+          style={{ width: "10%" }}
+        />
+        <Text
+          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+        >
+          About
+        </Text>
+        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+      </Pressable>
+      {/* sponsor */}
+      <Pressable style={styles.appItem}>
+        <Ionicons
+          name="help-outline"
+          size={30}
+          color="black"
+          style={{ width: "10%" }}
+        />
+        <Text
+          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+        >
+          Support
+        </Text>
+        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+      </Pressable>
+    </View>
+  );
+}
+
 const ManagerDetails = () => {
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       {/* navigation */}
       <View
         style={{
@@ -162,7 +229,10 @@ const ManagerDetails = () => {
         <ManagerInformation />
       </View>
       <ManagerLeagues />
-      <View style={{ marginHorizontal: 15 }}></View>
+      {/* <View style={styles.divider}></View> */}
+      <View style={{ marginHorizontal: 15 }}>
+        <AppCustoms />
+      </View>
     </ScrollView>
   );
 };
@@ -242,6 +312,7 @@ const styles = StyleSheet.create({
   managerLeagues: {
     marginHorizontal: 15,
     marginTop: 20,
+    marginBottom: 20,
   },
   filter: {
     flexDirection: "row",
@@ -269,5 +340,10 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     backgroundColor: "gray",
     marginVertical: 12,
+  },
+  appItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
   },
 });

@@ -27,4 +27,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
+  divider: {
+    width: "100%",
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: "gray",
+    marginVertical: 12,
+  },
 });

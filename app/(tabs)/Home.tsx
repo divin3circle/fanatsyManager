@@ -23,7 +23,7 @@ const Home = () => {
         flex: 1,
       }}
     >
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <StatusBar barStyle="light-content" />
         <View style={styles.componentContainer}>
           <ManagerBanner />

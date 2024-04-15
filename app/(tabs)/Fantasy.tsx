@@ -76,7 +76,7 @@ const Fantasy = () => {
     AsyncStorage.setItem("fplteamId", fplteamId!.toString());
   }, [fplteamId]);
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView
         style={{
           backgroundColor: theme === "dark" ? "black" : "white",
