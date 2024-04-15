@@ -93,3 +93,5 @@ type PlayerData = {
   last_deadline_value: number;
   last_deadline_total_transfers: number;
 };
+
+export type { PlayerData, Classic, League, Cup, CupMatch };

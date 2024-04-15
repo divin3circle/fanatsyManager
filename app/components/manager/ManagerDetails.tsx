@@ -6,25 +6,32 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { teams } from "../../../utils/Data";
 import { COLORS } from "../../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { Classic, PlayerData } from "../../types/Manager";
+import { fetchData } from "../../../utils/Suggested";
 
-function ManagerHeader() {
+function ManagerHeader({ manager }: { manager: PlayerData | null }) {
   return (
     <View style={styles.managerHeader}>
       {/* manager club */}
       <View style={styles.managerClub}>
-        <Image source={teams[4].logo} style={{ width: 150, height: 150 }} />
+        <Image
+          source={teams[manager?.favourite_team! - 1]?.logo}
+          style={{ width: 150, height: 150 }}
+        />
       </View>
       {/* manager name */}
       <View>
-        <Text style={styles.managerName}>Manager Name</Text>
+        <Text style={styles.managerName}>
+          {manager?.player_first_name + " " + manager?.player_last_name}
+        </Text>
       </View>
       {/* manager region */}
       <View>
-        <Text style={styles.managerRegion}>Manager Region:</Text>
+        <Text style={styles.managerRegion}>{manager?.player_region_name}</Text>
       </View>
       <View style={styles.premiumContainer}>
         <Pressable style={styles.premiumButton}>
@@ -41,39 +48,83 @@ function ManagerHeader() {
     </View>
   );
 }
-function ManagerInformation() {
+function ManagerInformation({ manager }: { manager: PlayerData | null }) {
   return (
     <View style={styles.informationContainer}>
       {/* overall points */}
       <View style={styles.information}>
         <Text style={styles.infoText}>Overall Points</Text>
-        <Text style={styles.statsText}>999</Text>
+        <Text style={styles.statsText}>
+          {manager?.summary_overall_points ?? 0}
+        </Text>
       </View>
       {/* overall rank */}
       <View style={styles.information}>
         <Text style={styles.infoText}>Overall Rank</Text>
-        <Text style={styles.statsText}>99,999,999</Text>
+        <Text style={styles.statsText}>
+          {manager?.summary_overall_rank.toLocaleString() ?? 0}
+        </Text>
       </View>
       {/* team value */}
       <View style={styles.information}>
         <Text style={styles.infoText}>Team Value</Text>
-        <Text style={styles.statsText}>$999.9</Text>
+        <Text style={styles.statsText}>
+          ${manager?.last_deadline_value! / 10}
+        </Text>
       </View>
     </View>
   );
 }
-function ManagerLeagues() {
+
+type League = "classic" | "h2h" | "cups";
+
+function ManagerLeagues({ manger }: { manger: PlayerData | null }) {
+  const [leaguesShown, setLeaguesShown] = React.useState<League>("classic");
+
+  const toggleLeagues = (leagueType: string) => {
+    switch (leagueType) {
+      case "classic":
+        setLeaguesShown("classic");
+        break;
+      case "h2h":
+        setLeaguesShown("h2h");
+        break;
+      case "cups":
+        setLeaguesShown("cups");
+        break;
+    }
+  };
   return (
     <View style={styles.managerLeagues}>
       {/* filter */}
       <View style={styles.filter}>
-        <Pressable style={[styles.leagues, { backgroundColor: "white" }]}>
+        <Pressable
+          style={[
+            styles.leagues,
+            {
+              backgroundColor: leaguesShown === "classic" ? "white" : undefined,
+            },
+          ]}
+          onPress={() => toggleLeagues("classic")}
+        >
           <Text style={styles.leagueText}>Classic Leagues</Text>
         </Pressable>
-        <Pressable style={[styles.leagues, { backgroundColor: undefined }]}>
+        <Pressable
+          style={[
+            styles.leagues,
+            { backgroundColor: leaguesShown === "h2h" ? "white" : undefined },
+          ]}
+          onPress={() => toggleLeagues("h2h")}
+        >
           <Text style={styles.leagueText}>H2H Leagues</Text>
         </Pressable>
-        <Pressable style={[styles.leagues, { backgroundColor: undefined }]}>
+        <Pressable
+          style={[
+            styles.leagues,
+            { backgroundColor: leaguesShown === "cups" ? "white" : undefined },
+          ]}
+          onPress={() => toggleLeagues("cups")}
+        >
           <Text style={styles.leagueText}>Cups</Text>
         </Pressable>
       </View>
@@ -95,21 +146,62 @@ function ManagerLeagues() {
         </Text>
       </View>
       <View style={styles.divider}></View>
-      <Standings />
-      <View style={styles.divider}></View>
-      <Standings />
-      <View style={styles.divider}></View>
-      <Standings />
-      <View style={styles.divider}></View>
-      <Standings />
-      <View style={styles.divider}></View>
-      <Standings />
-      <View style={styles.divider}></View>
+      {leaguesShown === "classic" &&
+        manger?.leagues.classic.slice(0, 5).map((league) => {
+          return (
+            <View key={league.id}>
+              <Standings league={league} />
+              <View style={styles.divider}></View>
+            </View>
+          );
+        })}
+      {leaguesShown === "h2h" && (
+        <Pressable
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 20,
+          }}
+        >
+          <Ionicons name="lock-closed-outline" size={17} color="gray" />
+          <Text style={{ fontFamily: "InclusiveSans", color: "gray" }}>
+            Subscribe to Pro Manager to unlock
+          </Text>
+        </Pressable>
+      )}
+      {leaguesShown === "cups" && (
+        <Pressable
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 20,
+          }}
+        >
+          <Ionicons name="lock-closed-outline" size={17} color="gray" />
+          <Text style={{ fontFamily: "InclusiveSans", color: "gray" }}>
+            Subscribe to Pro Manager to unlock
+          </Text>
+        </Pressable>
+      )}
+      {leaguesShown === "classic" && (
+        <Text
+          style={{
+            color: "gray",
+            fontFamily: "InclusiveSans",
+            textAlign: "center",
+            marginVertical: 10,
+          }}
+        >
+          View All
+        </Text>
+      )}
     </View>
   );
 }
 
-function Standings() {
+function Standings({ league }: { league: Classic }) {
   return (
     <View style={{ flexDirection: "row", marginVertical: 5 }}>
       <View
@@ -122,16 +214,22 @@ function Standings() {
         }}
       >
         <Ionicons
-          name={21 > 4 ? "caret-up-outline" : "caret-down-outline"}
+          name={
+            league.entry_last_rank > league.entry_rank
+              ? "caret-up-outline"
+              : league.entry_last_rank < league.entry_rank
+              ? "caret-down-outline"
+              : "remove-outline"
+          }
           size={14}
           color={COLORS["drop-rank"]}
         />
         <Text style={{ fontFamily: "InclusiveSans", fontSize: 14 }}>
-          99,999,999
+          {league.entry_rank.toLocaleString()}
         </Text>
       </View>
       <Text style={{ width: "65%", fontFamily: "InclusiveSans", fontSize: 14 }}>
-        Manager League Name
+        {league.name}
       </Text>
       <Ionicons name="arrow-forward-outline" size={24} color="black" />
     </View>
@@ -206,6 +304,22 @@ function AppCustoms() {
 }
 
 const ManagerDetails = () => {
+  const [managerDetails, setManagerDetails] = React.useState<PlayerData | null>(
+    null
+  );
+  // https://fantasy.premierleague.com/api/entry/565066/
+
+  useEffect(() => {
+    const getManager = async () => {
+      const res = await fetch(
+        "https://fantasy.premierleague.com/api/entry/1985425/"
+      );
+      const data = await res.json();
+      setManagerDetails(data);
+    };
+    getManager();
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* navigation */}
@@ -224,11 +338,11 @@ const ManagerDetails = () => {
           <Ionicons name="log-out-outline" size={30} color="black" />
         </View>
       </View>
-      <ManagerHeader />
+      <ManagerHeader manager={managerDetails} />
       <View style={{ marginHorizontal: 15 }}>
-        <ManagerInformation />
+        <ManagerInformation manager={managerDetails} />
       </View>
-      <ManagerLeagues />
+      <ManagerLeagues manger={managerDetails} />
       {/* <View style={styles.divider}></View> */}
       <View style={{ marginHorizontal: 15 }}>
         <AppCustoms />
