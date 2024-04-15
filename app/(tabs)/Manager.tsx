@@ -10,7 +10,6 @@ import useThemeStore from "../../utils/store";
 import ManagerDetails, {
   AppCustoms,
 } from "../components/manager/ManagerDetails";
-import { COLORS } from "../../utils/Colors";
 import NoManager from "../components/manager/NoManager";
 import { PlayerData } from "../types/Manager";
 import AsyncStorage from "@react-native-async-storage/async-storage";

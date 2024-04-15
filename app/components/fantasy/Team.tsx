@@ -108,7 +108,7 @@ export const NoTeam = ({ fplteamId, setFplteamId }: NoTeamProps) => {
             marginTop: 10,
           }}
           onPress={() => setFplteamId(teamId)}
-          disabled={teamId === null ? true : teamId!.toString().length < 7}
+          disabled={teamId === null ? true : teamId!.toString().length < 3}
         >
           <Text style={{ color: "white", fontFamily: "InclusiveSans" }}>
             Submit
