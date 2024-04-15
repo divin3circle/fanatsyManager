@@ -87,7 +87,7 @@ const Position = ({
   players,
   loading,
 }: {
-  position: number;
+  position?: number;
   players: PlayerData[] | null;
   loading: boolean;
 }) => {
@@ -98,7 +98,9 @@ const Position = ({
       ? "Defenders"
       : position == 3
       ? "Midfielders"
-      : "Forwards";
+      : position === 4
+      ? "Forwards"
+      : "Captains";
   return (
     <Animated.View
       entering={FadeInDown.delay(100).duration(1000)}
@@ -180,6 +182,7 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
   const [defs, setDef] = useState<PlayerData[] | null>(null);
   const [mids, setMid] = useState<PlayerData[] | null>(null);
   const [sts, setSts] = useState<PlayerData[] | null>(null);
+  const [captains, setCaptains] = useState<PlayerData[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const getSuggestedPlayers = async (url: string) => {
@@ -194,16 +197,20 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
       const sortedDefs = sortByIndex(def);
       const sortedMids = sortByIndex(mid);
       const sortedSts = sortByIndex(st);
+      //sort captains by ict
+      const sortedCaptains = sortByIndex(players.elements);
       //calculate CI for top 3 players
       const suggestedGks = combinedIndexCalculatorGks(sortedGks);
       const suggestedDefs = combinedIndexCalculatorGks(sortedDefs);
       const suggestedMids = combinedIndexCalculator(sortedMids);
       const suggestedSts = combinedIndexCalculator(sortedSts);
+      const suggestedCaptains = combinedIndexCalculator(sortedCaptains);
       //set state
       setGk(suggestedGks);
       setDef(suggestedDefs);
       setMid(suggestedMids);
       setSts(suggestedSts);
+      setCaptains(suggestedCaptains);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -239,6 +246,19 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
       </View>
       <View>
         <Position position={4} players={sts} loading={loading} />
+      </View>
+      <View style={styles.titleContainer}>
+        <Text style={{ fontFamily: "InclusiveSans", fontSize: 20 }}>
+          Captain Picks
+        </Text>
+        <Text
+          style={{ fontFamily: "InclusiveSans", fontSize: 17, color: "gray" }}
+        >
+          Gameweek {++gameWeek!}
+        </Text>
+      </View>
+      <View>
+        <Position players={captains} loading={loading} />
       </View>
     </ScrollView>
   );

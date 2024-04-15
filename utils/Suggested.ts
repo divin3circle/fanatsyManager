@@ -145,12 +145,17 @@ const combinedIndexCalculator = (players: PlayerData[]) => {
       10,
       parseFloat(player.expected_goal_involvements)
     );
+    const normalizedAvailability = normalizeField(
+      100,
+      player.chance_of_playing_this_round ?? 0
+    );
     const combinedIndex =
       normalizedICT +
       normalizedForm +
       normalizedOwnership +
       normalizedValue +
-      normalizedXGI;
+      normalizedXGI +
+      normalizedAvailability;
     player["combined_index"] = combinedIndex;
   });
   //sort by combined index
@@ -176,13 +181,18 @@ const combinedIndexCalculatorGks = (players: PlayerData[]) => {
       1,
       parseFloat(player.clean_sheets_per_90.toString())
     );
+    const normalizedAvailability = normalizeField(
+      100,
+      player.chance_of_playing_this_round ?? 0
+    );
     const combinedIndex =
       normalizedICT +
       normalizedForm +
       normalizedOwnership +
       normalizedValue -
       normalizedXGC -
-      normalizedXCS;
+      normalizedXCS +
+      normalizedAvailability;
     player["combined_index"] = combinedIndex;
   });
   //sort by combined index
