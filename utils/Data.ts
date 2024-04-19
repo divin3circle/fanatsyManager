@@ -415,6 +415,13 @@ export const carouselData = [
       "To get your FPL Team ID, login to your FPL account and go to the 'My Team' page. Your Team ID is the number at the end of the URL.",
   },
   {
+    id: 6,
+    image: require("../assests/images/players/ars.jpeg"),
+    title: "Captaincy Picks",
+    description:
+      "Captaincy Picks is a feature that helps you choose the best captain for your FPL team based on the player's form, fixtures and other factors. The app uses further 5 indicators such availability, form, XGI, XG and XA to determine the best captaincy pick.",
+  },
+  {
     id: 3,
     image: require("../assests/images/players/mci.jpeg"),
     title: "Get your Manager ID",
@@ -434,12 +441,5 @@ export const carouselData = [
     title: "About Pro-Manager",
     description:
       "With less than a dollar a month you can enjoy premium features of the app such as detailed cup & league stats, player stats, ad-free experience and more.",
-  },
-  {
-    id: 6,
-    image: require("../assests/images/players/ars.jpeg"),
-    title: "Captaincy Picks",
-    description:
-      "Captaincy Picks is a feature that helps you choose the best captain for your FPL team based on the player's form, fixtures and other factors. The app uses further 5 indicators such availability, form, XGI, XG and XA to determine the best captaincy pick.",
   },
 ];

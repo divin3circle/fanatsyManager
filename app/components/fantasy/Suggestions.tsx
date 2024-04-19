@@ -232,7 +232,7 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
         <Text
           style={{ fontFamily: "InclusiveSans", fontSize: 17, color: "gray" }}
         >
-          Gameweek {++gameWeek!}
+          Gameweek {gameWeek ? ++gameWeek : ""}
         </Text>
       </View>
       <View>

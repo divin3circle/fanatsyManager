@@ -120,11 +120,12 @@ const Settings = () => {
       </View>
       <Pressable
         style={{
-          backgroundColor: "#f00",
+          backgroundColor: "#ff67f7",
           padding: 10,
           margin: 10,
           marginVertical: 20,
           borderRadius: 10,
+          paddingHorizontal: 20,
           alignItems: "center",
         }}
       >
