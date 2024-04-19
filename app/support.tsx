@@ -45,7 +45,7 @@ function CarouselItem({ id, title, description, image }: CarouselItemProps) {
           right: 0,
           bottom: 0,
           backgroundColor: "black",
-          opacity: 0.5,
+          opacity: 0.7,
           width: "100%",
           height: "100%",
           borderRadius: 10,
@@ -57,7 +57,6 @@ function CarouselItem({ id, title, description, image }: CarouselItemProps) {
         <View
           style={{
             padding: 10,
-            zIndex: 10,
           }}
         >
           <Text
@@ -65,7 +64,6 @@ function CarouselItem({ id, title, description, image }: CarouselItemProps) {
               color: "white",
               fontFamily: "InclusiveSans",
               fontSize: 18,
-              zIndex: 10,
             }}
           >
             {title}

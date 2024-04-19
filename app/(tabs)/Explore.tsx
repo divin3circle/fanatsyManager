@@ -31,7 +31,16 @@ type News = {
   date: string;
   time: string;
 };
-
+type NewsItemType = {
+  imageUrl: string;
+  title: string;
+  gmtTime: string;
+  sourceStr: string;
+  sourceIconUrl: string;
+  page: {
+    url: string;
+  };
+};
 const TeamFilter = ({ id, name, logo }: Team) => {
   return (
     <TouchableOpacity>
@@ -43,14 +52,14 @@ const TeamFilter = ({ id, name, logo }: Team) => {
 };
 
 const NewsItem = ({
-  name,
   title,
-  logo,
   imgUrl,
-  description,
   date,
-  time,
-}: News) => {
+}: {
+  title: string;
+  imgUrl: any;
+  date: string;
+}) => {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [showContent, setShowContent] = React.useState(false);
   const { theme, toggleTheme } = useThemeStore();
@@ -65,7 +74,7 @@ const NewsItem = ({
         flex: 1,
       }}
     >
-      <View style={styles.newsItemConatainer}>
+      <View style={styles.newsItemConatiner}>
         {/* Image */}
 
         <View style={styles.newsItemImageContainer}>
@@ -79,24 +88,24 @@ const NewsItem = ({
               source={{
                 uri: imgUrl,
               }}
-              style={{ width: "100%", height: 150 }}
+              style={{ width: "100%", height: 170 }}
             />
           </Skeleton>
         </View>
 
         {/* Core */}
-        <View style={styles.newsItemCoreConatainer}>
+        <View style={styles.newsItemCoreConatiner}>
           <View style={{ marginBottom: 5 }}>
             <Skeleton show={showContent} colorMode="light" radius={10}>
               <Text style={styles.newsItemTitleText}>{title}</Text>
             </Skeleton>
           </View>
-          <Skeleton show={showContent} colorMode="light" radius={10}>
+          {/* <Skeleton show={showContent} colorMode="light" radius={10}>
             <Text style={styles.newsItemText}>
               {description.substring(0, 100)}
               <Text style={{ color: "blue", fontSize: 12 }}>...Read More</Text>
             </Text>
-          </Skeleton>
+          </Skeleton> */}
         </View>
         {/* Info */}
         <Skeleton show={showContent} radius={10} colorMode="light">
@@ -104,15 +113,15 @@ const NewsItem = ({
             {/* Logo */}
             <View style={styles.newsItemInfoLogoConatiner}>
               <Image
-                source={logo}
+                source={require("../../assests/images/icons/prem.png")}
                 style={{ width: 30, height: 30, borderRadius: 10 }}
               />
-              <Text style={styles.newsItemInfoText}>{name}</Text>
+              {/* <Text style={styles.newsItemInfoText}></Text> */}
             </View>
             {/* Text */}
             <View>
               <Text style={styles.newsItemInfoText}>
-                {date} : {time}
+                {date.substring(0, 10)}
               </Text>
             </View>
             {/* Save */}
@@ -132,19 +141,15 @@ const NewsItem = ({
 
 const Explore = () => {
   const { theme, toggleTheme } = useThemeStore();
-  const [fetchedNews, setFetchedNews] = React.useState([]);
-  const url =
-    "https://football-news-aggregator-live.p.rapidapi.com/news/fourfourtwo/epl";
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "d5bc29aec0msh2f3f9cf6402fd71p131be5jsnfbb7388e8690",
-      "X-RapidAPI-Host": "football-news-aggregator-live.p.rapidapi.com",
-    },
-  };
+  const [fetchedNews, setFetchedNews] = React.useState<NewsItemType[] | null>(
+    null
+  );
   const fetchNews = async () => {
     try {
-      const response = await fetch(url, options);
+      // https://www.fotmob.com/api/worldnews?lang=en-GB&page=1
+      const response = await fetch(
+        "https://www.fotmob.com/api/worldnews?lang=en-GB&page=1"
+      );
       const result = await response.json();
       setFetchedNews(result);
     } catch (error) {
@@ -182,33 +187,29 @@ const Explore = () => {
         />
       </View>
       <View style={styles.newsCategoryContainer}>
-        <TouchableOpacity style={styles.catergoryContainer}>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Text style={styles.newsCategoryText}>Latest</Text>
           <Ionicons name="newspaper-outline" size={20} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.catergoryContainer}>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Text style={styles.newsCategoryText}>Trending</Text>
           <Ionicons name="camera-outline" size={20} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.catergoryContainer}>
+        <TouchableOpacity style={styles.categoryContainer}>
           <Text style={styles.newsCategoryText}>Fantasy</Text>
           <Ionicons name="flame-outline" size={20} color="black" />
         </TouchableOpacity>
       </View>
       {/* News */}
       <ScrollView>
-        <View style={styles.newsConatainer}>
-          {news.map((item) => {
+        <View style={styles.newsConatiner}>
+          {fetchedNews?.map((item) => {
             return (
               <NewsItem
-                key={item.id}
-                name={item.name}
+                key={item.title}
                 title={item.title}
-                logo={item.logo}
-                imgUrl={item.imgUrl}
-                description={item.description}
-                date={item.date}
-                time={item.time}
+                imgUrl={item.imageUrl}
+                date={item.gmtTime}
               />
             );
           })}
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 10,
   },
-  catergoryContainer: {
+  categoryContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -262,12 +263,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: "InclusiveSans",
   },
-  newsConatainer: {
+  newsConatiner: {
     justifyContent: "space-between",
     marginHorizontal: 20,
     marginVertical: 1,
   },
-  newsItemConatainer: {
+  newsItemConatiner: {
     marginVertical: 10,
     backgroundColor: "#fff7f1",
     padding: 10,
@@ -285,7 +286,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: "100%",
   },
-  newsItemCoreConatainer: {
+  newsItemCoreConatiner: {
     marginVertical: 10,
     padding: 10,
   },
@@ -314,7 +315,6 @@ const styles = StyleSheet.create({
     gap: 5,
     alignItems: "center",
     marginVertical: 10,
-    width: 90,
   },
   newsItemInfoText: {
     fontSize: 14,
