@@ -55,10 +55,12 @@ const NewsItem = ({
   title,
   imgUrl,
   date,
+  loading,
 }: {
   title: string;
   imgUrl: any;
   date: string;
+  loading: boolean;
 }) => {
   const [isBookmarked, setIsBookmarked] = React.useState(false);
   const [showContent, setShowContent] = React.useState(false);
@@ -78,12 +80,7 @@ const NewsItem = ({
         {/* Image */}
 
         <View style={styles.newsItemImageContainer}>
-          <Skeleton
-            show={showContent}
-            colorMode="light"
-            radius={0}
-            height={150}
-          >
+          <Skeleton show={loading} colorMode="light" radius={0} height={150}>
             <Image
               source={{
                 uri: imgUrl,
@@ -96,7 +93,7 @@ const NewsItem = ({
         {/* Core */}
         <View style={styles.newsItemCoreConatiner}>
           <View style={{ marginBottom: 5 }}>
-            <Skeleton show={showContent} colorMode="light" radius={10}>
+            <Skeleton show={loading} colorMode="light" radius={10}>
               <Text style={styles.newsItemTitleText}>{title}</Text>
             </Skeleton>
           </View>
@@ -108,13 +105,14 @@ const NewsItem = ({
           </Skeleton> */}
         </View>
         {/* Info */}
-        <Skeleton show={showContent} radius={10} colorMode="light">
+        <Skeleton show={loading} radius={10} colorMode="light">
           <View style={styles.newsItemInfoContainer}>
             {/* Logo */}
             <View style={styles.newsItemInfoLogoConatiner}>
               <Image
                 source={require("../../assests/images/icons/prem.png")}
                 style={{ width: 30, height: 30, borderRadius: 10 }}
+                resizeMode="cover"
               />
               {/* <Text style={styles.newsItemInfoText}></Text> */}
             </View>
@@ -144,14 +142,17 @@ const Explore = () => {
   const [fetchedNews, setFetchedNews] = React.useState<NewsItemType[] | null>(
     null
   );
+  const [loading, setLoading] = React.useState(false);
   const fetchNews = async () => {
     try {
       // https://www.fotmob.com/api/worldnews?lang=en-GB&page=1
+      setLoading(true);
       const response = await fetch(
         "https://www.fotmob.com/api/worldnews?lang=en-GB&page=1"
       );
       const result = await response.json();
       setFetchedNews(result);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -172,7 +173,7 @@ const Explore = () => {
         barStyle={theme === "dark" ? "light-content" : "dark-content"}
       />
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>Explore Pre-Match News</Text>
+        <Text style={styles.titleText}>Explore World Football News</Text>
       </View>
       {/* Teams filter */}
       <View style={styles.carouselContainer}>
@@ -210,6 +211,7 @@ const Explore = () => {
                 title={item.title}
                 imgUrl={item.imageUrl}
                 date={item.gmtTime}
+                loading={loading}
               />
             );
           })}
@@ -285,6 +287,7 @@ const styles = StyleSheet.create({
   newsItemImageContainer: {
     height: 150,
     width: "100%",
+    marginVertical: 10,
   },
   newsItemCoreConatiner: {
     marginVertical: 10,
