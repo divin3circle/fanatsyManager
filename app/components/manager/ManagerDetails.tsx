@@ -11,8 +11,8 @@ import { teams } from "../../../utils/Data";
 import { COLORS } from "../../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Classic, PlayerData } from "../../types/Manager";
-import { fetchData } from "../../../utils/Suggested";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Link } from "expo-router";
 
 function ManagerHeader({ manager }: { manager: PlayerData | null }) {
   return (
@@ -241,20 +241,22 @@ export function AppCustoms() {
   return (
     <View>
       {/* settings */}
-      <Pressable style={styles.appItem}>
-        <Ionicons
-          name="settings-outline"
-          size={30}
-          color="black"
-          style={{ width: "10%" }}
-        />
-        <Text
-          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
-        >
-          Settings
-        </Text>
-        <Ionicons name="arrow-forward-outline" size={24} color="black" />
-      </Pressable>
+      <Link asChild href="/settings">
+        <Pressable style={styles.appItem}>
+          <Ionicons
+            name="settings-outline"
+            size={30}
+            color="black"
+            style={{ width: "10%" }}
+          />
+          <Text
+            style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+          >
+            Settings
+          </Text>
+          <Ionicons name="arrow-forward-outline" size={24} color="black" />
+        </Pressable>
+      </Link>
       {/* refer */}
       <Pressable style={styles.appItem}>
         <Ionicons
@@ -286,20 +288,22 @@ export function AppCustoms() {
         <Ionicons name="arrow-forward-outline" size={24} color="black" />
       </Pressable>
       {/* sponsor */}
-      <Pressable style={styles.appItem}>
-        <Ionicons
-          name="help-outline"
-          size={30}
-          color="black"
-          style={{ width: "10%" }}
-        />
-        <Text
-          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
-        >
-          Support
-        </Text>
-        <Ionicons name="arrow-forward-outline" size={24} color="black" />
-      </Pressable>
+      <Link asChild href="/support">
+        <Pressable style={styles.appItem}>
+          <Ionicons
+            name="help-outline"
+            size={30}
+            color="black"
+            style={{ width: "10%" }}
+          />
+          <Text
+            style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+          >
+            Support
+          </Text>
+          <Ionicons name="arrow-forward-outline" size={24} color="black" />
+        </Pressable>
+      </Link>
     </View>
   );
 }

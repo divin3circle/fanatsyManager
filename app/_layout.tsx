@@ -19,7 +19,18 @@ const Layout = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{ title: "Back", headerShown: false }}
+      />
+      <Stack.Screen
+        name="settings"
+        options={{ title: "Settings", headerShown: true }}
+      />
+      <Stack.Screen
+        name="support"
+        options={{ title: "Support", headerShown: true }}
+      />
     </Stack>
   );
 };
