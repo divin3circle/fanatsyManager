@@ -145,16 +145,18 @@ const Explore = () => {
   const [loading, setLoading] = React.useState(false);
   const fetchNews = async () => {
     try {
-      // https://www.fotmob.com/api/worldnews?lang=en-GB&page=1
       setLoading(true);
       const response = await fetch(
         "https://www.fotmob.com/api/worldnews?lang=en-GB&page=1"
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const result = await response.json();
       setFetchedNews(result);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error("Fetch Error:", error);
     }
   };
   React.useEffect(() => {
@@ -187,7 +189,7 @@ const Explore = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-      <View style={styles.newsCategoryContainer}>
+      {/* <View style={styles.newsCategoryContainer}>
         <TouchableOpacity style={styles.categoryContainer}>
           <Text style={styles.newsCategoryText}>Latest</Text>
           <Ionicons name="newspaper-outline" size={20} color="black" />
@@ -200,7 +202,7 @@ const Explore = () => {
           <Text style={styles.newsCategoryText}>Fantasy</Text>
           <Ionicons name="flame-outline" size={20} color="black" />
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* News */}
       <ScrollView>
         <View style={styles.newsConatiner}>
