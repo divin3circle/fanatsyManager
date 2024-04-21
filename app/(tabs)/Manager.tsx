@@ -45,7 +45,7 @@ const Manager = () => {
   }, [managerID]);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <StatusBar
           barStyle={theme === "dark" ? "light-content" : "dark-content"}
         />
