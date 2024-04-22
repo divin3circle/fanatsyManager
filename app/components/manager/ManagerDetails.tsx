@@ -281,11 +281,24 @@ export function AppCustoms() {
           style={{ width: "10%" }}
         />
         <Text
-          style={{ width: "85%", fontSize: 20, fontFamily: "InclusiveSans" }}
+          style={{ width: "75%", fontSize: 20, fontFamily: "InclusiveSans" }}
         >
           About
         </Text>
-        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+        {/* <Ionicons name="arrow-forward-outline" size={24} color="black" /> */}
+        <Text
+          style={{
+            width: "15%",
+            fontSize: 15,
+            fontFamily: "InclusiveSans",
+            color: "gray",
+            marginRight: 10,
+
+            textAlign: "right",
+          }}
+        >
+          Beta
+        </Text>
       </Pressable>
       {/* sponsor */}
       <Link asChild href="/support">
@@ -477,6 +490,8 @@ const styles = StyleSheet.create({
   appItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 15,
+    width: "100%",
+    justifyContent: "space-between",
   },
 });
