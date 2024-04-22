@@ -31,6 +31,14 @@ const Layout = () => {
         name="support"
         options={{ title: "Support", headerShown: true }}
       />
+      <Stack.Screen
+        name="playermodal"
+        options={{
+          title: "Player",
+          headerShown: true,
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 };

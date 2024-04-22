@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { COLORS } from "../../../utils/Colors";
 import { def, gks, jerseys, mid, strikers } from "../../../utils/Data";
@@ -13,12 +20,13 @@ import {
 } from "../../../utils/Suggested";
 import { Skeleton } from "moti/skeleton";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { Link } from "expo-router";
 
 type PositionProps = {
   position: number;
   players: PlayerData[];
 };
-type Bootstrap = {
+export type Bootstrap = {
   events: any[];
   game_settings: any;
   phases: any[];
@@ -34,9 +42,11 @@ type PlayerStats = {
 const Player = (player: PlayerData) => {
   return (
     <View style={styles.playerContainer}>
-      <View style={styles.iconContainer}>
-        <Ionicons name="information-outline" size={24} />
-      </View>
+      <Link href={`/player/${player.code}`} asChild>
+        <Pressable style={styles.iconContainer}>
+          <Ionicons name="information-outline" size={24} />
+        </Pressable>
+      </Link>
       <View
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
