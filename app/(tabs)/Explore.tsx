@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import useThemeStore from "../../utils/store";
@@ -162,6 +163,27 @@ const Explore = () => {
   React.useEffect(() => {
     fetchNews();
   }, []);
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="black" />
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "InclusiveSans",
+          }}
+        >
+          Loading...
+        </Text>
+      </View>
+    );
+  }
   return (
     <View
       style={[
