@@ -11,3 +11,11 @@ export const COLORS = {
   "primary-Text": "#fff",
   "drop-rank": "red",
 };
+
+export const colorCodes = {
+  one: "#01fc7b",
+  two: "#01fc7b",
+  three: "#e7e7e7",
+  four: "#ff1650",
+  five: "#81072c",
+};

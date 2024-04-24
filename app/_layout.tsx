@@ -31,12 +31,18 @@ const Layout = () => {
         name="support"
         options={{ title: "Support", headerShown: true }}
       />
-      <Stack.Screen
-        name="playermodal"
+      {/* <Stack.Screen
+        name="/player/:id"
         options={{
-          title: "Player",
+          title: "Player Details",
           headerShown: true,
-          presentation: "modal",
+        }}
+      /> */}
+      <Stack.Screen
+        name="/player/:id"
+        options={{
+          title: "Player Details",
+          headerShown: true,
         }}
       />
     </Stack>
