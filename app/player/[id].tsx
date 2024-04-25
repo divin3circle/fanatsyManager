@@ -733,47 +733,49 @@ const PlayerModal = () => {
 
   const getPlayer = async (url: string) => {
     try {
+      setLoading(true);
       const playerID = Number(id);
-      console.log(playerID);
       const data: Bootstrap = await fetchData(url);
       const players: PlayerData[] = data.elements;
       const player = players.find((player) => player.code === playerID);
       setPlayer(player);
       setLoading(false);
     } catch (error) {
-      setLoading(false);
       alert("Error fetching player data");
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     getPlayer("https://fantasy.premierleague.com/api/bootstrap-static/");
-  }, [id,player]);
-
+  }, [id]);
 
   const getPlayerData = async (id: number) => {
-    const res = await fetch(
-      `https://fantasy.premierleague.com/api/element-summary/${id}/`
-    );
-    const data = await res.json();
-    setPlayerData(data);
-  };
-  useEffect(() => {
     try {
       setLoading(true);
-      if (player?.id !== undefined) {
-        getPlayerData(player?.id);
-      }
-      setLoading(false);
-      // console.log(playerData?.history_past);
+      const res = await fetch(
+        `https://fantasy.premierleague.com/api/element-summary/${id}/`
+      );
+      const data = await res.json();
+      setPlayerData(data);
     } catch (error) {
       console.warn(error);
-      setLoading(false);
       Alert.alert("Awww Snap!!!");
+    } finally {
+      setLoading(false);
     }
-  }, [player, id]);
+  };
 
-  if (loading && player === undefined) {
+  useEffect(() => {
+    if (player) {
+      getPlayerData(player.id);
+    } else {
+      console.log("Player is missing");
+    }
+  }, [player]);
+
+  if (loading) {
     return (
       <View
         style={{
@@ -797,7 +799,6 @@ const PlayerModal = () => {
   }
 
   if (!player) {
-    console.log(id);
     return (
       <View
         style={{
