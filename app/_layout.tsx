@@ -39,7 +39,7 @@ const Layout = () => {
         }}
       /> */}
       <Stack.Screen
-        name="/player/:id"
+        name="player/[id]"
         options={{
           title: "Player Details",
           headerShown: true,
