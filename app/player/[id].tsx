@@ -732,6 +732,7 @@ const PlayerModal = () => {
   const getPlayer = async (url: string) => {
     try {
       const playerID = Number(id);
+      console.log(playerID);
       const data: Bootstrap = await fetchData(url);
       const players: PlayerData[] = data.elements;
       const player = players.find((player) => player.code === playerID);
@@ -792,6 +793,7 @@ const PlayerModal = () => {
   }
 
   if (!player) {
+    console.log(id);
     return (
       <View
         style={{
@@ -806,19 +808,28 @@ const PlayerModal = () => {
             fontFamily: "InclusiveSans",
           }}
         >
-          Wrong Player ID
+          Aww Snap! An error occurred
         </Text>
-        <Link href="/(tabs)/Home">
-          <Text
-            style={{
-              fontSize: 17,
-              fontFamily: "InclusiveSans",
-              marginVertical: 20,
-            }}
-          >
-            Back Home
-          </Text>
-        </Link>
+        {/* <Link href="/(tabs)/Home" > */}
+        {/* <Pressable
+          style={{
+            marginVertical: 20,
+            padding: 10,
+            backgroundColor: COLORS.primary,
+            borderRadius: 45,
+          }}
+        > */}
+        <Text
+          style={{
+            fontSize: 17,
+            fontFamily: "InclusiveSans",
+            color: "gray",
+          }}
+        >
+          It's not you, it must be us😞
+        </Text>
+        {/* </Pressable> */}
+        {/* </Link> */}
       </View>
     );
   }

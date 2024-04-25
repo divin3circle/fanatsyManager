@@ -70,6 +70,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
   const handleBootstrapResponse = (data: any, element: number) => {
     const players = data.elements as any[];
     const player = players.find((player) => player.id === element);
+    setElementIDN(player.id);
     setForm(player.form);
     setTotalPoints(player.total_points);
     setPrice(player.ict_index);
@@ -99,7 +100,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
     fetchTeam(element);
   }, [element]);
   return (
-    <Link href={`/player/${524}`} asChild>
+    <Link href={`/player/281`} asChild>
       <Pressable style={styles.carouselItem}>
         <View style={styles.carouselImageContainer}>
           <View
