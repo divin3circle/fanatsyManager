@@ -725,7 +725,9 @@ function PlayerSeasonHistory({ historyPast }: { historyPast: HistoryPast[] }) {
 
 const PlayerModal = () => {
   const { id } = useGlobalSearchParams();
-  const [player, setPlayer] = React.useState<PlayerData | undefined>(undefined);
+  const [player, setPlayer] = React.useState<PlayerData | null | undefined>(
+    null
+  );
   const [loading, setLoading] = React.useState<boolean>(true);
   const [playerData, setPlayerData] = React.useState<PlayerInfo | null>(null);
 
@@ -746,7 +748,9 @@ const PlayerModal = () => {
   };
   useEffect(() => {
     getPlayer("https://fantasy.premierleague.com/api/bootstrap-static/");
-  }, [id]);
+  }, [id,player]);
+
+
   const getPlayerData = async (id: number) => {
     const res = await fetch(
       `https://fantasy.premierleague.com/api/element-summary/${id}/`
@@ -767,9 +771,9 @@ const PlayerModal = () => {
       setLoading(false);
       Alert.alert("Awww Snap!!!");
     }
-  }, [player]);
+  }, [player, id]);
 
-  if (loading) {
+  if (loading && player === undefined) {
     return (
       <View
         style={{
@@ -804,11 +808,11 @@ const PlayerModal = () => {
       >
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 17,
             fontFamily: "InclusiveSans",
           }}
         >
-          Aww Snap! An error occurred
+          Be patient, this is taking longer than expected.
         </Text>
         {/* <Link href="/(tabs)/Home" > */}
         {/* <Pressable
@@ -821,12 +825,12 @@ const PlayerModal = () => {
         > */}
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 14,
             fontFamily: "InclusiveSans",
             color: "gray",
           }}
         >
-          It's not you, it must be us😞
+          It's must be us😞
         </Text>
         {/* </Pressable> */}
         {/* </Link> */}
