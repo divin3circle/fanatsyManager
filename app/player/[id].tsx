@@ -15,7 +15,8 @@ import { fetchData, PlayerData } from "../../utils/Suggested";
 import { colorCodes, COLORS } from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { teams } from "../../utils/Data";
-import { Fixtures, PlayerInfo } from "../types/PlayerModal";
+import { Fixtures, PlayerHistory, PlayerInfo } from "../types/PlayerModal";
+import { PLAYERS } from "../../utils/Players";
 //https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
 
 function Header({ player }: { player: PlayerData | undefined }) {
@@ -206,7 +207,7 @@ const UpcomingFixtures = ({ fixtures }: { fixtures: Fixtures[] }) => {
           }}
         ></View>
       </View>
-      {fixtures.length < 0 ? (
+      {fixtures?.length > 0 ? (
         <View>
           <FlatList
             data={fixtures}
@@ -292,6 +293,228 @@ const UpcomingFixtures = ({ fixtures }: { fixtures: Fixtures[] }) => {
     </View>
   );
 };
+
+function PlayerCoreStats({ player }: { player: PlayerData }) {
+  return (
+    <View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+          marginVertical: 5,
+          marginHorizontal: 10,
+          backgroundColor: COLORS["card-light"],
+          padding: 10,
+          borderRadius: 10,
+        }}
+      >
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              ICT: {player.ict_index}
+            </Text>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: COLORS.primary,
+              marginVertical: 15,
+            }}
+          ></View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Rank: {player.ict_index_rank}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: 1,
+            height: "100%",
+            backgroundColor: COLORS.primary,
+          }}
+        ></View>
+        <View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Form: {player.form}
+            </Text>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: COLORS.primary,
+              marginVertical: 15,
+            }}
+          ></View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Rank: {player.form_rank}
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            width: 1,
+            height: "100%",
+            backgroundColor: COLORS.primary,
+          }}
+        ></View>
+        <View>
+          <View>
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Cost: £{player.now_cost / 10}
+            </Text>
+          </View>
+          <View
+            style={{
+              width: "100%",
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: COLORS.primary,
+              marginVertical: 15,
+            }}
+          ></View>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 15,
+                textAlign: "center",
+              }}
+            >
+              Rank: {player.now_cost_rank}
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function PastFive({ playerHistory }: { playerHistory: PlayerHistory[] }) {
+  const pastFive = playerHistory.slice(-5);
+  // console.log(pastFive)
+  return (
+    <View>
+      <FlatList
+        data={pastFive}
+        keyExtractor={(item) => item.fixture.toString()}
+        renderItem={({ item }) => {
+          const color =
+            item.total_points === 0
+              ? colorCodes.five
+              : item.total_points <= 4
+              ? colorCodes.four
+              : item.total_points <= 8
+              ? colorCodes.three
+              : item.total_points > 8
+              ? colorCodes.two
+              : colorCodes.two;
+
+          return (
+            <Pressable
+              style={{
+                marginHorizontal: 10,
+                width: 100,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={teams[item.opponent_team - 1].logo}
+                style={{
+                  width: 50,
+                  height: 50,
+                }}
+              />
+              <View
+                style={{
+                  backgroundColor: color,
+                  padding: 10,
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  marginVertical: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "InclusiveSans",
+                    color: item.total_points <= 4 ? "white" : "black",
+                  }}
+                >
+                  {item.total_points}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        }}
+        horizontal
+        style={{
+          marginVertical: 10,
+          paddingHorizontal: 10,
+          flexDirection: "row",
+          // justifyContent: "space-around",
+        }}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
+  );
+}
 const PlayerModal = () => {
   const { id } = useGlobalSearchParams();
   const [player, setPlayer] = React.useState<PlayerData | undefined>(undefined);
@@ -400,6 +623,32 @@ const PlayerModal = () => {
         }}
       >
         <UpcomingFixtures fixtures={playerData?.fixtures!} />
+      </View>
+      <View>
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            fontSize: 20,
+            marginVertical: 10,
+            marginHorizontal: 10,
+          }}
+        >
+          Core Stats
+        </Text>
+        <PlayerCoreStats player={player} />
+      </View>
+      <View>
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            fontSize: 20,
+            marginVertical: 10,
+            marginHorizontal: 10,
+          }}
+        >
+          Last 5 Games
+        </Text>
+        <PastFive playerHistory={playerData?.history!} />
       </View>
     </View>
   );

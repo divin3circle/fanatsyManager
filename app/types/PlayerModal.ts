@@ -14,8 +14,7 @@ export type Fixtures = {
   is_home: boolean;
   difficulty: number;
 };
-
-type PlayerHistory = {
+export type PlayerHistory = {
   element: number;
   fixture: number;
   opponent_team: number;
