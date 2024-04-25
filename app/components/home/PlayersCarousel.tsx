@@ -1,10 +1,18 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  Pressable,
+} from "react-native";
 import React, { useEffect } from "react";
 
 import { PLAYERS } from "../../../utils/Players";
 import { COLORS } from "../../../utils/Colors";
 import { Skeleton } from "moti/skeleton";
 import { jerseys } from "../../../utils/Data";
+import { Link } from "expo-router";
 
 type PlayerProps = {
   element: number;
@@ -32,6 +40,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
     null
   );
   const [playerTeamId, setPlayerTeamId] = React.useState<number>(0);
+  const [elementIDN, setElementIDN] = React.useState<number | null>(null);
   const [playerName, setPlayerName] = React.useState<string>("");
   const [form, setForm] = React.useState<number>(0);
   const [totalPoints, setTotalPoints] = React.useState<number>(0);
@@ -46,8 +55,10 @@ const Player = ({ element, points, position }: PlayerProps) => {
     return await response.json();
   };
 
-  const handleElementSummaryResponse = (data: any, element: number) => {
+  const handleElementSummaryResponse = (data: any) => {
     const firstFixture = data.fixtures[0];
+    const elementID = firstFixture.element;
+    setElementIDN(elementID);
     const teamId = firstFixture.is_home
       ? firstFixture.team_h
       : firstFixture.team_a;
@@ -73,7 +84,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
       const elementSummaryData = await fetchData(
         `https://fantasy.premierleague.com/api/element-summary/${element}/`
       );
-      handleElementSummaryResponse(elementSummaryData, element);
+      handleElementSummaryResponse(elementSummaryData);
       const bootstrapData = await fetchData(
         "https://fantasy.premierleague.com/api/bootstrap-static/"
       );
@@ -88,64 +99,68 @@ const Player = ({ element, points, position }: PlayerProps) => {
     fetchTeam(element);
   }, [element]);
   return (
-    <View style={styles.carouselItem}>
-      <View style={styles.carouselImageContainer}>
-        <View
-          style={{
-            marginVertical: 5,
-            paddingHorizontal: 10,
-          }}
-        >
+    <Link href={`/player/${524}`} asChild>
+      <Pressable style={styles.carouselItem}>
+        <View style={styles.carouselImageContainer}>
+          <View
+            style={{
+              marginVertical: 5,
+              paddingHorizontal: 10,
+            }}
+          >
+            <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+              <Image
+                source={jerseys[jersey].jerseyImage}
+                style={{ width: 175, height: 175, marginTop: 4 }}
+              />
+            </Skeleton>
+          </View>
+        </View>
+        <View style={styles.carouselDetailsContainer}>
           <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-            <Image
-              source={jerseys[jersey].jerseyImage}
-              style={{ width: 175, height: 175, marginTop: 4 }}
-            />
+            <Text style={styles.carouselTextName}>
+              {playerName.substring(0, 12)}...
+            </Text>
+          </Skeleton>
+          <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+            <Text style={styles.carouselTextPosition}>
+              {/* {jerseys[playerTeamId].name.toLocaleUpperCase()} */}
+              {points}
+            </Text>
           </Skeleton>
         </View>
-      </View>
-      <View style={styles.carouselDetailsContainer}>
-        <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-          <Text style={styles.carouselTextName}>
-            {playerName.substring(0, 12)}...
-          </Text>
-        </Skeleton>
-        <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-          <Text style={styles.carouselTextPosition}>
-            {/* {jerseys[playerTeamId].name.toLocaleUpperCase()} */}
-            {points}
-          </Text>
-        </Skeleton>
-      </View>
-      <View style={styles.divider}></View>
-      {/* <Text>{team}</Text> */}
-      <View style={styles.carouselStatsContainer}>
-        <View style={styles.carouselInfoContainer}>
-          <View style={{ marginBottom: 2 }}>
-            <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-              <Text style={styles.carouselTextStats}>Form: {form}</Text>
-            </Skeleton>
+        <View style={styles.divider}></View>
+        {/* <Text>{team}</Text> */}
+        <View style={styles.carouselStatsContainer}>
+          <View style={styles.carouselInfoContainer}>
+            <View style={{ marginBottom: 2 }}>
+              <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+                <Text style={styles.carouselTextStats}>Form: {form}</Text>
+              </Skeleton>
+            </View>
+            <View>
+              <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+                <Text style={styles.carouselTextStats}>
+                  Total: {totalPoints}
+                </Text>
+              </Skeleton>
+            </View>
           </View>
-          <View>
-            <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-              <Text style={styles.carouselTextStats}>Total: {totalPoints}</Text>
-            </Skeleton>
-          </View>
-        </View>
-        <View style={styles.carouselInfoContainer}>
-          <View style={{ marginBottom: 2 }}>
-            <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-              <Text style={styles.carouselTextStats}>ICT: {price}</Text>
-            </Skeleton>
-          </View>
-          <View>
-            <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
-              <Text style={styles.carouselTextStats}>Own: {own}%</Text>
-            </Skeleton>
+          <View style={styles.carouselInfoContainer}>
+            <View style={{ marginBottom: 2 }}>
+              <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+                <Text style={styles.carouselTextStats}>ICT: {price}</Text>
+              </Skeleton>
+            </View>
+            <View>
+              <Skeleton show={laodingPlayerData} colorMode="light" radius={10}>
+                <Text style={styles.carouselTextStats}>Own: {own}%</Text>
+              </Skeleton>
+            </View>
           </View>
         </View>
-      </View>
-    </View>
+      </Pressable>
+    </Link>
   );
 };
 
@@ -205,11 +220,15 @@ const PlayersCarousel = () => {
         <FlatList
           data={dreamTeam}
           renderItem={({ item }) => (
-            <Player
-              element={item.element}
-              points={item.points}
-              position={item.position}
-            />
+            <Link href={`/player/${204}`} asChild>
+              <Pressable>
+                <Player
+                  element={item.element}
+                  points={item.points}
+                  position={item.position}
+                />
+              </Pressable>
+            </Link>
           )}
           keyExtractor={(item) => item.element.toString()}
           horizontal={true}

@@ -1,6 +1,5 @@
 import {
   StyleSheet,
-  ScrollView,
   Text,
   View,
   ActivityIndicator,
@@ -22,7 +21,8 @@ import {
   PlayerInfo,
   HistoryPast,
 } from "../types/PlayerModal";
-import { PLAYERS } from "../../utils/Players";
+import { Link } from "expo-router";
+
 //https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
 
 function Header({ player }: { player: PlayerData | undefined }) {
@@ -806,8 +806,19 @@ const PlayerModal = () => {
             fontFamily: "InclusiveSans",
           }}
         >
-          Please wait...
+          Wrong Player ID
         </Text>
+        <Link href="/(tabs)/Home">
+          <Text
+            style={{
+              fontSize: 17,
+              fontFamily: "InclusiveSans",
+              marginVertical: 20,
+            }}
+          >
+            Back Home
+          </Text>
+        </Link>
       </View>
     );
   }
