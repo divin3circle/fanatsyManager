@@ -447,71 +447,87 @@ function PlayerCoreStats({ player }: { player: PlayerData }) {
 function PastFive({ playerHistory }: { playerHistory: PlayerHistory[] }) {
   const pastFive = playerHistory.slice(-5);
   // console.log(pastFive)
+  //TODO: ADD INDIVIDUAL FIXTURE MODAL
   return (
     <View>
-      <FlatList
-        data={pastFive}
-        keyExtractor={(item) => item.fixture.toString()}
-        renderItem={({ item }) => {
-          const color =
-            item.total_points === 0
-              ? colorCodes.five
-              : item.total_points <= 4
-              ? colorCodes.four
-              : item.total_points <= 8
-              ? colorCodes.three
-              : item.total_points > 8
-              ? colorCodes.two
-              : colorCodes.two;
+      {pastFive.length > 0 ? (
+        <View>
+          <FlatList
+            data={pastFive}
+            keyExtractor={(item) => item.fixture.toString()}
+            renderItem={({ item }) => {
+              const color =
+                item.total_points === 0
+                  ? colorCodes.five
+                  : item.total_points <= 4
+                  ? colorCodes.four
+                  : item.total_points <= 8
+                  ? colorCodes.three
+                  : item.total_points > 8
+                  ? colorCodes.two
+                  : colorCodes.two;
 
-          return (
-            <Pressable
-              style={{
-                marginHorizontal: 10,
-                width: 100,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Image
-                source={teams[item.opponent_team - 1].logo}
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              />
-              <View
-                style={{
-                  backgroundColor: color,
-                  padding: 10,
-                  borderRadius: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  marginVertical: 5,
-                }}
-              >
-                <Text
+              return (
+                <Pressable
                   style={{
-                    fontFamily: "InclusiveSans",
-                    color: item.total_points <= 4 ? "white" : "black",
+                    marginHorizontal: 10,
+                    width: 100,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  {item.total_points}
-                </Text>
-              </View>
-            </Pressable>
-          );
-        }}
-        horizontal
-        style={{
-          marginVertical: 10,
-          paddingHorizontal: 10,
-          flexDirection: "row",
-          // justifyContent: "space-around",
-        }}
-        showsHorizontalScrollIndicator={false}
-      />
+                  <Image
+                    source={teams[item.opponent_team - 1].logo}
+                    style={{
+                      width: 50,
+                      height: 50,
+                    }}
+                  />
+                  <View
+                    style={{
+                      backgroundColor: color,
+                      padding: 10,
+                      borderRadius: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      marginVertical: 5,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        color: item.total_points <= 4 ? "white" : "black",
+                      }}
+                    >
+                      {item.total_points}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            }}
+            horizontal
+            style={{
+              marginVertical: 10,
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              // justifyContent: "space-around",
+            }}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      ) : (
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            textAlign: "center",
+            fontSize: 15,
+            marginVertical: 10,
+          }}
+        >
+          Nothing to show here
+        </Text>
+      )}
     </View>
   );
 }
