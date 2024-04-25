@@ -206,76 +206,89 @@ const UpcomingFixtures = ({ fixtures }: { fixtures: Fixtures[] }) => {
           }}
         ></View>
       </View>
-      <View>
-        <FlatList
-          data={fixtures}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => {
-            const color =
-              item.difficulty === 1
-                ? colorCodes.one
-                : item.difficulty === 2
-                ? colorCodes.two
-                : item.difficulty === 3
-                ? colorCodes.three
-                : item.difficulty === 4
-                ? colorCodes.four
-                : colorCodes.five;
-            const team = item.is_home ? item.team_a : item.team_h;
-            return (
-              <View
-                style={{
-                  marginHorizontal: 10,
-                  width: 100,
-                }}
-              >
+      {fixtures.length < 0 ? (
+        <View>
+          <FlatList
+            data={fixtures}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => {
+              const color =
+                item.difficulty === 1
+                  ? colorCodes.one
+                  : item.difficulty === 2
+                  ? colorCodes.two
+                  : item.difficulty === 3
+                  ? colorCodes.three
+                  : item.difficulty === 4
+                  ? colorCodes.four
+                  : colorCodes.five;
+              const team = item.is_home ? item.team_a : item.team_h;
+              return (
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: 5,
+                    marginHorizontal: 10,
+                    width: 100,
                   }}
                 >
-                  <Image
-                    source={teams[team - 1].logo}
+                  <View
                     style={{
-                      width: 40,
-                      height: 40,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    backgroundColor: color,
-                    padding: 10,
-                    borderRadius: 10,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "InclusiveSans",
-                      color: item.difficulty <= 3 ? "black" : "white",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: 5,
                     }}
                   >
-                    {item.difficulty}
-                  </Text>
+                    <Image
+                      source={teams[team - 1].logo}
+                      style={{
+                        width: 40,
+                        height: 40,
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: color,
+                      padding: 10,
+                      borderRadius: 10,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        color: item.difficulty <= 3 ? "black" : "white",
+                      }}
+                    >
+                      {item.difficulty}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-          horizontal
+              );
+            }}
+            horizontal
+            style={{
+              marginVertical: 10,
+              paddingHorizontal: 10,
+              flexDirection: "row",
+              // justifyContent: "space-around",
+            }}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      ) : (
+        <Text
           style={{
+            fontFamily: "InclusiveSans",
+            textAlign: "center",
+            fontSize: 15,
             marginVertical: 10,
-            paddingHorizontal: 10,
-            flexDirection: "row",
-            // justifyContent: "space-around",
           }}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+        >
+          No Upcoming Fixtures
+        </Text>
+      )}
     </View>
   );
 };
