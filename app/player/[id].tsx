@@ -1,5 +1,6 @@
 import {
   StyleSheet,
+  ScrollView,
   Text,
   View,
   ActivityIndicator,
@@ -11,17 +12,20 @@ import {
 import React, { useEffect } from "react";
 import { useGlobalSearchParams } from "expo-router";
 import { Bootstrap } from "../components/fantasy/Suggestions";
-import { fetchData, PlayerData } from "../../utils/Suggested";
+import { PlayerData, fetchData } from "../../utils/Suggested";
 import { colorCodes, COLORS } from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { teams } from "../../utils/Data";
-import { Fixtures, PlayerHistory, PlayerInfo } from "../types/PlayerModal";
+import {
+  Fixtures,
+  PlayerHistory,
+  PlayerInfo,
+  HistoryPast,
+} from "../types/PlayerModal";
 import { PLAYERS } from "../../utils/Players";
 //https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
 
 function Header({ player }: { player: PlayerData | undefined }) {
-  useEffect(() => {}, []);
-
   return (
     <View style={styles.container}>
       {/* image */}
@@ -197,7 +201,7 @@ const UpcomingFixtures = ({ fixtures }: { fixtures: Fixtures[] }) => {
             fontSize: 13,
           }}
         >
-          Fixtures
+          Upcoming Fixtures
         </Text>
         <View
           style={{
@@ -242,8 +246,8 @@ const UpcomingFixtures = ({ fixtures }: { fixtures: Fixtures[] }) => {
                     <Image
                       source={teams[team - 1].logo}
                       style={{
-                        width: 40,
-                        height: 40,
+                        width: 50,
+                        height: 50,
                       }}
                     />
                   </View>
@@ -445,12 +449,12 @@ function PlayerCoreStats({ player }: { player: PlayerData }) {
 }
 
 function PastFive({ playerHistory }: { playerHistory: PlayerHistory[] }) {
-  const pastFive = playerHistory.slice(-5);
+  const pastFive = playerHistory?.slice(-5);
   // console.log(pastFive)
   //TODO: ADD INDIVIDUAL FIXTURE MODAL
   return (
     <View>
-      {pastFive.length > 0 ? (
+      {pastFive?.length > 0 ? (
         <View>
           <FlatList
             data={pastFive}
@@ -531,18 +535,199 @@ function PastFive({ playerHistory }: { playerHistory: PlayerHistory[] }) {
     </View>
   );
 }
+
+function PlayerSeasonHistory({ historyPast }: { historyPast: HistoryPast[] }) {
+  return (
+    <View>
+      {historyPast?.length > 0 ? (
+        <View
+          style={{
+            justifyContent: "center",
+            flexDirection: "column",
+            marginLeft: 10,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginHorizontal: 10,
+              width: "100%",
+            }}
+          >
+            <View style={{ flex: 2 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                Season
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                Points
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                MP
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                ICT
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                xGI
+              </Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                  color: "gray",
+                }}
+              >
+                xGC
+              </Text>
+            </View>
+          </View>
+          <FlatList
+            data={historyPast}
+            keyExtractor={(item) => item.season_name}
+            renderItem={({ item }) => {
+              return (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginHorizontal: 10,
+                    marginVertical: 5,
+                    width: "100%",
+                  }}
+                >
+                  <View style={{ flex: 2 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.season_name}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                        // textAlign: "center",
+                      }}
+                    >
+                      {item.total_points}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.minutes}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.ict_index}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.expected_goal_involvements}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        fontFamily: "InclusiveSans",
+                        fontSize: 12,
+                      }}
+                    >
+                      {item.expected_goals_conceded}
+                    </Text>
+                  </View>
+                </View>
+              );
+            }}
+            style={{
+              marginBottom: 20,
+            }}
+          />
+        </View>
+      ) : (
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            textAlign: "center",
+            fontSize: 15,
+            marginVertical: 10,
+          }}
+        >
+          Nothing to show here
+        </Text>
+      )}
+    </View>
+  );
+}
+
 const PlayerModal = () => {
   const { id } = useGlobalSearchParams();
   const [player, setPlayer] = React.useState<PlayerData | undefined>(undefined);
   const [loading, setLoading] = React.useState<boolean>(true);
   const [playerData, setPlayerData] = React.useState<PlayerInfo | null>(null);
-
-  // useEffect(() => {
-  //   const getPlayerData = async (id: number) => {
-  //     fetch(`https://fantasy.premierleague.com/api/element-summary/${id}/`);
-  //   };
-  //   if(player !==)
-  // }, []);
 
   const getPlayer = async (url: string) => {
     try {
@@ -628,45 +813,102 @@ const PlayerModal = () => {
   }
 
   return (
-    <View>
-      <Header player={player} />
-      {/* <Text>{playerData?.fixtures[0].difficulty}</Text> */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <UpcomingFixtures fixtures={playerData?.fixtures!} />
-      </View>
-      <View>
-        <Text
-          style={{
-            fontFamily: "InclusiveSans",
-            fontSize: 20,
-            marginVertical: 10,
-            marginHorizontal: 10,
-          }}
-        >
-          Core Stats
-        </Text>
-        <PlayerCoreStats player={player} />
-      </View>
-      <View>
-        <Text
-          style={{
-            fontFamily: "InclusiveSans",
-            fontSize: 20,
-            marginVertical: 10,
-            marginHorizontal: 10,
-          }}
-        >
-          Last 5 Games
-        </Text>
-        <PastFive playerHistory={playerData?.history!} />
-      </View>
-    </View>
+    // <ScrollView>
+    //   <Header player={player} />
+    //   <View
+    //     style={{
+    //       flexDirection: "row",
+    //       justifyContent: "center",
+    //       alignItems: "center",
+    //     }}
+    //   >
+    //     <UpcomingFixtures fixtures={playerData?.fixtures!} />
+    //   </View>
+    //   <View>
+    //     <Text
+    //       style={{
+    //         fontFamily: "InclusiveSans",
+    //         fontSize: 20,
+    //         marginVertical: 10,
+    //         marginHorizontal: 10,
+    //       }}
+    //     >
+    //       Core Stats
+    //     </Text>
+    //     <PlayerCoreStats player={player} />
+    //   </View>
+    //   <View>
+    //     <Text
+    //       style={{
+    //         fontFamily: "InclusiveSans",
+    //         fontSize: 20,
+    //         marginVertical: 10,
+    //         marginHorizontal: 10,
+    //       }}
+    //     >
+    //       Last 5 Games
+    //     </Text>
+    //     <PastFive playerHistory={playerData?.history!} />
+    //   </View>
+    //   <View>
+    //     <Text
+    //       style={{
+    //         fontFamily: "InclusiveSans",
+    //         fontSize: 20,
+    //         marginVertical: 10,
+    //         marginHorizontal: 10,
+    //       }}
+    //     >
+    //       Season History
+    //     </Text>
+    //     <PlayerSeasonHistory historyPast={playerData?.history_past!} />
+    //   </View>
+    // </ScrollView>
+    <FlatList
+      ListHeaderComponent={
+        <>
+          <Header player={player} />
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <UpcomingFixtures fixtures={playerData?.fixtures!} />
+          </View>
+        </>
+      }
+      data={[
+        { title: "Core Stats", component: <PlayerCoreStats player={player} /> },
+        {
+          title: "Last 5 Games",
+          component: <PastFive playerHistory={playerData?.history!} />,
+        },
+        {
+          title: "Season History",
+          component: (
+            <PlayerSeasonHistory historyPast={playerData?.history_past!} />
+          ),
+        },
+      ]}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({ item }) => (
+        <View>
+          <Text
+            style={{
+              fontFamily: "InclusiveSans",
+              fontSize: 20,
+              marginVertical: 10,
+              marginHorizontal: 10,
+            }}
+          >
+            {item.title}
+          </Text>
+          {item.component}
+        </View>
+      )}
+    />
   );
 };
 

@@ -53,7 +53,7 @@ export type PlayerHistory = {
   transfers_out: number;
 };
 
-type HistoryPast = {
+export type HistoryPast = {
   season_name: string;
   element_code: number;
   start_cost: number;
