@@ -735,11 +735,11 @@ const PlayerModal = () => {
     try {
       setLoading(true);
       const playerID = Number(id);
-      console.log(playerID, "nnn");
+      // console.log(playerID, "nnn");
       const data: Bootstrap = await fetchData(url);
       const players: PlayerData[] = data.elements;
       const player = players.find((player) => player.code === playerID);
-      console.log(player);
+      // console.log(player);
       setPlayer(player);
       // setLoading(false);
     } catch (error) {
@@ -771,12 +771,10 @@ const PlayerModal = () => {
 
   useEffect(() => {
     if (player) {
-      console.log("Player available");
-      console.log(player.id);
       getPlayerData(player.id);
     } else {
       // console.log(id);
-      console.log("missing");
+      // console.log("missing");
       return;
     }
   }, [player, id]);

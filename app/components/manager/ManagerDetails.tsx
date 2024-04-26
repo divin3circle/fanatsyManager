@@ -270,7 +270,7 @@ export function AppCustoms() {
         >
           Share App
         </Text>
-        <Ionicons name="arrow-forward-outline" size={24} color="black" />
+        <Ionicons name="copy-outline" size={24} color="black" />
       </Pressable>
       {/* about */}
       <Pressable style={styles.appItem}>

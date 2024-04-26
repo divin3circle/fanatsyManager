@@ -11,6 +11,9 @@ import React from "react";
 
 const Settings = () => {
   const [isPro, setIsPro] = React.useState<boolean>(false);
+  const [darkMode, setDarkMode] = React.useState<boolean>(false);
+  const [allowNotifications, setAllowNotifications] =
+    React.useState<boolean>(false);
   return (
     <View
       style={{
@@ -89,7 +92,10 @@ const Settings = () => {
               </Text>
             </View>
             <View>
-              <Switch value={true} />
+              <Switch
+                value={allowNotifications}
+                onChange={() => setAllowNotifications(!allowNotifications)}
+              />
             </View>
           </View>
           <View style={styles.divider}></View>

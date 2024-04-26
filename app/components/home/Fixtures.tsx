@@ -132,6 +132,7 @@ const FixtureContainer = ({
   started,
   kickOffTime,
 }: FixtureProps) => {
+  //TODO: Add Fixture specific screen
   return (
     <View
       style={{
