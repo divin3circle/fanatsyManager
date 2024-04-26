@@ -735,11 +735,13 @@ const PlayerModal = () => {
     try {
       setLoading(true);
       const playerID = Number(id);
+      console.log(playerID, "nnn");
       const data: Bootstrap = await fetchData(url);
       const players: PlayerData[] = data.elements;
       const player = players.find((player) => player.code === playerID);
+      console.log(player);
       setPlayer(player);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       alert("Error fetching player data");
       console.error(error);
@@ -769,11 +771,15 @@ const PlayerModal = () => {
 
   useEffect(() => {
     if (player) {
+      console.log("Player available");
+      console.log(player.id);
       getPlayerData(player.id);
     } else {
-      console.log("Player is missing");
+      // console.log(id);
+      console.log("missing");
+      return;
     }
-  }, [player]);
+  }, [player, id]);
 
   if (loading) {
     return (
@@ -809,32 +815,31 @@ const PlayerModal = () => {
       >
         <Text
           style={{
-            fontSize: 17,
+            fontSize: 20,
             fontFamily: "InclusiveSans",
           }}
         >
-          Be patient, this is taking longer than expected.
+          Aww Snap!
         </Text>
-        {/* <Link href="/(tabs)/Home" > */}
-        {/* <Pressable
+        <Link
+          href="/(tabs)/Home"
           style={{
             marginVertical: 20,
             padding: 10,
-            backgroundColor: COLORS.primary,
-            borderRadius: 45,
-          }}
-        > */}
-        <Text
-          style={{
-            fontSize: 14,
-            fontFamily: "InclusiveSans",
-            color: "gray",
           }}
         >
-          It's must be us😞
-        </Text>
-        {/* </Pressable> */}
-        {/* </Link> */}
+          <Pressable>
+            <Text
+              style={{
+                fontSize: 15,
+                fontFamily: "InclusiveSans",
+                color: "gray",
+              }}
+            >
+              Seems like a broken link😞It must be us.
+            </Text>
+          </Pressable>
+        </Link>
       </View>
     );
   }
@@ -907,9 +912,12 @@ const PlayerModal = () => {
         </>
       }
       data={[
-        { title: "Core Stats", component: <PlayerCoreStats player={player} /> },
         {
-          title: "Last 5 Games",
+          title: "Core Stats & Rankings",
+          component: <PlayerCoreStats player={player} />,
+        },
+        {
+          title: "Points Last 5 Games",
           component: <PastFive playerHistory={playerData?.history!} />,
         },
         {

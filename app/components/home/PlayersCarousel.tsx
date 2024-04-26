@@ -70,7 +70,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
   const handleBootstrapResponse = (data: any, element: number) => {
     const players = data.elements as any[];
     const player = players.find((player) => player.id === element);
-    setElementIDN(player.id);
+    setElementIDN(player.code);
     setForm(player.form);
     setTotalPoints(player.total_points);
     setPrice(player.ict_index);
@@ -100,7 +100,7 @@ const Player = ({ element, points, position }: PlayerProps) => {
     fetchTeam(element);
   }, [element]);
   return (
-    <Link href={`/player/281`} asChild>
+    <Link href={`/player/${elementIDN}`} asChild>
       <Pressable style={styles.carouselItem}>
         <View style={styles.carouselImageContainer}>
           <View
@@ -221,15 +221,15 @@ const PlayersCarousel = () => {
         <FlatList
           data={dreamTeam}
           renderItem={({ item }) => (
-            <Link href={`/player/${204}`} asChild>
-              <Pressable>
-                <Player
-                  element={item.element}
-                  points={item.points}
-                  position={item.position}
-                />
-              </Pressable>
-            </Link>
+            // <Link href={`/player/${204}`} asChild>
+            //   <Pressable>
+            <Player
+              element={item.element}
+              points={item.points}
+              position={item.position}
+            />
+            //   </Pressable>
+            // </Link>
           )}
           keyExtractor={(item) => item.element.toString()}
           horizontal={true}
