@@ -9,6 +9,7 @@ import {
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
+  Pressable,
 } from "react-native";
 import React from "react";
 import useThemeStore from "../../utils/store";
@@ -17,6 +18,7 @@ import { news, teams } from "../../utils/Data";
 import { Ionicons } from "@expo/vector-icons";
 import { Skeleton } from "moti/skeleton";
 import "react-native-reanimated";
+import { handleProActions } from "../../utils/Subscribe";
 
 type Team = {
   id: number;
@@ -184,6 +186,7 @@ const Explore = () => {
       </View>
     );
   }
+
   return (
     <View
       style={[
@@ -230,13 +233,17 @@ const Explore = () => {
         <View style={styles.newsConatiner}>
           {fetchedNews?.map((item) => {
             return (
-              <NewsItem
+              <Pressable
                 key={item.title}
-                title={item.title}
-                imgUrl={item.imageUrl}
-                date={item.gmtTime}
-                loading={loading}
-              />
+                onPress={() => handleProActions(false)}
+              >
+                <NewsItem
+                  title={item.title}
+                  imgUrl={item.imageUrl}
+                  date={item.gmtTime}
+                  loading={loading}
+                />
+              </Pressable>
             );
           })}
         </View>

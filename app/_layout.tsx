@@ -45,6 +45,13 @@ const Layout = () => {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="proscreen"
+        options={{
+          title: "Subscribe",
+          headerShown: true,
+        }}
+      />
     </Stack>
   );
 };
