@@ -10,6 +10,23 @@ type Fees = {
   discount?: number;
 };
 
+function TitleBar() {
+  return (
+    <View style={styles.titlebar}>
+      <Ionicons name="chevron-back" size={28} color="black" />
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          flex: 2,
+        }}
+      >
+        <Text style={styles.titlebarText}>Subscribe</Text>
+      </View>
+    </View>
+  );
+}
+
 const Subscribe = () => {
   const fees: Fees[] = [
     {
@@ -38,18 +55,7 @@ const Subscribe = () => {
   return (
     <SafeAreaView>
       {/* titlebar */}
-      <View style={styles.titlebar}>
-        <Ionicons name="chevron-back" size={28} color="black" />
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 2,
-          }}
-        >
-          <Text style={styles.titlebarText}>Subscribe</Text>
-        </View>
-      </View>
+      <TitleBar />
       <View></View>
       <View></View>
     </SafeAreaView>
