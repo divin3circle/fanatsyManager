@@ -35,9 +35,9 @@ export const teams = [
   { id: 13, name: "Man City", logo: mci },
   { id: 14, name: "Man United", logo: mun },
   { id: 15, name: "Newcastle", logo: newc },
-  { id: 16, name: "Nottm Forest", logo: nfo },
-  { id: 17, name: "Sheffield Utd", logo: shu },
-  { id: 18, name: "Tottenham", logo: tot },
+  { id: 16, name: "Nott'm Forest", logo: nfo },
+  { id: 17, name: "Sheff Utd", logo: shu },
+  { id: 18, name: "Spurs", logo: tot },
   { id: 19, name: "West Ham", logo: whu },
   { id: 20, name: "Wolves", logo: wol },
 ];

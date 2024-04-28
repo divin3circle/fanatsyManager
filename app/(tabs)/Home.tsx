@@ -1,8 +1,6 @@
 import {
-  Button,
   StyleSheet,
   SafeAreaView,
-  Text,
   ScrollView,
   View,
   StatusBar,

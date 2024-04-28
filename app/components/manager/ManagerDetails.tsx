@@ -13,6 +13,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Classic, PlayerData } from "../../types/Manager";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
+import { handleProActions } from "../../../utils/Subscribe";
+import { router } from "expo-router";
 
 function ManagerHeader({ manager }: { manager: PlayerData | null }) {
   return (
@@ -34,18 +36,54 @@ function ManagerHeader({ manager }: { manager: PlayerData | null }) {
       <View>
         <Text style={styles.managerRegion}>{manager?.player_region_name}</Text>
       </View>
-      <View style={styles.premiumContainer}>
-        <Pressable style={styles.premiumButton}>
-          <Text style={[styles.premiumText]}>Pro Manager</Text>
-          <View
-            style={{ width: 1, height: "auto", backgroundColor: "gray" }}
-          ></View>
-          <Text style={[styles.premiumText]}>$0.99/month</Text>
-        </Pressable>
-        <Pressable style={styles.joinPremiumButton}>
-          <Text style={styles.joinText}>Join Premium</Text>
-        </Pressable>
-      </View>
+      {/* TODO: Add manager pro membership boolean */}
+      {manager ? (
+        <View style={styles.premiumContainer}>
+          <Pressable style={styles.premiumButton}>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 17,
+                fontFamily: "InclusiveSans",
+                marginVertical: 5,
+              }}
+            >
+              PRO Manager
+            </Text>
+            <View
+              style={{ width: 1, height: "auto", backgroundColor: "gray" }}
+            ></View>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 14,
+                fontFamily: "InclusiveSans",
+                marginVertical: 5,
+              }}
+            >
+              Membership
+            </Text>
+          </Pressable>
+        </View>
+      ) : (
+        <View style={styles.premiumContainer}>
+          <Pressable style={styles.premiumButton}>
+            <Text style={[styles.premiumText]}>Pro Manager</Text>
+            <View
+              style={{ width: 1, height: "auto", backgroundColor: "gray" }}
+            ></View>
+            <Text style={[styles.premiumText]}>$0.99/month</Text>
+          </Pressable>
+          <Pressable
+            style={styles.joinPremiumButton}
+            onPress={() => router.navigate("proscreen")}
+          >
+            <Text style={styles.joinText}>Join Premium</Text>
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 }
@@ -151,7 +189,9 @@ function ManagerLeagues({ manger }: { manger: PlayerData | null }) {
         manger?.leagues.classic.slice(0, 5).map((league) => {
           return (
             <View key={league.id}>
-              <Standings league={league} />
+              <Pressable onPress={() => handleProActions(false)}>
+                <Standings league={league} />
+              </Pressable>
               <View style={styles.divider}></View>
             </View>
           );
@@ -187,16 +227,18 @@ function ManagerLeagues({ manger }: { manger: PlayerData | null }) {
         </Pressable>
       )}
       {leaguesShown === "classic" && (
-        <Text
-          style={{
-            color: "gray",
-            fontFamily: "InclusiveSans",
-            textAlign: "center",
-            marginVertical: 10,
-          }}
-        >
-          View All
-        </Text>
+        <Pressable onPress={() => handleProActions(false)}>
+          <Text
+            style={{
+              color: "gray",
+              fontFamily: "InclusiveSans",
+              textAlign: "center",
+              marginVertical: 10,
+            }}
+          >
+            View All
+          </Text>
+        </Pressable>
       )}
     </View>
   );

@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
+import { handleProActions } from "../utils/Subscribe";
+import { router } from "expo-router";
 
 const Settings = () => {
   const [isPro, setIsPro] = React.useState<boolean>(false);
@@ -32,7 +34,10 @@ const Settings = () => {
       <View>
         <Text style={styles.title}>Account</Text>
         <View style={styles.settingContainer}>
-          <View style={styles.setting}>
+          <Pressable
+            style={styles.setting}
+            onPress={() => (!isPro ? router.navigate("proscreen") : null)}
+          >
             <View style={styles.info}>
               <Text style={styles.text}>Membership</Text>
               <Text style={styles.infoText}>
@@ -52,7 +57,7 @@ const Settings = () => {
                 <Ionicons name="arrow-forward" size={24} color="gray" />
               )}
             </View>
-          </View>
+          </Pressable>
           <View style={styles.divider}></View>
           <View style={styles.setting}>
             <View style={styles.info}>
@@ -66,7 +71,10 @@ const Settings = () => {
             </View>
           </View>
           <View style={styles.divider}></View>
-          <View style={styles.setting}>
+          <Pressable
+            style={styles.setting}
+            onPress={() => alert("Feature in progress🔜")}
+          >
             <View style={styles.info}>
               <Text style={styles.text}>Password</Text>
               <Text style={styles.infoText}>
@@ -76,7 +84,7 @@ const Settings = () => {
             <View>
               <Text style={styles.infoText}>******</Text>
             </View>
-          </View>
+          </Pressable>
         </View>
       </View>
 
@@ -111,7 +119,7 @@ const Settings = () => {
             </View>
           </View>
           <View style={styles.divider}></View>
-          <View style={styles.setting}>
+          <Pressable style={styles.setting}>
             <View style={styles.info}>
               <Text style={styles.text}>Dark Mode</Text>
               <Text style={styles.infoText}>
@@ -119,9 +127,12 @@ const Settings = () => {
               </Text>
             </View>
             <View>
-              <Switch value={false} />
+              <Switch
+                value={false}
+                onChange={() => alert("Feature in progress🔜")}
+              />
             </View>
-          </View>
+          </Pressable>
         </View>
       </View>
       <Pressable
@@ -134,6 +145,7 @@ const Settings = () => {
           paddingHorizontal: 20,
           alignItems: "center",
         }}
+        onPress={() => router.navigate("/")}
       >
         <Text
           style={{

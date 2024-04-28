@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS } from "../../../utils/Colors";
