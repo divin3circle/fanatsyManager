@@ -1,7 +1,15 @@
-import { StyleSheet, Text, View, SafeAreaView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Pressable,
+  FlatList,
+} from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../utils/Colors";
+import { router } from "expo-router";
 
 type Fees = {
   title: string;
@@ -13,7 +21,7 @@ type Fees = {
 
 function TitleBar() {
   return (
-    <View style={styles.titlebar}>
+    <Pressable style={styles.titlebar} onPress={() => router.back()}>
       <Ionicons name="chevron-back" size={28} color="black" />
       <View
         style={{
@@ -24,6 +32,124 @@ function TitleBar() {
       >
         <Text style={styles.titlebarText}>Subscribe</Text>
       </View>
+    </Pressable>
+  );
+}
+
+function Fee({ fee }: { fee: Fees }) {
+  return (
+    <View
+      style={[
+        styles.fee,
+        fee.discount ? { borderColor: COLORS.primary, borderWidth: 2 } : null,
+      ]}
+    >
+      <View
+        style={{
+          marginVertical: 20,
+          width: "100%",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 24,
+            fontFamily: "InclusiveSans",
+          }}
+        >
+          {fee.title}
+        </Text>
+      </View>
+      <View
+        style={{
+          marginVertical: 20,
+          width: "100%",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 34,
+            fontWeight: "bold",
+            color: COLORS.primary,
+          }}
+        >
+          ${fee.fee}
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            color: "gray",
+            fontFamily: "InclusiveSans",
+          }}
+        >
+          {fee.descriptions}
+        </Text>
+      </View>
+      <View
+        style={{
+          marginVertical: 20,
+          width: "100%",
+        }}
+      >
+        {fee.info.map((item, index) => {
+          return (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginVertical: 10,
+                gap: 10,
+              }}
+            >
+              <Ionicons
+                name="checkmark-circle"
+                size={18}
+                color={COLORS.primary}
+              />
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 15,
+                }}
+              >
+                {item}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+      <Pressable style={styles.footer}>
+        <Ionicons name="notifications-outline" size={24} color="black" />
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            fontSize: 12,
+            marginLeft: 10,
+          }}
+        >
+          Get a reminder before your trial ends
+        </Text>
+      </Pressable>
+      <Pressable
+        style={{
+          position: "absolute",
+          bottom: 20,
+          backgroundColor: COLORS.primary,
+          width: "80%",
+          padding: 10,
+          borderRadius: 10,
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            color: COLORS["card-light2"],
+            fontFamily: "InclusiveSans",
+            fontSize: 18,
+          }}
+        >
+          Make Payment
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -58,160 +184,30 @@ const Subscribe = () => {
       style={{
         flex: 1,
         backgroundColor: "#fff",
-        alignItems: "center",
+        //alignItems: "center",
       }}
     >
       {/* titlebar */}
       <TitleBar />
-      <View style={styles.fee}>
-        <View
-          style={{
-            marginVertical: 20,
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              fontFamily: "InclusiveSans",
-            }}
-          >
-            Plan Title
-          </Text>
-        </View>
-        <View
-          style={{
-            marginVertical: 20,
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 34,
-              fontWeight: "bold",
-              color: COLORS.primary,
-            }}
-          >
-            Plan Fee
-          </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "gray",
-              fontFamily: "InclusiveSans",
-            }}
-          >
-            Plan Description
-          </Text>
-        </View>
-        <View
-          style={{
-            marginVertical: 20,
-            width: "100%",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 10,
-              gap: 10,
-            }}
-          >
-            <Ionicons
-              name="checkmark-circle"
-              size={18}
-              color={COLORS.primary}
-            />
-            <Text
+      <FlatList
+        data={fees}
+        renderItem={({ item }) => {
+          return (
+            <View
+              key={item.title}
               style={{
-                fontFamily: "InclusiveSans",
-                fontSize: 15,
+                width: 400,
               }}
             >
-              Plan Info
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 10,
-              gap: 10,
-            }}
-          >
-            <Ionicons
-              name="checkmark-circle"
-              size={18}
-              color={COLORS.primary}
-            />
-            <Text
-              style={{
-                fontFamily: "InclusiveSans",
-                fontSize: 15,
-              }}
-            >
-              Plan Info
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 10,
-              gap: 10,
-            }}
-          >
-            <Ionicons
-              name="checkmark-circle"
-              size={18}
-              color={COLORS.primary}
-            />
-            <Text
-              style={{
-                fontFamily: "InclusiveSans",
-                fontSize: 15,
-              }}
-            >
-              Plan Info
-            </Text>
-          </View>
-        </View>
-        <Pressable style={styles.footer}>
-          <Ionicons name="notifications-outline" size={24} color="black" />
-          <Text
-            style={{
-              fontFamily: "InclusiveSans",
-              fontSize: 14,
-              marginLeft: 10,
-            }}
-          >
-            Get a reminder before your trial ends
-          </Text>
-        </Pressable>
-        <Pressable
-          style={{
-            position: "absolute",
-            bottom: 20,
-            backgroundColor: COLORS.primary,
-            width: "80%",
-            padding: 10,
-            borderRadius: 10,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: COLORS["card-light2"],
-              fontFamily: "InclusiveSans",
-              fontSize: 18,
-            }}
-          >
-            Make Payment
-          </Text>
-        </Pressable>
-      </View>
-      <View></View>
+              <Fee fee={item} />
+            </View>
+          );
+        }}
+        keyExtractor={(item) => item.title}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+      />
+      {/* <View></View> */}
     </SafeAreaView>
   );
 };
@@ -222,6 +218,7 @@ const styles = StyleSheet.create({
   titlebar: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 15,
     marginHorizontal: 20,
   },
   titlebarText: {
@@ -238,7 +235,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     position: "relative",
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: COLORS.primary,
     shadowOffset: {
       width: 0,
       height: 2,
