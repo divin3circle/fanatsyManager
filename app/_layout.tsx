@@ -49,7 +49,7 @@ const Layout = () => {
         name="proscreen"
         options={{
           title: "Subscribe",
-          headerShown: true,
+          headerShown: false,
         }}
       />
     </Stack>

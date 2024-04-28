@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { handleProActions } from "../utils/Subscribe";
 import { router } from "expo-router";
 
 const Settings = () => {
