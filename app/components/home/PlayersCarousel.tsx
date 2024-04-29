@@ -166,14 +166,14 @@ const Player = ({ element, points, position }: PlayerProps) => {
 };
 
 type EventId = number | null;
-type DreamTeam = {
+type DreamPlayer = {
   element: number;
   points: number;
   position: number;
 };
 const PlayersCarousel = () => {
-  const [eventId, setEventId] = React.useState<EventId>(null);
-  const [dreamTeam, setDreamTeam] = React.useState<DreamTeam[]>([]);
+  const [eventId, setEventId] = React.useState<EventId | null>(null);
+  const [dreamTeam, setDreamTeam] = React.useState<DreamPlayer[]>([]);
   const [loadingDreamTeam, setLoadingDreamTeam] = React.useState<boolean>(true);
 
   const fetchEventId = async () => {
@@ -198,7 +198,6 @@ const PlayersCarousel = () => {
       );
       const data = await response.json();
       setDreamTeam(data.team);
-      // console.log(data.team);
       setLoadingDreamTeam(false);
     } catch (error) {
       console.error(error);
