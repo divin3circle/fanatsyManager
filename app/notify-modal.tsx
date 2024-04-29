@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../utils/Colors";
+import { router } from "expo-router";
 
 const Notifications = () => {
   return (
@@ -19,6 +20,7 @@ const Notifications = () => {
           style={{
             flex: 2,
           }}
+          onPress={() => router.back()}
         >
           <Ionicons name="close" size={28} color="black" />
         </Pressable>
