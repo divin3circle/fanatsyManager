@@ -46,7 +46,7 @@ const Notifications = () => {
           <Text
             style={{
               color: "blue",
-              fontSize: 14,
+              fontSize: 15,
               fontFamily: "InclusiveSans",
             }}
           >
