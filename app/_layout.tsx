@@ -52,6 +52,14 @@ const Layout = () => {
           headerShown: true,
         }}
       />
+      <Stack.Screen
+        name="notify-modal"
+        options={{
+          title: "Notifications",
+          headerShown: false,
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 };

@@ -5,14 +5,16 @@ import {
   ScrollView,
   View,
   StatusBar,
+  Pressable,
+  Modal,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import useThemeStore from "../../utils/store";
 import ManagerBanner from "../components/home/ManagerBanner";
 import PlayersCarousel from "../components/home/PlayersCarousel";
 import Fixtures from "../components/home/Fixtures";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../../utils/Colors";
+import { router } from "expo-router";
 
 const Home = () => {
   const { theme, toggleTheme } = useThemeStore();
@@ -59,12 +61,13 @@ const Home = () => {
             Manager
           </Text>
         </View>
-        <View>
+        <Pressable onPress={() => router.navigate("/notify-modal")}>
           <Ionicons name="notifications" size={24} color="black" />
-        </View>
+        </Pressable>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <StatusBar barStyle="light-content" />
+
         <View style={styles.componentContainer}>
           <ManagerBanner />
         </View>
@@ -84,5 +87,43 @@ export default Home;
 const styles = StyleSheet.create({
   componentContainer: {
     padding: 10,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
