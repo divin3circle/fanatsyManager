@@ -35,6 +35,7 @@ const Home = () => {
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: 15,
+          marginTop: 10,
           // shadowColor: "#000",
           // shadowOffset: {
           //   width: 0,
