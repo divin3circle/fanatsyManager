@@ -53,12 +53,12 @@ const Home = () => {
               fontSize: 20,
             }}
           >
+            Good{" "}
             {currentHour < 12
               ? "Morning"
               : currentHour < 16
               ? "Afternoon"
               : "Evening"}{" "}
-            Manager
           </Text>
         </View>
         <Pressable onPress={() => router.navigate("/notify-modal")}>
