@@ -22,6 +22,7 @@ import {
   HistoryPast,
 } from "../types/PlayerModal";
 import { Link } from "expo-router";
+import { router } from "expo-router";
 
 //https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
 
@@ -924,20 +925,60 @@ const PlayerModal = () => {
             <PlayerSeasonHistory historyPast={playerData?.history_past!} />
           ),
         },
+        {
+          // title: "Detailed Stats",
+          component: (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Pressable
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: COLORS.primary,
+                  padding: 10,
+                  borderRadius: 10,
+                  paddingHorizontal: 15,
+                }}
+                onPress={() => router.navigate("/proscreen")}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontFamily: "InclusiveSans",
+                    color: "black",
+                  }}
+                >
+                  View all
+                </Text>
+              </Pressable>
+            </View>
+          ),
+        },
       ]}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({ item }) => (
-        <View>
-          <Text
-            style={{
-              fontFamily: "InclusiveSans",
-              fontSize: 20,
-              marginVertical: 10,
-              marginHorizontal: 10,
-            }}
-          >
-            {item.title}
-          </Text>
+        <View
+          style={{
+            marginBottom: 25,
+          }}
+        >
+          {item.title ? (
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 20,
+                marginVertical: 10,
+                marginHorizontal: 10,
+              }}
+            >
+              {item.title}
+            </Text>
+          ) : null}
           {item.component}
         </View>
       )}
@@ -954,6 +995,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     padding: 15,
     gap: 10,
+    marginHorizontal: 5,
   },
   imageContainer: {
     position: "relative",
