@@ -22,9 +22,9 @@ const wol = require("../assests/images/team-logos/wol.png");
 export const teams = [
   { id: 1, name: "Arsenal", logo: ars },
   { id: 2, name: "Aston Villa", logo: avl },
-  { id: 3, name: "Brighton", logo: bha },
-  { id: 4, name: "Bournemouth", logo: bou },
-  { id: 5, name: "Brentford", logo: bre },
+  { id: 3, name: "Bournemouth", logo: bou },
+  { id: 4, name: "Brentford", logo: bre },
+  { id: 5, name: "Brighton", logo: bha },
   { id: 6, name: "Burnley", logo: bur },
   { id: 7, name: "Chelsea", logo: che },
   { id: 8, name: " Palace", logo: cry },
@@ -42,18 +42,6 @@ export const teams = [
   { id: 20, name: "Wolves", logo: wol },
 ];
 
-// export const fixtureTeams = [
-//   {
-//     id: 0,
-//     name: "Dummy Team",
-//     logo: ars,
-//   },
-//   {
-//     id: 1,
-//     name: "Arsenal",
-//     logo: ars,
-//   }
-// ]
 export const managerBanner = [
   {
     id: 1,
@@ -198,8 +186,8 @@ export const jerseys = [
   },
   {
     id: 3,
-    name: "Bha",
-    jerseyImage: require("../assests/images/jerseys/bri.png"),
+    name: "Bou",
+    jerseyImage: require("../assests/images/jerseys/bou.png"),
   },
   {
     id: 4,
@@ -208,8 +196,8 @@ export const jerseys = [
   },
   {
     id: 5,
-    name: "Bou",
-    jerseyImage: require("../assests/images/jerseys/bou.png"),
+    name: "Bha",
+    jerseyImage: require("../assests/images/jerseys/bri.png"),
   },
   {
     id: 6,
