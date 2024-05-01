@@ -60,6 +60,14 @@ const Layout = () => {
           presentation: "modal",
         }}
       />
+      <Stack.Screen
+        name="[id]"
+        options={{
+          title: "Stats",
+          headerShown: false,
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 };
