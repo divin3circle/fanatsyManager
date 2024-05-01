@@ -1,4 +1,5 @@
 import {
+  Modal,
   StyleSheet,
   Text,
   View,
@@ -7,6 +8,7 @@ import {
   Pressable,
   Alert,
   FlatList,
+  ScrollView,
 } from "react-native";
 import React, { useEffect } from "react";
 import { useGlobalSearchParams } from "expo-router";
@@ -844,145 +846,106 @@ const PlayerModal = () => {
   }
 
   return (
-    // <ScrollView>
-    //   <Header player={player} />
-    //   <View
-    //     style={{
-    //       flexDirection: "row",
-    //       justifyContent: "center",
-    //       alignItems: "center",
-    //     }}
-    //   >
-    //     <UpcomingFixtures fixtures={playerData?.fixtures!} />
-    //   </View>
-    //   <View>
-    //     <Text
-    //       style={{
-    //         fontFamily: "InclusiveSans",
-    //         fontSize: 20,
-    //         marginVertical: 10,
-    //         marginHorizontal: 10,
-    //       }}
-    //     >
-    //       Core Stats
-    //     </Text>
-    //     <PlayerCoreStats player={player} />
-    //   </View>
-    //   <View>
-    //     <Text
-    //       style={{
-    //         fontFamily: "InclusiveSans",
-    //         fontSize: 20,
-    //         marginVertical: 10,
-    //         marginHorizontal: 10,
-    //       }}
-    //     >
-    //       Last 5 Games
-    //     </Text>
-    //     <PastFive playerHistory={playerData?.history!} />
-    //   </View>
-    //   <View>
-    //     <Text
-    //       style={{
-    //         fontFamily: "InclusiveSans",
-    //         fontSize: 20,
-    //         marginVertical: 10,
-    //         marginHorizontal: 10,
-    //       }}
-    //     >
-    //       Season History
-    //     </Text>
-    //     <PlayerSeasonHistory historyPast={playerData?.history_past!} />
-    //   </View>
-    // </ScrollView>
-    <FlatList
-      ListHeaderComponent={
-        <>
-          <Header player={player} />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <UpcomingFixtures fixtures={playerData?.fixtures!} />
-          </View>
-        </>
-      }
-      data={[
-        {
-          title: "Core Stats & Rankings",
-          component: <PlayerCoreStats player={player} />,
-        },
-        {
-          title: "Points Last 5 Games",
-          component: <PastFive playerHistory={playerData?.history!} />,
-        },
-        {
-          title: "Season History",
-          component: (
-            <PlayerSeasonHistory historyPast={playerData?.history_past!} />
-          ),
-        },
-        {
-          // title: "Detailed Stats",
-          component: (
+    <>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <Header player={player} />
             <View
               style={{
+                flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Pressable
+              <UpcomingFixtures fixtures={playerData?.fixtures!} />
+            </View>
+          </>
+        }
+        data={[
+          {
+            title: "Core Stats & Rankings",
+            component: <PlayerCoreStats player={player} />,
+          },
+          {
+            title: "Points Last 5 Games",
+            component: <PastFive playerHistory={playerData?.history!} />,
+          },
+          {
+            title: "Season History",
+            component: (
+              <PlayerSeasonHistory historyPast={playerData?.history_past!} />
+            ),
+          },
+          {
+            // title: "Detailed Stats",
+            component: (
+              <View
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
                   justifyContent: "center",
-                  backgroundColor: COLORS.primary,
-                  padding: 10,
-                  borderRadius: 10,
-                  paddingHorizontal: 15,
+                  alignItems: "center",
                 }}
-                onPress={() => router.navigate("/proscreen")}
               >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontFamily: "InclusiveSans",
-                    color: "black",
+                <Link
+                  asChild
+                  href={{
+                    pathname: `/${player.id}`,
+                    params: {
+                      player: JSON.stringify(player),
+                      playerData: JSON.stringify(playerData),
+                    },
                   }}
                 >
-                  View all
-                </Text>
-              </Pressable>
-            </View>
-          ),
-        },
-      ]}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <View
-          style={{
-            marginBottom: 25,
-          }}
-        >
-          {item.title ? (
-            <Text
-              style={{
-                fontFamily: "InclusiveSans",
-                fontSize: 20,
-                marginVertical: 10,
-                marginHorizontal: 10,
-              }}
-            >
-              {item.title}
-            </Text>
-          ) : null}
-          {item.component}
-        </View>
-      )}
-    />
+                  <Pressable
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: COLORS.primary,
+                      padding: 10,
+                      borderRadius: 10,
+                      paddingHorizontal: 15,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontFamily: "InclusiveSans",
+                        color: "black",
+                      }}
+                    >
+                      View all
+                    </Text>
+                  </Pressable>
+                </Link>
+              </View>
+            ),
+          },
+        ]}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              marginBottom: 25,
+            }}
+          >
+            {item.title ? (
+              <Text
+                style={{
+                  fontFamily: "InclusiveSans",
+                  fontSize: 20,
+                  marginVertical: 10,
+                  marginHorizontal: 10,
+                }}
+              >
+                {item.title}
+              </Text>
+            ) : null}
+            {item.component}
+          </View>
+        )}
+      />
+    </>
   );
 };
 
@@ -1027,5 +990,44 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginVertical: 5,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
   },
 });
