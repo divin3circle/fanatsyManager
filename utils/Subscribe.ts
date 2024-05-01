@@ -1,14 +1,22 @@
 import { router } from "expo-router";
 import { Alert } from "react-native";
 
-export const handleProActions = (isPro: boolean) => {
+export const handleProActions = (isPro: boolean, navigation?: any) => {
   isPro
-    ? router.navigate("proscreen")
+    ? navigation
+      ? navigation.navigate("proscreen")
+      : router.navigate("proscreen")
     : Alert.alert("Oh-oh😬", "This one is for the pros😎", [
         {
           text: "Cancel",
           style: "cancel",
         },
-        { text: "Become a PRO", onPress: () => router.navigate("proscreen") },
+        {
+          text: "Become a PRO",
+          onPress: () =>
+            navigation
+              ? navigation.navigate("proscreen")
+              : router.navigate("proscreen"),
+        },
       ]);
 };

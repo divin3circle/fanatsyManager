@@ -886,28 +886,38 @@ const PlayerModal = () => {
                   alignItems: "center",
                 }}
               >
-                <Pressable
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: COLORS.primary,
-                    padding: 10,
-                    borderRadius: 10,
-                    paddingHorizontal: 15,
+                <Link
+                  asChild
+                  href={{
+                    pathname: `/${player.id}`,
+                    params: {
+                      player: JSON.stringify(player),
+                      playerData: JSON.stringify(playerData),
+                    },
                   }}
-                  onPress={() => router.navigate(`${player.id}`)}
                 >
-                  <Text
+                  <Pressable
                     style={{
-                      fontSize: 20,
-                      fontFamily: "InclusiveSans",
-                      color: "black",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: COLORS.primary,
+                      padding: 10,
+                      borderRadius: 10,
+                      paddingHorizontal: 15,
                     }}
                   >
-                    View all
-                  </Text>
-                </Pressable>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontFamily: "InclusiveSans",
+                        color: "black",
+                      }}
+                    >
+                      View all
+                    </Text>
+                  </Pressable>
+                </Link>
               </View>
             ),
           },

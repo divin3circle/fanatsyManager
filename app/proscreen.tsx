@@ -99,6 +99,7 @@ function Fee({ fee }: { fee: Fees }) {
                 marginVertical: 10,
                 gap: 10,
               }}
+              key={index}
             >
               <Ionicons
                 name="checkmark-circle"
