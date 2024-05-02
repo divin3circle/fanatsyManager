@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { COLORS } from "../../../utils/Colors";
 import Caurosel from "./Carousel";
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
@@ -35,7 +35,7 @@ const Welcome = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        {/* Prem-logo imagae */}
+        {/* Prem-logo image */}
 
         <View style={{ flexDirection: "column", marginBottom: 10 }}>
           <Image

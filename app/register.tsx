@@ -14,8 +14,6 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "expo-router";
-import Welcome from "./components/welcome_components/Welcome";
-import { Link } from "expo-router";
 import { COLORS } from "../utils/Colors";
 import useThemeStore from "../utils/store";
 import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
@@ -44,7 +42,6 @@ const Register = () => {
 
   const bgStyle = theme === "dark" ? styles.welcomeDark : styles.welcomeLight;
   const textColor = theme === "dark" ? styles.textDark : null;
-  // console.log(email, fplTeam, eplTeam, password);
   const signIn = async () => {
     setLoading(true);
     const isLoggedIn = await login();
@@ -75,10 +72,7 @@ const Register = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <ScrollView
-        style={{ flex: 1, backgroundColor: bgStyle.backgroundColor }}
-        // keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView style={{ flex: 1, backgroundColor: bgStyle.backgroundColor }}>
         <View style={[styles.welcome, bgStyle]}>
           <StatusBar
             barStyle={theme === "dark" ? "light-content" : "dark-content"}
@@ -101,7 +95,7 @@ const Register = () => {
               }}
               resizeMode="contain"
             />
-            <View style={styles.textConainter}>
+            <View style={styles.textConatiner}>
               {!isUser ? (
                 <>
                   <Text style={[styles.appText, textColor]}>Welcome back</Text>
@@ -118,18 +112,8 @@ const Register = () => {
                 </>
               )}
             </View>
-            {/* <View style={{ margin: 15 }}>
-        <Button
-          title={!isUser ? "Create Account" : "Member?"}
-          onPress={() => setIsUser(!isUser)}
-        />
-      </View> */}
-            {/* <Button title="Toggle Theme" onPress={toggleTheme} /> */}
           </Animated.View>
-          {/* <Link href={"/Home"} replace asChild>
-      <Button title="Login" />
-    </Link> */}
-          {/* Sign In Form */}
+
           {isUser ? (
             <Animated.View
               entering={FadeInUp.delay(100).duration(1000)}
@@ -264,7 +248,7 @@ const styles = StyleSheet.create({
     color: COLORS["app-dark"],
     fontFamily: "InclusiveSans",
   },
-  textConainter: {
+  textConatiner: {
     marginTop: 10,
     marginBottom: 10,
   },
