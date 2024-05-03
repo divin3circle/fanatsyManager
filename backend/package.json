@@ -1,0 +1,11 @@
+{
+  "name": "fantasy-assistant-backend",
+  "version": "1.0.0",
+  "description": "A RESTful backend for the Fanatsy Assistant App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sylus Abel (divin3circle)",
+  "license": "MIT"
+}
