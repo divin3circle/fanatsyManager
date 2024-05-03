@@ -7,8 +7,6 @@ import {
   Pressable,
 } from "react-native";
 import React, { useEffect } from "react";
-
-import { PLAYERS } from "../../../utils/Players";
 import { COLORS } from "../../../utils/Colors";
 import { Skeleton } from "moti/skeleton";
 import { jerseys } from "../../../utils/Data";
