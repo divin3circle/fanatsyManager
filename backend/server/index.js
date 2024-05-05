@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import fantasyRoutes from "../routes/fantasyRoutes.js";
 import cron from "node-cron";
 
+//schedule a task to run every 3 days
 cron.schedule("0 0 */3 * *", async () => {
   try {
     console.log("Running cron job");

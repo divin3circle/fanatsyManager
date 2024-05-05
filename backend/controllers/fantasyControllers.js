@@ -8,7 +8,6 @@ import DreamTeam from "../models/fantasyModels.js";
 const getDreamTeam = asyncHandler(async (req, res) => {
   try {
     const dreamTeam = await DreamTeam.find();
-    // console.log(dreamTeam);
     res.status(200).json({ dreamTeam });
   } catch (error) {
     console.error(error);
