@@ -7,23 +7,35 @@ import connectDB from "../config/connectDB.js";
 import cookieParser from "cookie-parser";
 import fantasyRoutes from "../routes/fantasyRoutes.js";
 import cron from "node-cron";
-
-//schedule a task to run every 3 days
-cron.schedule("0 0 */3 * *", async () => {
-  try {
-    console.log("Running cron job");
-    const dreamTeam = await insertDreamTeam(await fetchDreamTeam());
-    console.log(dreamTeam);
-  } catch (error) {
-    console.error(error);
-  }
-});
+import {
+  fetchSuggestedPlayers,
+  insertSuggestions,
+} from "../utils/fantasyUtils.js";
 
 const port = process.env.PORT;
 
 connectDB();
 
 const app = express();
+
+//schedule a task to run every 3 days
+cron.schedule("0 0 */3 * *", async () => {
+  try {
+    console.log("Running cron job");
+    const dreamTeam = await insertDreamTeam(await fetchDreamTeam());
+    const suggestions = await insertSuggestions(await fetchSuggestedPlayers());
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+// first time run
+// try {
+//   const suggestions = await insertSuggestions(await fetchSuggestedPlayers());
+//   console.log("Suggestions inserted");
+// } catch (error) {
+//   console.error(error);
+// }
 
 // Middleware to parse JSON data
 app.use(express.json());
