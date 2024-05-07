@@ -727,6 +727,7 @@ function PlayerSeasonHistory({ historyPast }: { historyPast: HistoryPast[] }) {
 
 const PlayerModal = () => {
   const { id } = useGlobalSearchParams();
+  console.log(id)
   const [player, setPlayer] = React.useState<PlayerData | null | undefined>(
     null
   );

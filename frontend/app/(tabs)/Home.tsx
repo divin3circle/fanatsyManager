@@ -15,6 +15,8 @@ import PlayersCarousel from "../components/home/PlayersCarousel";
 import Fixtures from "../components/home/Fixtures";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { Provider } from "react-redux";
+import { store } from "../store";
 
 const Home = () => {
   const { theme, toggleTheme } = useThemeStore();
@@ -22,56 +24,58 @@ const Home = () => {
   const currentHour = now.getHours();
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: theme === "dark" ? "black" : "white",
-        flex: 1,
-      }}
-    >
-      {/* navigation */}
-      <View
+    <Provider store={store}>
+      <SafeAreaView
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 15,
-          marginTop: 10,
-          paddingHorizontal: 20,
+          backgroundColor: theme === "dark" ? "black" : "white",
+          flex: 1,
         }}
       >
-        <View>
-          <Text
-            style={{
-              fontFamily: "InclusiveSans",
-              fontSize: 20,
-            }}
-          >
-            Good{" "}
-            {currentHour < 12
-              ? "Morning"
-              : currentHour < 16
-              ? "Afternoon"
-              : "Evening"}{" "}
-          </Text>
+        {/* navigation */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 15,
+            marginTop: 10,
+            paddingHorizontal: 20,
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontFamily: "InclusiveSans",
+                fontSize: 20,
+              }}
+            >
+              Good{" "}
+              {currentHour < 12
+                ? "Morning"
+                : currentHour < 16
+                ? "Afternoon"
+                : "Evening"}{" "}
+            </Text>
+          </View>
+          <Pressable onPress={() => router.navigate("/notify-modal")}>
+            <Ionicons name="notifications" size={24} color="black" />
+          </Pressable>
         </View>
-        <Pressable onPress={() => router.navigate("/notify-modal")}>
-          <Ionicons name="notifications" size={24} color="black" />
-        </Pressable>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <StatusBar barStyle="light-content" />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <StatusBar barStyle="light-content" />
 
-        <View style={styles.componentContainer}>
-          <ManagerBanner />
-        </View>
-        <View style={styles.componentContainer}>
-          <PlayersCarousel />
-        </View>
-        <View style={styles.componentContainer}>
-          <Fixtures />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <View style={styles.componentContainer}>
+            <ManagerBanner />
+          </View>
+          <View style={styles.componentContainer}>
+            <PlayersCarousel />
+          </View>
+          <View style={styles.componentContainer}>
+            <Fixtures />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </Provider>
   );
 };
 

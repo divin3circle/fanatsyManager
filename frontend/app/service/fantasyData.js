@@ -12,7 +12,7 @@ export const fantasyDataApi = createApi({
   endpoints: (builder) => ({
     // Get the Dream 11
     getDreamTeam: builder.query({
-      query: () => `/dream11`,
+      query: () => "/dream11",
     }),
   }),
 });
