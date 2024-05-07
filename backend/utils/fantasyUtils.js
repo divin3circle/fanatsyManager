@@ -1,5 +1,9 @@
 import asyncHandler from "express-async-handler";
-import DreamTeam, { Suggestions } from "../models/fantasyModels.js";
+import DreamTeam, {
+  PlayerData,
+  Suggestions,
+  ElementSummary,
+} from "../models/fantasyModels.js";
 
 const weights = {
   gk: {
@@ -257,6 +261,118 @@ const indexCalculator = (player, position, players) => {
   }
 };
 
+const mergePlayerStats = asyncHandler(async () => {
+  const bootstrapStaticResponse = await fetch(
+    "https://fantasy.premierleague.com/api/bootstrap-static/"
+  );
+  const bootstrapStaticData = await bootstrapStaticResponse.json();
+  const players = bootstrapStaticData.elements;
+  let delay = 500;
+  const ipv6Addresses = [
+    "2001:db8:3c4d:1542:dead:beef:cafe:f00d",
+    "fec0:0:0:0:cafe:babe:1001:1a2b",
+    "2a02:1588:3f41:89ab:cdef:0123:4567:89ab",
+    "2001:470:1ffe:7ffe:0:0:0:8080",
+    "fd42:4242:4242:4242::1234:5678",
+    "2607:f8b0:4c0a:8cac:0:0:1337:beef",
+    "2002:ac10:10a::1:2:3:4",
+    "fcfe::5678:90ab:cdef:0123",
+    "2a01:4f8:1020:2131::dead:beef",
+    "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+    "2001:db8:beef:cafe:0:0:1:2345",
+    "fc00::1234:5678:90ab:cdef",
+    "2a00:2345:6789:abcd::ef01",
+    "2002:ac10:2021:4041::dead:c0de",
+    "fec3::cafe:babe:0123:4567",
+    "2400:cb00:789a:bcde:0:0:1a2b:3c4d",
+    "2001:4869:ef12:3456::7890:abcd",
+    "fdcd::dead:beef:0000:0000:1111:2222",
+    "2606:f000:1234:5678::9abc:def0",
+    "2001:0db8:85a3:0000:0000:ffff:ffff:ffff",
+  ];
+
+  const mergedPlayers = await Promise.all(
+    players.map(async (player) => {
+      // const getElementSummary = async () => {
+      //   try {
+      //     await new Promise((resolve) => setTimeout(resolve, delay));
+      //     const randIndex = Math.floor(Math.random() * ipv6Addresses.length);
+      //     const randomIP = ipv6Addresses[randIndex];
+      //     const elementSummaryResponse = await fetch(
+      //       `https://fantasy.premierleague.com/api/element-summary/${player.id}`,
+      //       {
+      //         headers: {
+      //           "X-Forwarded-For": randomIP,
+      //         },
+      //       }
+      //     );
+      //     if (elementSummaryResponse.status === 429) {
+      //       delay *= 2; // double the delay if a 429 response is received
+      //       return getElementSummary(); // retry the request
+      //     } else if (!elementSummaryResponse.ok) {
+      //       throw new Error(
+      //         `HTTP error! status: ${elementSummaryResponse.status}`
+      //       );
+      //     }
+      //     const elementSummaryData = await elementSummaryResponse.json();
+      //     delay = 500; // reset the delay after a successful request
+      //     return elementSummaryData;
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // };
+      // const elementSummaryData = await getElementSummary();
+      return { ...player };
+    })
+  );
+
+  return mergedPlayers;
+});
+
+const fetchElementSummaries = async () => {
+  const elementSummaries = [];
+  let delay = 200; // start with a delay of 500 milliseconds
+
+  for (let id = 1; id <= 859; id++) {
+    while (true) {
+      // keep trying until the request is successful
+      try {
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        const response = await fetch(
+          `https://fantasy.premierleague.com/api/element-summary/${id}`
+        );
+        if (response.status === 429) {
+          delay *= 2; // double the delay if a 429 response is received
+        } else {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          delay = 500; // reset the delay after a successful request
+          elementSummaries.push(data); // add the fetched data to the array
+          break; // exit the while loop and move on to the next ID
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
+  return elementSummaries;
+};
+
+const insertElementSummary = asyncHandler(async (summary) => {
+  await ElementSummary.deleteMany();
+  const insertedSummary = await ElementSummary.insertMany(summary);
+  return insertedSummary;
+});
+
+const insertMergedPlayers = asyncHandler(async (mergedPlayers) => {
+  await PlayerData.deleteMany();
+  const insertedMergedPlayers = await PlayerData.insertMany(mergedPlayers);
+  return insertedMergedPlayers;
+});
+
 const insertDreamTeam = asyncHandler(async (dreamTeam) => {
   await DreamTeam.deleteMany();
   const insertedDreamTeam = await DreamTeam.insertMany(dreamTeam);
@@ -274,4 +390,8 @@ export {
   fetchDreamTeam,
   fetchSuggestedPlayers,
   insertSuggestions,
+  insertMergedPlayers,
+  mergePlayerStats,
+  insertElementSummary,
+  fetchElementSummaries,
 };

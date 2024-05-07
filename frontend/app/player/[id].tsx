@@ -24,7 +24,6 @@ import {
   HistoryPast,
 } from "../types/PlayerModal";
 import { Link } from "expo-router";
-import { router } from "expo-router";
 
 //https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
 

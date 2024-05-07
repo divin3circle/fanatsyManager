@@ -16,10 +16,12 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",
+    "https-proxy-agent": "^7.0.4",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.0",
     "mongoose": "^8.3.3",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "request-promise": "^4.2.6"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

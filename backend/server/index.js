@@ -8,8 +8,12 @@ import cookieParser from "cookie-parser";
 import fantasyRoutes from "../routes/fantasyRoutes.js";
 import cron from "node-cron";
 import {
+  fetchElementSummaries,
   fetchSuggestedPlayers,
+  insertElementSummary,
+  insertMergedPlayers,
   insertSuggestions,
+  mergePlayerStats,
 } from "../utils/fantasyUtils.js";
 
 const port = process.env.PORT;
@@ -24,6 +28,7 @@ cron.schedule("0 0 */3 * *", async () => {
     console.log("Running cron job");
     const dreamTeam = await insertDreamTeam(await fetchDreamTeam());
     const suggestions = await insertSuggestions(await fetchSuggestedPlayers());
+    const mergedPlayers = await insertMergedPlayers(await mergePlayerStats());
   } catch (error) {
     console.error(error);
   }
@@ -31,8 +36,8 @@ cron.schedule("0 0 */3 * *", async () => {
 
 // first time run
 // try {
-//   const suggestions = await insertSuggestions(await fetchSuggestedPlayers());
-//   console.log("Suggestions inserted");
+//   const mergedPlayers = await insertMergedPlayers(await mergePlayerStats());
+//   console.log("Summary inserted");
 // } catch (error) {
 //   console.error(error);
 // }
