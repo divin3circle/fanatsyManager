@@ -188,6 +188,7 @@ const PlayersCarousel = () => {
       console.error(error);
     }
   };
+
   const fetchDreamTeam = async () => {
     try {
       setLoadingDreamTeam(true);

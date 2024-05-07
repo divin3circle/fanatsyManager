@@ -8,38 +8,6 @@ import { ScrollView } from "moti";
 import { handleProActions } from "../utils/Subscribe";
 import { useNavigation } from "@react-navigation/native";
 
-// type SeasonalStats = {
-//   starts: number;
-//   expected_goals: string;
-//   expected_assists: string;
-//   expected_goal_involvements: string;
-//   expected_goals_conceded: string;
-//   minutes: number;
-//   dreamteam_count: number;
-//   clean_sheets?: number;
-//   goals_conceded?: number;
-//   goals_scored: number;
-//   assists: number;
-//   yellow_cards: number;
-//   red_cards: number;
-//   saves?: number;
-//   bonus: number;
-//   ict_index_rank: number;
-//   threat_rank: number;
-//   creativity_rank: number;
-//   influence_rank: number;
-//   combined_index?: number;
-//   expected_goals_per_90: number;
-//   saves_per_90: number;
-//   expected_assists_per_90: number;
-//   expected_goal_involvements_per_90: number;
-//   expected_goals_conceded_per_90: number;
-//   goals_conceded_per_90: number;
-//   points_per_game_rank: number;
-//   points_per_game_rank_type: number;
-
-// }
-
 const AdditionalStats = () => {
   const navigation = useNavigation();
   const params = useLocalSearchParams();
