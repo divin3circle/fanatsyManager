@@ -14,6 +14,8 @@ export const fantasyDataApi = createApi({
     getDreamTeam: builder.query({
       query: () => "/dream11",
     }),
+
+    //get suggested players
   }),
 });
 
