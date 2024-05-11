@@ -7,12 +7,12 @@ import {
 export const fantasyDataApi = createApi({
   reducerPath: "fantasyDataApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api/fantasy",
+    baseUrl: "http://192.168.100.11:3000/api/fantasy",
   }),
   endpoints: (builder) => ({
     // Get the Dream 11
     getDreamTeam: builder.query({
-      query: () => "/dream11",
+      query: () => `/dream11`,
     }),
 
     //get suggested players

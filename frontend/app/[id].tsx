@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Platform } from "react-native";
 import React, { useEffect } from "react";
 import { useLocalSearchParams, Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -171,6 +171,7 @@ const AdditionalStats = () => {
           alignItems: "center",
           marginVertical: 15,
           marginHorizontal: 10,
+          paddingTop: Platform.OS === "android" ? 25 : 0,
         }}
       >
         <Pressable

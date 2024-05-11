@@ -21,6 +21,7 @@ import {
 import { Skeleton } from "moti/skeleton";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { Link } from "expo-router";
+import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 type PositionProps = {
   position: number;
@@ -39,10 +40,10 @@ export type Bootstrap = {
 type PlayerStats = {
   player: PlayerData;
 };
-const Player = (player: PlayerData) => {
+const Player = (player: any) => {
   return (
     <View style={styles.playerContainer}>
-      <Link href={`/player/${player.code}`} asChild>
+      <Link href={`/player/${player.element}`} asChild>
         <Pressable style={styles.iconContainer}>
           <Ionicons name="information-outline" size={24} />
         </Pressable>
@@ -66,30 +67,38 @@ const Player = (player: PlayerData) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            source={jerseys[player.team].jerseyImage}
+            source={jerseys[player.teamID].jerseyImage}
           />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.textName}>{player.web_name}</Text>
+          <Text style={styles.textName}>{player.name}</Text>
           <Text style={styles.textTeam}>
-            {jerseys[player.team].name.toLocaleUpperCase()}
+            {jerseys[player.teamID].name.toLocaleUpperCase()}
           </Text>
         </View>
       </View>
       <View
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
-      <View style={{ width: "8%" }}>
-        <Text>{Number(player.selected_by_percent).toFixed(0)}%</Text>
+      <View style={{ width: "10%" }}>
+        <Text>{Number(player.ownership).toFixed(0)}%</Text>
       </View>
       <View
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
       <View style={{ width: "8%" }}>
-        <Text>{player.combined_index?.toFixed(1)}</Text>
+        <Text>{player.combined_index?.toFixed(1) * 100}%</Text>
       </View>
     </View>
   );
+};
+
+const fetchSuggestions = async ({ queryKey }: QueryFunctionContext) => {
+  const [_key, id] = queryKey;
+  const data = await fetch(
+    `http://192.168.100.11:3000/api/fantasy/suggested/4`
+  );
+  return data.json();
 };
 
 const Position = ({
@@ -111,12 +120,23 @@ const Position = ({
       : position === 4
       ? "Forwards"
       : "Captains";
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["suggestedPlayers", position],
+    queryFn: fetchSuggestions,
+  });
+  // console.log(data, isLoading, error);
+  let slicedData;
+  if (data) {
+    slicedData = data?.suggestions.slice(0, 3);
+  }
+
   return (
     <Animated.View
       entering={FadeInDown.delay(100).duration(1000)}
       style={styles.positionContainer}
     >
-      <Skeleton show={loading} colorMode="light">
+      <Skeleton show={isLoading} colorMode="light">
         <View>
           <View
             style={{
@@ -140,12 +160,21 @@ const Position = ({
               <Text style={styles.positionText}>{playerPosition}</Text>
             </View>
             <View style={styles.playerContainer}>
-              <Text>Info</Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontFamily: "InclusiveSans",
+                  fontSize: 12,
+                }}
+              >
+                Info
+              </Text>
               <Text
                 style={{
                   width: "30%",
                   textAlign: "center",
                   fontFamily: "InclusiveSans",
+                  fontSize: 12,
                 }}
               >
                 Name
@@ -155,6 +184,7 @@ const Position = ({
                   width: "10%",
                   textAlign: "center",
                   fontFamily: "InclusiveSans",
+                  fontSize: 12,
                 }}
               >
                 Own
@@ -164,6 +194,7 @@ const Position = ({
                   width: "10%",
                   textAlign: "center",
                   fontFamily: "InclusiveSans",
+                  fontSize: 12,
                 }}
               >
                 Index
@@ -171,15 +202,18 @@ const Position = ({
             </View>
           </View>
           <View>
-            {players?.map((player) => {
-              return (
-                <View key={player.code}>
-                  <Skeleton show={loading} height={100} colorMode="light">
-                    <Player {...player} />
-                  </Skeleton>
-                </View>
-              );
-            })}
+            {slicedData &&
+              !isLoading &&
+              !error &&
+              slicedData?.map((player: any) => {
+                return (
+                  <View key={player.element}>
+                    <Skeleton show={isLoading} height={100} colorMode="light">
+                      <Player {...player} />
+                    </Skeleton>
+                  </View>
+                );
+              })}
           </View>
         </View>
       </Skeleton>
@@ -293,7 +327,7 @@ const styles = StyleSheet.create({
   positionText: {
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: "InclusiveSans",
     color: COLORS.primary,
   },
@@ -329,11 +363,11 @@ const styles = StyleSheet.create({
   },
   textName: {
     fontFamily: "InclusiveSans",
-    fontSize: 17,
+    fontSize: 15,
   },
   textTeam: {
     fontFamily: "InclusiveSans",
-    fontSize: 12,
+    fontSize: 11,
     color: "gray",
   },
 });

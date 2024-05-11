@@ -9,6 +9,7 @@ import {
   Alert,
   FlatList,
   ScrollView,
+  Platform,
 } from "react-native";
 import React, { useEffect } from "react";
 import { useGlobalSearchParams } from "expo-router";
@@ -29,7 +30,11 @@ import { Link } from "expo-router";
 
 function Header({ player }: { player: PlayerData | undefined }) {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container
+      ]}
+    >
       {/* image */}
       <View style={styles.imageContainer}>
         <Image
@@ -727,7 +732,6 @@ function PlayerSeasonHistory({ historyPast }: { historyPast: HistoryPast[] }) {
 
 const PlayerModal = () => {
   const { id } = useGlobalSearchParams();
-  console.log(id)
   const [player, setPlayer] = React.useState<PlayerData | null | undefined>(
     null
   );
@@ -741,7 +745,7 @@ const PlayerModal = () => {
       // console.log(playerID, "nnn");
       const data: Bootstrap = await fetchData(url);
       const players: PlayerData[] = data.elements;
-      const player = players.find((player) => player.code === playerID);
+      const player = players.find((player) => player.id === playerID);
       // console.log(player);
       setPlayer(player);
       // setLoading(false);
@@ -959,6 +963,7 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
     marginHorizontal: 5,
+
   },
   imageContainer: {
     position: "relative",

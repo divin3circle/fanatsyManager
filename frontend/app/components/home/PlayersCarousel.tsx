@@ -104,7 +104,10 @@ const PlayersCarousel = () => {
     }
   };
 
-  const { data, isError, isLoading, isSuccess } = useGetDreamTeamQuery({});
+  const { data, isError, isLoading, isSuccess, error } = useGetDreamTeamQuery(
+    {}
+  );
+  // console.log(data, isError, error);
 
   useEffect(() => {
     fetchEventId();

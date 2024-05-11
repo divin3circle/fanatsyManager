@@ -7,6 +7,7 @@ import {
   StatusBar,
   Pressable,
   Modal,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import useThemeStore from "../../utils/store";
@@ -24,58 +25,58 @@ const Home = () => {
   const currentHour = now.getHours();
 
   return (
-    <Provider store={store}>
-      <SafeAreaView
+    <SafeAreaView
+      style={{
+        backgroundColor: theme === "dark" ? "black" : "white",
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? 25 : 0,
+      }}
+    >
+      <StatusBar barStyle={"dark-content"} />
+      {/* navigation */}
+      <View
         style={{
-          backgroundColor: theme === "dark" ? "black" : "white",
-          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 15,
+          marginTop: 10,
+          paddingHorizontal: 20,
         }}
       >
-        {/* navigation */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 15,
-            marginTop: 10,
-            paddingHorizontal: 20,
-          }}
-        >
-          <View>
-            <Text
-              style={{
-                fontFamily: "InclusiveSans",
-                fontSize: 20,
-              }}
-            >
-              Good{" "}
-              {currentHour < 12
-                ? "Morning"
-                : currentHour < 16
-                ? "Afternoon"
-                : "Evening"}{" "}
-            </Text>
-          </View>
-          <Pressable onPress={() => router.navigate("/notify-modal")}>
-            <Ionicons name="notifications" size={24} color="black" />
-          </Pressable>
+        <View>
+          <Text
+            style={{
+              fontFamily: "InclusiveSans",
+              fontSize: 20,
+            }}
+          >
+            Good{" "}
+            {currentHour < 12
+              ? "Morning"
+              : currentHour < 16
+              ? "Afternoon"
+              : "Evening"}{" "}
+          </Text>
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <StatusBar barStyle="light-content" />
+        <Pressable onPress={() => router.navigate("/notify-modal")}>
+          <Ionicons name="notifications" size={24} color="black" />
+        </Pressable>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <StatusBar barStyle="light-content" />
 
-          <View style={styles.componentContainer}>
-            <ManagerBanner />
-          </View>
-          <View style={styles.componentContainer}>
-            <PlayersCarousel />
-          </View>
-          <View style={styles.componentContainer}>
-            <Fixtures />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </Provider>
+        <View style={styles.componentContainer}>
+          <ManagerBanner />
+        </View>
+        <View style={styles.componentContainer}>
+          <PlayersCarousel />
+        </View>
+        <View style={styles.componentContainer}>
+          <Fixtures />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

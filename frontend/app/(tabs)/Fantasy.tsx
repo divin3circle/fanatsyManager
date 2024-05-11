@@ -5,6 +5,7 @@ import {
   StatusBar,
   ScrollView,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import useThemeStore from "../../utils/store";
@@ -82,6 +83,7 @@ const Fantasy = () => {
         style={{
           backgroundColor: theme === "dark" ? "black" : "white",
           flex: 1,
+          paddingTop: Platform.OS === "android" ? 25 : 0,
         }}
       >
         <StatusBar

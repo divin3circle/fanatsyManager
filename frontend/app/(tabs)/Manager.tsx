@@ -4,6 +4,7 @@ import {
   View,
   StatusBar,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import React, { useEffect } from "react";
 import useThemeStore from "../../utils/store";
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     flex: 1,
+    paddingTop: Platform.OS === "android" ? 25 : 0,
   },
   divider: {
     width: "100%",

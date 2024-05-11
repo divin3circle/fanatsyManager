@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable, Platform } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../utils/Colors";
@@ -6,7 +6,11 @@ import { router } from "expo-router";
 
 const Notifications = () => {
   return (
-    <View>
+    <View
+      style={{
+        paddingTop: Platform.OS === "android" ? 25 : 0,
+      }}
+    >
       <View
         style={{
           flexDirection: "row",

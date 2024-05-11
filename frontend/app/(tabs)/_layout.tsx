@@ -12,7 +12,7 @@ const Layout = () => {
       screenOptions={{
         tabBarActiveTintColor: COLORS.primary,
         tabBarStyle: {
-          marginHorizontal: 5,
+          // marginHorizontal: 5,
           borderTopEndRadius: 10,
           borderTopStartRadius: 10,
           backgroundColor: COLORS["card-light"],

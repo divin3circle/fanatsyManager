@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Pressable,
   FlatList,
+  Platform,
 } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -186,6 +187,7 @@ const Subscribe = () => {
         flex: 1,
         backgroundColor: "#fff",
         //alignItems: "center",
+        paddingTop: Platform.OS === "android" ? 25 : 0,
       }}
     >
       {/* titlebar */}
