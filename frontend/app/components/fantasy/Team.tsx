@@ -236,7 +236,7 @@ const Team = ({
             GameWeek
           </Text>
           <Text style={styles.valueText}>
-            {playerInformation?.current_event}/37
+            {playerInformation?.current_event}/38
           </Text>
         </View>
       </View>

@@ -81,13 +81,27 @@ const Player = (player: any) => {
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
       <View style={{ width: "10%" }}>
-        <Text>{Number(player.ownership).toFixed(0)}%</Text>
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            fontSize: 12,
+          }}
+        >
+          {Number(player.ownership).toFixed(0)}%
+        </Text>
       </View>
       <View
         style={{ height: "100%", backgroundColor: "gray", width: 1 }}
       ></View>
       <View style={{ width: "8%" }}>
-        <Text>{player.combined_index?.toFixed(1) * 100}%</Text>
+        <Text
+          style={{
+            fontFamily: "InclusiveSans",
+            fontSize: 12,
+          }}
+        >
+          {player.combined_index?.toFixed(1) * 100}%
+        </Text>
       </View>
     </View>
   );
@@ -101,15 +115,7 @@ const fetchSuggestions = async ({ queryKey }: QueryFunctionContext) => {
   return data.json();
 };
 
-const Position = ({
-  position,
-  players,
-  loading,
-}: {
-  position?: number;
-  players: PlayerData[] | null;
-  loading: boolean;
-}) => {
+const Position = ({ position }: { position: number }) => {
   const playerPosition =
     position == 1
       ? "Goalkeepers"
@@ -222,51 +228,6 @@ const Position = ({
 };
 
 const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
-  const [gk, setGk] = useState<PlayerData[] | null>(null);
-  const [defs, setDef] = useState<PlayerData[] | null>(null);
-  const [mids, setMid] = useState<PlayerData[] | null>(null);
-  const [sts, setSts] = useState<PlayerData[] | null>(null);
-  const [captains, setCaptains] = useState<PlayerData[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const getSuggestedPlayers = async (url: string) => {
-    try {
-      setLoading(true);
-      //fetch bootstrap data
-      const players: Bootstrap = await fetchData(url);
-      //sort players into positions
-      const { gks, def, mid, st } = sortPlayers(players.elements);
-      //sort players by index(ict)
-      const sortedGks = sortByIndex(gks);
-      const sortedDefs = sortByIndex(def);
-      const sortedMids = sortByIndex(mid);
-      const sortedSts = sortByIndex(st);
-      //sort captains by ict
-      const sortedCaptains = sortByIndex(players.elements);
-      //calculate CI for top 3 players
-      const suggestedGks = combinedIndexCalculatorGks(sortedGks);
-      const suggestedDefs = combinedIndexCalculatorGks(sortedDefs);
-      const suggestedMids = combinedIndexCalculator(sortedMids);
-      const suggestedSts = combinedIndexCalculator(sortedSts);
-      const suggestedCaptains = combinedIndexCalculator(sortedCaptains);
-      //set state
-      setGk(suggestedGks);
-      setDef(suggestedDefs);
-      setMid(suggestedMids);
-      setSts(suggestedSts);
-      setCaptains(suggestedCaptains);
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    getSuggestedPlayers(
-      "https://fantasy.premierleague.com/api/bootstrap-static/"
-    );
-    // );
-  }, []);
-
   return (
     <ScrollView>
       <View style={styles.titleContainer}>
@@ -280,18 +241,18 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
         </Text>
       </View>
       <View>
-        <Position position={1} players={gk} loading={loading} />
+        <Position position={1} />
       </View>
       <View>
-        <Position position={2} players={defs} loading={loading} />
+        <Position position={2} />
       </View>
       <View>
-        <Position position={3} players={mids} loading={loading} />
+        <Position position={3} />
       </View>
       <View>
-        <Position position={4} players={sts} loading={loading} />
+        <Position position={4} />
       </View>
-      <View style={styles.titleContainer}>
+      {/* <View style={styles.titleContainer}>
         <Text style={{ fontFamily: "InclusiveSans", fontSize: 20 }}>
           Captain Picks
         </Text>
@@ -303,7 +264,7 @@ const Suggestions = ({ gameWeek }: { gameWeek: number | undefined }) => {
       </View>
       <View>
         <Position players={captains} loading={loading} />
-      </View>
+      </View> */}
     </ScrollView>
   );
 };

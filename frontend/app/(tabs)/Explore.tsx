@@ -266,7 +266,6 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 20,
-    fontWeight: "bold",
     fontFamily: "InclusiveSans",
   },
   carouselContainer: {
@@ -293,7 +292,6 @@ const styles = StyleSheet.create({
   },
   newsCategoryText: {
     fontSize: 16,
-    fontWeight: "bold",
     fontFamily: "InclusiveSans",
   },
   newsConatiner: {
@@ -334,7 +332,6 @@ const styles = StyleSheet.create({
   },
   newsItemTitleText: {
     fontSize: 20,
-    fontWeight: "bold",
     fontFamily: "InclusiveSans",
   },
   newsItemText: {

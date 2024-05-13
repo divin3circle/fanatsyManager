@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
@@ -16,7 +17,7 @@ const Settings = () => {
   const [allowNotifications, setAllowNotifications] =
     React.useState<boolean>(false);
   return (
-    <View
+    <ScrollView
       style={{
         paddingHorizontal: 10,
         backgroundColor: "white",
@@ -156,7 +157,7 @@ const Settings = () => {
           Log out
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -212,7 +213,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
     fontFamily: "InclusiveSans",
     marginVertical: 10,
     marginHorizontal: 10,

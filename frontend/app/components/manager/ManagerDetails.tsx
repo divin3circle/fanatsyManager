@@ -43,7 +43,6 @@ function ManagerHeader({ manager }: { manager: PlayerData | null }) {
             <Text
               style={{
                 color: "white",
-                fontWeight: "bold",
                 fontSize: 17,
                 fontFamily: "InclusiveSans",
                 marginVertical: 5,
@@ -57,7 +56,6 @@ function ManagerHeader({ manager }: { manager: PlayerData | null }) {
             <Text
               style={{
                 color: "white",
-                fontWeight: "bold",
                 fontSize: 14,
                 fontFamily: "InclusiveSans",
                 marginVertical: 5,

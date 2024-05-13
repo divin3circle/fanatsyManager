@@ -228,8 +228,8 @@ const Fixtures = () => {
           <Ionicons name="star" size={17} color={COLORS.primary} />
         </View>
         {/*   Divider */}
-        <View style={styles.divider}></View>
-        <View style={styles.divider}></View>
+
+        {/* <View style={styles.divider}></View> */}
         {/*   Fav content  */}
         {fixtures.slice(0, 2).map((fixture) => {
           return (
@@ -260,8 +260,8 @@ const Fixtures = () => {
           <Ionicons name="alarm-outline" size={17} color={COLORS.primary} />
         </View>
         {/*   Divider */}
-        <View style={styles.divider}></View>
-        <View style={styles.divider}></View>
+
+        {/* <View style={styles.divider}></View> */}
         {/*   Fixture content  */}
         {fixtures.slice(2, 10).map((fixture) => {
           return (
@@ -298,12 +298,12 @@ const styles = StyleSheet.create({
   },
   headingText: {
     fontSize: 20,
-    fontWeight: "bold",
+
     fontFamily: "InclusiveSans",
   },
   altHeadingText: {
     fontSize: 12,
-    fontWeight: "bold",
+
     fontFamily: "InclusiveSans",
     color: COLORS["text-light"],
   },
@@ -347,11 +347,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 5,
   },
   fixtureTitle: {
     fontFamily: "InclusiveSans",
     fontSize: 16,
-    fontWeight: "bold",
   },
   fixtureContainer: {
     padding: 10,
@@ -377,7 +377,6 @@ const styles = StyleSheet.create({
   fixtureText: {
     fontFamily: "InclusiveSans",
     fontSize: 13,
-    fontWeight: "bold",
   },
   teamLlogo: {
     width: 30,
@@ -415,7 +414,7 @@ const styles = StyleSheet.create({
   fullTimeText: {
     fontFamily: "InclusiveSans",
     fontSize: 14,
-    fontWeight: "bold",
+
     color: COLORS.primary,
   },
   activityIndicatorContainer: {

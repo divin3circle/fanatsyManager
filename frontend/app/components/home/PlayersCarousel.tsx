@@ -160,12 +160,12 @@ const styles = StyleSheet.create({
   },
   headingText: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontFamily: "InclusiveSans",
   },
   altHeadingText: {
     fontSize: 12,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontFamily: "InclusiveSans",
     color: COLORS["text-light"],
   },
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   carouselTextName: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontSize: 16,
     fontFamily: "InclusiveSans",
   },
@@ -217,13 +217,13 @@ const styles = StyleSheet.create({
     color: COLORS["text-light"],
   },
   carouselTextStats: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontSize: 15,
     fontFamily: "InclusiveSans",
     margin: 5,
   },
   divider: {
-    height: 0.2,
+    height: 0.5,
     backgroundColor: COLORS["text-light"],
     margin: 5,
   },
