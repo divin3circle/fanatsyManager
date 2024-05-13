@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -10,10 +11,27 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../utils/Colors";
 import CheckBox from "@react-native-community/checkbox";
+import { router } from "expo-router";
 
 const Pay = () => {
   return (
-    <View style={{}}>
+    <View
+      style={{
+        paddingTop: Platform.OS === "android" ? 25 : 0,
+      }}
+    >
+      {Platform.OS === "android" ? (
+        <Ionicons
+          name="close"
+          size={24}
+          color="black"
+          onPress={() => router.back()}
+          style={{
+            marginHorizontal: 10,
+            marginTop: 10,
+          }}
+        />
+      ) : null}
       {/* apple pay */}
       <View
         style={{
@@ -191,6 +209,7 @@ const Pay = () => {
                 fontSize: 15,
                 paddingHorizontal: 10,
               }}
+              keyboardType="numeric"
             />
             <Ionicons
               name="card"
@@ -251,6 +270,7 @@ const Pay = () => {
                   fontSize: 15,
                   paddingHorizontal: 10,
                 }}
+                keyboardType="numeric"
               />
               <Ionicons
                 name="card-outline"
