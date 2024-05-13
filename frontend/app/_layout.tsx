@@ -75,6 +75,13 @@ const Layout = () => {
               presentation: "modal",
             }}
           />
+          <Stack.Screen
+            name="payment-modal"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+            }}
+          />
         </Stack>
       </QueryClientProvider>
     </Provider>

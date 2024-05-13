@@ -140,6 +140,7 @@ function Fee({ fee }: { fee: Fees }) {
           padding: 10,
           borderRadius: 10,
         }}
+        onPress={() => router.navigate("/payment-modal")}
       >
         <Text
           style={{
@@ -199,7 +200,7 @@ const Subscribe = () => {
             <View
               key={item.title}
               style={{
-                width: 400,
+                width: 350,
               }}
             >
               <Fee fee={item} />
@@ -209,8 +210,20 @@ const Subscribe = () => {
         keyExtractor={(item) => item.title}
         horizontal
         showsHorizontalScrollIndicator={false}
+        bounces={false}
       />
-      {/* <View></View> */}
+      <View>
+        <Text
+          style={{
+            textAlign: "center",
+            fontFamily: "InclusiveSans",
+            color: "gray",
+            fontSize: 10,
+          }}
+        >
+          Terms & Conditions Apply
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
