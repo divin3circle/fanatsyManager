@@ -25,16 +25,11 @@ import {
   HistoryPast,
 } from "../types/PlayerModal";
 import { Link } from "expo-router";
-
-//https://resources.premierleague.com/premierleague/photos/players/250x250/p80201.png
+import { QueryFunctionContext, useQuery } from "@tanstack/react-query";
 
 function Header({ player }: { player: PlayerData | undefined }) {
   return (
-    <View
-      style={[
-        styles.container
-      ]}
-    >
+    <View style={[styles.container]}>
       {/* image */}
       <View style={styles.imageContainer}>
         <Image
@@ -71,7 +66,7 @@ function Header({ player }: { player: PlayerData | undefined }) {
               padding: 5,
             }}
           >
-            {player?.first_name} {player?.second_name}
+            {player?.web_name}
           </Text>
         </View>
         {/* position */}
@@ -153,7 +148,7 @@ function Header({ player }: { player: PlayerData | undefined }) {
               Compare
             </Text>
           </Pressable>
-          <Pressable
+          {/* <Pressable
             style={{
               padding: 10,
               backgroundColor: COLORS.primary,
@@ -174,7 +169,7 @@ function Header({ player }: { player: PlayerData | undefined }) {
             >
               Save
             </Text>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
     </View>
@@ -963,7 +958,6 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
     marginHorizontal: 5,
-
   },
   imageContainer: {
     position: "relative",

@@ -108,9 +108,9 @@ const Player = (player: any) => {
 };
 
 const fetchSuggestions = async ({ queryKey }: QueryFunctionContext) => {
-  const [_key, id] = queryKey;
+  const [_key, position] = queryKey;
   const data = await fetch(
-    `http://192.168.100.11:3000/api/fantasy/suggested/4`
+    `http://192.168.100.11:3000/api/fantasy/suggested/${position}`
   );
   return data.json();
 };

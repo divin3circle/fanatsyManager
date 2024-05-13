@@ -1,8 +1,7 @@
 import { create } from "zustand";
-import { FIREBASE_APP, FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { UserCredential } from "firebase/auth";
 
 export type FormInput = string | null;
 type RegisterUserState = {
@@ -11,10 +10,12 @@ type RegisterUserState = {
   fplTeam: FormInput;
   eplTeam: FormInput;
   password: FormInput;
+
   setEmail: (email: FormInput) => void;
   setFplTeam: (fplTeam: FormInput) => void;
   setEplTeam: (eplTeam: FormInput) => void;
   setPassword: (password: FormInput) => void;
+
   reset: () => void;
 };
 
@@ -35,6 +36,7 @@ const useUseRegisterStore = create<RegisterUserState>((set, get) => ({
           fplTeam,
           eplTeam,
           password,
+          isPro: false,
         });
         set({ email: "", fplTeam: "", eplTeam: "", password: "" });
         return true;
